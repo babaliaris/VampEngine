@@ -15,5 +15,6 @@ class MyApp : public VampEngine::Application
 
 VampEngine::Application* VampEngine::CreateApp()
 {
+	VAMP_INFO("APP created!");
 	return new MyApp();
 }

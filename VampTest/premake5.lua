@@ -1,4 +1,4 @@
-project "Sandbox"
+project "VampTest"
 	kind "ConsoleApp"
 	language "C++"
 	targetdir "%{wks.location}/bin/%{prj.name}_%{cfg.shortname}"
@@ -11,8 +11,5 @@ project "Sandbox"
 	}
 
 	includedirs{
-		"%{wks.location}/VampEngine/src",
 		"%{wks.location}/VampLogger/src"
 	}
-	
-	links "VampEngine"

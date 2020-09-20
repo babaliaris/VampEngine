@@ -9,3 +9,7 @@ project "VampEngine"
 		"src/**.h",
 		"premake5.lua"
 	}
+	
+	includedirs{
+		"%{wks.location}/VampLogger/src"
+	}

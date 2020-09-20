@@ -1,5 +1,6 @@
 #pragma once
 
+#include <VampLogger.h>
 #include "Core/Application.h"
 
 
