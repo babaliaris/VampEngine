@@ -19,11 +19,12 @@ project "VampEngine"
 		"%{wks.location}/VampLogger/src",
 		"%{wks.location}/VampAssert/src",
 		"%{wks.location}/VampEngine/vendor/glfw-3.3.2/include",
-		"%{wks.location}/VampEngine/vendor/glad/include"
+		"%{wks.location}/VampEngine/vendor/glad/include",
+		"%{wks.location}/VampEngine/vendor/stb_image/src"
 		
 	}
 	
-	links {"Glad"}
+	links {"Glad", "STBimage"}
 	
 	--Windows Filter.
 	filter "system:windows"
