@@ -97,8 +97,46 @@ namespace VampEngine
 			return ss.str();
 		}
 
+		//Inline Methods.
+		inline double GetX() const { return m_x; }
+		inline double GetY() const { return m_y; }
+
 		//Static Methods.
 		static EventType GetStaticType() { return EventType::MOUSE_MOVE; }
+
+		//Private Members.
+		private:
+			double m_x, m_y;
+	};
+
+
+
+
+	class MouseScrollEvent : public Event
+	{
+
+		//Public Methods.
+		public:
+
+		//Contructors.
+		MouseScrollEvent(double x, double y)
+			: Event(EventType::MOUSE_SCROLL, EventCategory::MOUSE), m_x(x), m_y(y)
+		{}
+
+		//To String Method.
+		std::string ToString() const
+		{
+			std::stringstream ss;
+			ss << "MouseScrollEvent => X: " << m_x << " , Y: " << m_y;
+			return ss.str();
+		}
+
+		//Inline Methods.
+		inline double GetX() const { return m_x; }
+		inline double GetY() const { return m_y; }
+
+		//Static Methods.
+		static EventType GetStaticType() { return EventType::MOUSE_SCROLL; }
 
 		//Private Members.
 		private:

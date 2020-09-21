@@ -46,20 +46,28 @@ namespace VampEngine
 		public:
 
 		//Contructors.
-		WindowMoveEvent()
-			: Event(EventType::WINDOW_MOVE, EventCategory::WINDOW)
+		WindowMoveEvent(int x, int y)
+			: Event(EventType::WINDOW_MOVE, EventCategory::WINDOW), m_x(x), m_y(y)
 		{}
 
 		//To String Method.
 		std::string ToString() const
 		{
 			std::stringstream ss;
-			ss << "WindowMoveEvent";
+			ss << "WindowMoveEvent => X: " << m_x << " , Y: " << m_y;
 			return ss.str();
 		}
 
+		//Inline Methods.
+		inline unsigned int GetX() const { return m_x; }
+		inline unsigned int GetY() const { return m_y; }
+
 		//Static Methods.
 		static EventType GetStaticType() { return EventType::WINDOW_MOVE; }
+
+		//Private Members.
+		private:
+			int m_x, m_y;
 	};
 
 
@@ -112,5 +120,31 @@ namespace VampEngine
 
 		//Static Methods.
 		static EventType GetStaticType() { return EventType::WINDOW_LOST_FOCUS; }
+	};
+
+
+
+
+	class WindowCloseEvent : public Event
+	{
+
+		//Public Methods.
+		public:
+
+		//Contructors.
+		WindowCloseEvent()
+			: Event(EventType::WINDOW_CLOSE, EventCategory::WINDOW)
+		{}
+
+		//To String Method.
+		std::string ToString() const
+		{
+			std::stringstream ss;
+			ss << "WindowCloseEvent";
+			return ss.str();
+		}
+
+		//Static Methods.
+		static EventType GetStaticType() { return EventType::WINDOW_CLOSE; }
 	};
 }

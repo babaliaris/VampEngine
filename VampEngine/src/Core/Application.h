@@ -35,6 +35,12 @@ namespace VampEngine
 			std::vector<Layer*> m_layers;
 			std::vector<Layer*> m_overlayers;
 
+
+		//Private Methods.
+		private:
+
+			void PrepareEvents();
+
 	};
 
 
