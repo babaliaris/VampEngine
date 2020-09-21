@@ -17,6 +17,19 @@ workspace "VampEngine"
 	filter "configurations:Debug"
 		defines "VAMP_DEBUG"
 		defines "VAMP_ENABLE_ASSERTS"
+		symbols "On"
+		
+	--Release Filter for ALL Projects.
+	filter {}
+	filter "configurations:Release"
+		defines "VAMP_ENABLE_PROFILER"
+		optimize "On"
+		
+	--Distribution Filter for ALL Projects.
+	filter {}
+	filter "configurations:Dist"
+		optimize "On"
+		
 	
 	--Include The All The Projects.
 	include "VampEngine"

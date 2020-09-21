@@ -3,6 +3,10 @@ project "VampEngine"
 	language "C++"
 	targetdir "%{wks.location}/bin/%{prj.name}_%{cfg.shortname}"
 	objdir "%{wks.location}/bin-int/%{prj.name}_%{cfg.shortname}"
+
+	--Precompiled Header Configuration.
+	pchheader "pch.h"
+	pchsource "%{wks.location}/%{prj.name}/src/pch.cpp"
 	
 	files {
 		"src/**.cpp",
@@ -11,6 +15,7 @@ project "VampEngine"
 	}
 	
 	includedirs{
+		"%{wks.location}/%{prj.name}/src",
 		"%{wks.location}/VampLogger/src",
 		"%{wks.location}/VampAssert/src",
 		"%{wks.location}/VampEngine/vendor/glfw-3.3.2/include",

@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "Window.h"
 #include <VampAssert.h>
 #include <glad/glad.h>
