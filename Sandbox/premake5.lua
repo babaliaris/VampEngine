@@ -11,6 +11,7 @@ project "Sandbox"
 	}
 
 	includedirs{
+		"%{wks.location}/%{prj.name}/src",
 		"%{wks.location}/VampEngine/src",
 		"%{wks.location}/VampAssert/src",
 		"%{wks.location}/VampLogger/src"
