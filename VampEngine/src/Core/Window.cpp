@@ -1,5 +1,6 @@
 #include "Window.h"
 #include <VampAssert.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 namespace VampEngine
@@ -45,6 +46,13 @@ namespace VampEngine
 		//Create the window.
 		m_glfwWindow = glfwCreateWindow(m_data.width, m_data.height, m_data.title.c_str(), NULL, NULL);
 		VAMP_ASSERT(m_glfwWindow, "GLFW Window could not be created!");
+
+		//Create the OpenGL Context.
+		glfwMakeContextCurrent(m_glfwWindow);
+
+		//Initialize Glad.
+		int gladSuccess = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		VAMP_ASSERT(gladSuccess, "GLAD failed to be initialized!");
 
 		//Set User Pointer.
 		glfwSetWindowUserPointer(m_glfwWindow, (void*)&m_data);

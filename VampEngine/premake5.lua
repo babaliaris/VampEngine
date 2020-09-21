@@ -13,9 +13,12 @@ project "VampEngine"
 	includedirs{
 		"%{wks.location}/VampLogger/src",
 		"%{wks.location}/VampAssert/src",
-		"%{wks.location}/VampEngine/vendor/glfw-3.3.2/include"
+		"%{wks.location}/VampEngine/vendor/glfw-3.3.2/include",
+		"%{wks.location}/VampEngine/vendor/glad/include"
 		
 	}
+	
+	links {"Glad"}
 	
 	--Windows Filter.
 	filter "system:windows"
