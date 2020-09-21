@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Application.h"
 #include "Window.h"
+#include "Layer.h"
 
 #include "Events/WindowEvents.h"
 #include "Events/KeyEvents.h"
@@ -98,7 +99,41 @@ namespace VampEngine
 	{
 		while (true)
 		{
+
+			//Run Layers.
+			for (Layer* layer : m_layers)
+			{
+				if (layer->active)
+					layer->OnUpdate();
+			}
+
+			//Run Overlayers.
+			for (Layer* overlayer : m_overlayers)
+			{
+				if (overlayer->active)
+					overlayer->OnUpdate();
+			}
+
+			//Update the Window.
 			m_window->Update();
 		}
+	}
+
+
+
+
+	void Application::PushLayer(Layer* layer)
+	{
+		m_layers.push_back(layer);
+		layer->OnAttach();
+	}
+
+
+
+
+	void Application::PushOverlayer(Layer* layer)
+	{
+		m_overlayers.push_back(layer);
+		layer->OnAttach();
 	}
 }

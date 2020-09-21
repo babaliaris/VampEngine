@@ -4,6 +4,7 @@
 #include "Core/Core.h"
 #include "Core/Application.h"
 #include "Core/Window.h"
+#include "Core/Layer.h"
 
 //Include Events.
 #include "Events/WindowEvents.h"
