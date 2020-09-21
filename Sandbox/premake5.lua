@@ -12,6 +12,7 @@ project "Sandbox"
 
 	includedirs{
 		"%{wks.location}/VampEngine/src",
+		"%{wks.location}/VampAssert/src",
 		"%{wks.location}/VampLogger/src"
 	}
 	

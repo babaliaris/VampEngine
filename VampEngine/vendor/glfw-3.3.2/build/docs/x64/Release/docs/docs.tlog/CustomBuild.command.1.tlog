@@ -1,0 +1,24 @@
+^C:\USERS\BABALIARIS\SOURCE\REPOS\VAMPENGINE\VAMPENGINE\VENDOR\GLFW-3.3.2\BUILD\CMAKEFILES\CCAA6B47D447763DE02DFFA673B326B5\DOCS.RULE
+setlocal
+cd C:\Users\babaliaris\source\repos\VampEngine\VampEngine\vendor\glfw-3.3.2\build\docs
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\doxygen\bin\doxygen.exe"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\BABALIARIS\SOURCE\REPOS\VAMPENGINE\VAMPENGINE\VENDOR\GLFW-3.3.2\DOCS\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/babaliaris/source/repos/VampEngine/VampEngine/vendor/glfw-3.3.2 -BC:/Users/babaliaris/source/repos/VampEngine/VampEngine/vendor/glfw-3.3.2/build --check-stamp-file C:/Users/babaliaris/source/repos/VampEngine/VampEngine/vendor/glfw-3.3.2/build/docs/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

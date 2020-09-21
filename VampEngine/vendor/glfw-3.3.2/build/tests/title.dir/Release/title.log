@@ -1,0 +1,5 @@
+﻿  Building Custom Rule C:/Users/babaliaris/source/repos/VampEngine/VampEngine/vendor/glfw-3.3.2/tests/CMakeLists.txt
+  title.c
+  glad_gl.c
+  Generating Code...
+  title.vcxproj -> C:\Users\babaliaris\source\repos\VampEngine\VampEngine\vendor\glfw-3.3.2\build\tests\Release\title.exe

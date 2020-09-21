@@ -1,0 +1,6 @@
+﻿  Building Custom Rule C:/Users/babaliaris/source/repos/VampEngine/VampEngine/vendor/glfw-3.3.2/tests/CMakeLists.txt
+  monitors.c
+  getopt.c
+  glad_gl.c
+  Generating Code...
+  monitors.vcxproj -> C:\Users\babaliaris\source\repos\VampEngine\VampEngine\vendor\glfw-3.3.2\build\tests\Release\monitors.exe

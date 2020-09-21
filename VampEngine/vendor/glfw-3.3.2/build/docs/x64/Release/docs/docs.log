@@ -1,0 +1,4 @@
+﻿  Generating HTML documentation
+CUSTOMBUILD : warning : Tag 'TCL_SUBST' at line 216 of file 'Doxyfile' has become obsolete.
+           To avoid this warning please remove this line from your configuration file or upgrade it using "doxygen -u"
+  Building Custom Rule C:/Users/babaliaris/source/repos/VampEngine/VampEngine/vendor/glfw-3.3.2/docs/CMakeLists.txt

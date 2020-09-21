@@ -1,3 +1,6 @@
+os.execute("cmake -S VampEngine/vendor/glfw-3.3.2 -B VampEngine/vendor/glfw-3.3.2/build")
+
+
 workspace "VampEngine"
 	architecture "x64"
 	platforms "x64"
@@ -13,6 +16,7 @@ workspace "VampEngine"
 	filter {}
 	filter "configurations:Debug"
 		defines "VAMP_DEBUG"
+		defines "VAMP_ENABLE_ASSERTS"
 	
 	--Include The All The Projects.
 	include "VampEngine"
@@ -22,4 +26,5 @@ workspace "VampEngine"
 	group "Depedencies"
 		include "VampLogger"
 		include "VampTest"
+		include "VampAssert"
 	group ""

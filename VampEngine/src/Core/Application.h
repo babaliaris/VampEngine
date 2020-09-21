@@ -2,6 +2,8 @@
 
 namespace VampEngine
 {
+	class Window;
+
 	class Application
 	{
 
@@ -11,7 +13,11 @@ namespace VampEngine
 
 			void Run();
 
+			inline Window& GetWindow() { return *m_window; }
+
 		private:
+
+			Window *m_window;
 
 	};
 

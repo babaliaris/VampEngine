@@ -1,8 +1,10 @@
 #include "Application.h"
+#include "Window.h"
 
 namespace VampEngine
 {
 	Application::Application()
+		: m_window(new Window())
 	{
 	}
 
@@ -16,6 +18,9 @@ namespace VampEngine
 
 	void Application::Run()
 	{
-		while (true);
+		while (true)
+		{
+			m_window->Update();
+		}
 	}
 }

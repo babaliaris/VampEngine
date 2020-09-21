@@ -1,0 +1,6 @@
+﻿  Building Custom Rule C:/Users/babaliaris/source/repos/VampEngine/VampEngine/vendor/glfw-3.3.2/tests/CMakeLists.txt
+  msaa.c
+  getopt.c
+  glad_gl.c
+  Generating Code...
+  msaa.vcxproj -> C:\Users\babaliaris\source\repos\VampEngine\VampEngine\vendor\glfw-3.3.2\build\tests\Release\msaa.exe

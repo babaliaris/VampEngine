@@ -1,0 +1,6 @@
+﻿  Building Custom Rule C:/Users/babaliaris/source/repos/VampEngine/VampEngine/vendor/glfw-3.3.2/tests/CMakeLists.txt
+  threads.c
+  tinycthread.c
+  glad_gl.c
+  Generating Code...
+  threads.vcxproj -> C:\Users\babaliaris\source\repos\VampEngine\VampEngine\vendor\glfw-3.3.2\build\tests\Release\threads.exe

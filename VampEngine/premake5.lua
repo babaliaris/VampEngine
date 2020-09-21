@@ -11,5 +11,15 @@ project "VampEngine"
 	}
 	
 	includedirs{
-		"%{wks.location}/VampLogger/src"
+		"%{wks.location}/VampLogger/src",
+		"%{wks.location}/VampAssert/src",
+		"%{wks.location}/VampEngine/vendor/glfw-3.3.2/include"
+		
 	}
+	
+	--Windows Filter.
+	filter "system:windows"
+		links {"glfw3", "opengl32"}
+		libdirs{
+			"%{wks.location}/VampEngine/vendor/glfw-3.3.2/build/src/Release"
+		}
