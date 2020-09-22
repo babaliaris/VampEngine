@@ -14,7 +14,8 @@ project "Sandbox"
 		"%{wks.location}/%{prj.name}/src",
 		"%{wks.location}/VampEngine/src",
 		"%{wks.location}/VampAssert/src",
-		"%{wks.location}/VampLogger/src"
+		"%{wks.location}/VampLogger/src",
+		"%{wks.location}/VampEngine/vendor/glm-9.9.8"
 	}
 	
 	links "VampEngine"

@@ -15,5 +15,9 @@ class BufferLayer : public VampEngine::Layer
 		virtual void OnUpdate() override;
 
 		virtual void OnEvent(VampEngine::Event& e) override;
+
+	private:
+		VampEngine::VertexArray *m_vao = nullptr;
+		VampEngine::Shader* m_shader = nullptr;
 };
 

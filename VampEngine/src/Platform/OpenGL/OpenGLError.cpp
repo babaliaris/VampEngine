@@ -55,7 +55,4 @@ void VampEngine::OpenGLLogErrors(const std::string& file, unsigned int line)
 		VAMP_PRINT_CYAN("\tErrno  : %d\n", error);
 		VAMP_PRINT_CYAN("\tMessage: %s\n\n", GetOpenGLStringError(error).c_str());
 	}
-
-	//Leave some lines at the end.
-	printf("\n\n");
 }

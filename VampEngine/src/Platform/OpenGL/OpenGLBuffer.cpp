@@ -10,8 +10,8 @@ VampEngine::OpenGLVertexBuffer::OpenGLVertexBuffer(const void* data, unsigned in
 	//Generate The buffer.
 	VAMP_GLCALL(glGenBuffers(1, &m_id));
 
-	//Bind the Buffer => Uploda the data => Unbind the Buffer.
-	VAMP_GLCALL(glBindBuffer(GL_UNSIGNED_BYTE, m_id));
+	//Bind the Buffer => Upload the data => Unbind the Buffer.
+	VAMP_GLCALL(glBindBuffer(GL_ARRAY_BUFFER, m_id));
 	VAMP_GLCALL(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
 	VAMP_GLCALL(glBindBuffer(GL_ARRAY_BUFFER, 0));
 
@@ -50,7 +50,7 @@ VampEngine::OpenGLIndexBuffer::OpenGLIndexBuffer(const void* data, unsigned int 
 	//Generate The buffer.
 	VAMP_GLCALL(glGenBuffers(1, &m_id));
 
-	//Bind the Buffer => Uploda the data => Unbind the Buffer.
+	//Bind the Buffer => Upload the data => Unbind the Buffer.
 	VAMP_GLCALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_id));
 	VAMP_GLCALL(glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
 	VAMP_GLCALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
@@ -77,7 +77,7 @@ void VampEngine::OpenGLIndexBuffer::Bind() const
 
 void VampEngine::OpenGLIndexBuffer::Unbind() const
 {
-	VAMP_GLCALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));//
+	VAMP_GLCALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 }
 
 

@@ -75,14 +75,24 @@ namespace VampEngine
 
 		//Public Methods.
 		public:
+
+			//Constructor.
 			VertexBuffer(BufferLayout& layout);
 
+			//Set Layout.
 			void SetLayout(const BufferLayout& layout);
+
+			//Get Layout.
+			inline const BufferLayout& GetLayout() { return m_layout; }
+
 
 		//Public Virtual Methods.
 		public:
+
+			//Virtual Decontructor.
 			virtual ~VertexBuffer() = default;
 
+			//Bind and Unbind Methods.
 			virtual void Bind()		const = 0;
 			virtual void Unbind()	const = 0;
 
@@ -102,6 +112,7 @@ namespace VampEngine
 		//Public Static Methods.
 		public:
 
+			//Create METHOD.
 			static IndexBuffer* Create(const void* data, unsigned int size);
 
 

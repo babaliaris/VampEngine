@@ -6,6 +6,8 @@
 #include "Events/WindowEvents.h"
 #include "Events/KeyEvents.h"
 #include "Events/MouseEvents.h"
+#include "FileSystem.h"
+#include "Renderer/RendererCommand.h"
 
 
 namespace VampEngine
@@ -23,6 +25,12 @@ namespace VampEngine
 
 		//Create The Input Instance.
 		Input::Create();
+
+		//Create The File System.
+		FileSystem::Create();
+
+		//Create The Renderer Command.
+		RendererCommand::Create();
 
 		//Prepare The Events.
 		this->PrepareEvents();
@@ -44,6 +52,12 @@ namespace VampEngine
 		//Delete Input Static Varaible.
 		delete &Input::Get();
 
+		//Delete the file system instance.
+		delete FileSystem::Get();
+
+		//Delete the Renderer command.
+		delete RendererCommand::Get();
+
 		//Delete the window.
 		delete m_window;
 	}
@@ -52,8 +66,15 @@ namespace VampEngine
 
 	void Application::Run()
 	{
+
+		//Set Clear Color To Black.
+		RendererCommand::Get()->SetClearColor({ 0.0f, 0.0f, 0.0f, 1.0f });
+
 		while (true)
 		{
+
+			//Clear The Screen.
+			RendererCommand::Get()->Clear();
 
 			//If the Window is not minimized, run the Layers.
 			if (!m_window->IsMinimized())

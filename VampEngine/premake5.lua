@@ -20,7 +20,8 @@ project "VampEngine"
 		"%{wks.location}/VampAssert/src",
 		"%{wks.location}/VampEngine/vendor/glfw-3.3.2/include",
 		"%{wks.location}/VampEngine/vendor/glad/include",
-		"%{wks.location}/VampEngine/vendor/stb_image/src"
+		"%{wks.location}/VampEngine/vendor/stb_image/src",
+		"%{wks.location}/VampEngine/vendor/glm-9.9.8"
 		
 	}
 	

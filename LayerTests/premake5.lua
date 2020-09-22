@@ -14,7 +14,9 @@ project "LayerTests"
 		"%{wks.location}/%{prj.name}/src",
 		"%{wks.location}/VampEngine/src",
 		"%{wks.location}/VampLogger/src",
-		"%{wks.location}/VampAssert/src"
+		"%{wks.location}/VampAssert/src",
+		"%{wks.location}/VampEngine/vendor/glm-9.9.8",
+		"%{wks.location}/VampEngine/vendor/glad/include",
 	}
 	
-	links {"VampEngine"}
+	links {"VampEngine", "Glad"}
