@@ -85,9 +85,12 @@
 	#define VAMP_WARN(formatter, ...)
 	#define VAMP_TRACE(formatter, ...)
 
-	#define VAMP_PRINT(...)	
+	#define VAMP_PRINT(...)
 	#define VAMP_PRINT_GREEN(...)
 	#define VAMP_PRINT_RED(...)
 	#define VAMP_PRINT_YELLOW(...)
+	#define VAMP_PRINT_BLUE(...)
+	#define VAMP_PRINT_PINK(...)
+	#define VAMP_PRINT_CYAN(...)
 
 #endif
