@@ -10,7 +10,7 @@
 namespace VampEngine
 {
 	Application::Application()
-		: m_window(new Window())
+		: m_window(Window::Create())
 	{
 		this->PrepareEvents();
 	}
@@ -19,6 +19,17 @@ namespace VampEngine
 
 	Application::~Application()
 	{
+
+		//Delete all layers.
+		for (Layer* layer : m_layers)
+			delete layer;
+
+		//Delete all overlayers.
+		for (Layer* overlayer : m_overlayers)
+			delete overlayer;
+
+		//Delete the window.
+		delete m_window;
 	}
 
 
@@ -77,7 +88,7 @@ namespace VampEngine
 	void Application::PrepareEvents()
 	{
 		//Set the Event Callback Method.
-		m_window->m_data.callback = [this](Event& e)->void
+		m_window->GetEventCallback() = [this](Event& e)->void
 		{
 			//Run Layers OnEvent Backwards.
 			for (std::vector<Layer *>::reverse_iterator it = m_layers.rbegin(); it != m_layers.rend(); it++)

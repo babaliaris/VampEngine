@@ -3,70 +3,48 @@
 #include <functional>
 #include "Events/Event.h"
 
-struct GLFWwindow;
-
 namespace VampEngine
 {
+
 	class Window
 	{
+		//Event Callback Method Signature.
+		using EventCallback = std::function<void(Event&)>;
 
-		//Public Methods.
+		//Static Methods.
+		public:
+			static Window* Create(int width = 800, int height = 600, const std::string& title = "VampEngine");
+
+
+		//Virtual Methods.
 		public:
 
-			friend class Application;
-
-			//Constructors.
-			Window(int width = 800, int height = 600, const std::string& title = "VampEngine");
-			~Window();
+			//Destructor.
+			virtual ~Window() = default;
 
 			//Methods.
-			void Update();
+			virtual void Update() const = 0;
 
-			//Inline Methods.
-			inline unsigned int GetWidth() const { return m_data.width; }
-			inline unsigned int GetHeight() const { return m_data.height; }
+			//Get Width And Height.
+			virtual unsigned int GetWidth() const = 0;
+			virtual unsigned int GetHeight() const = 0;
 
-			inline int GetX() const { return m_data.x; }
-			inline int GetY() const { return m_data.y; }
+			//Get X, Y, Window Coordinates.
+			virtual int GetX() const = 0;
+			virtual int GetY() const = 0;
 
-			inline const std::string& GetTitle() const { return m_data.title; }
+			//Get Window Title.
+			virtual const std::string & GetTitle() const = 0;
 
-			inline bool IsMinimized() const { return m_data.minimized; }
-			inline bool IsMaximized() const { return m_data.maximized; }
+			//Get Event Callback.
+			virtual EventCallback& GetEventCallback() = 0;
 
+			//Check if minimized or maximized.
+			virtual bool IsMinimized() const = 0;
+			virtual bool IsMaximized() const = 0;
 
+			//Get Native Window.
+			virtual void* GetNativeWindow() = 0;
 
-		//Private Methods.
-		private:
-
-			void Init();
-
-			void ConnectEventSystem();
-
-
-		//Private Members.
-		private:
-
-			struct WindowData
-			{
-				using EventCallback = std::function<void(Event&)>;
-
-				unsigned int	width;
-				unsigned int	height;
-				int				x;
-				int				y;
-				std::string		title;
-				EventCallback	callback;
-				bool			minimized = false;
-				bool			maximized = false;
-
-				WindowData(int w, int h, const std::string& t)
-					: width(w), height(h), x(0), y(0), title(t), callback(nullptr)
-				{}
-			};
-
-			WindowData	m_data;
-			GLFWwindow* m_glfwWindow;
 	};
 }
-
