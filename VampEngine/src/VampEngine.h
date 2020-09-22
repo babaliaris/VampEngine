@@ -6,6 +6,10 @@
 #include "Core/Window.h"
 #include "Core/Layer.h"
 
+//Include Input and Keycodes.
+#include "Input/Input.h"
+#include "Input/Keycodes.h"
+
 //Include Events.
 #include "Events/WindowEvents.h"
 #include "Events/KeyEvents.h"

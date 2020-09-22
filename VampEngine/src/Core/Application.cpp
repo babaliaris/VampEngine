@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Application.h"
 #include "Window.h"
+#include "Input/Input.h"
 #include "Layer.h"
 #include "Events/WindowEvents.h"
 #include "Events/KeyEvents.h"
@@ -9,9 +10,21 @@
 
 namespace VampEngine
 {
+
+	Application* Application::s_Instance = nullptr;
+
+
 	Application::Application()
 		: m_window(Window::Create())
 	{
+		//Set the instance.
+		VAMP_ASSERT(s_Instance == nullptr, "s_Instance should be null at this point!");
+		s_Instance = this;
+
+		//Create The Input Instance.
+		Input::Create();
+
+		//Prepare The Events.
 		this->PrepareEvents();
 	}
 
@@ -27,6 +40,9 @@ namespace VampEngine
 		//Delete all overlayers.
 		for (Layer* overlayer : m_overlayers)
 			delete overlayer;
+
+		//Delete Input Static Varaible.
+		delete &Input::Get();
 
 		//Delete the window.
 		delete m_window;
@@ -57,6 +73,10 @@ namespace VampEngine
 						overlayer->OnUpdate();
 				}
 			}
+
+
+			//Update the Inputs.
+			Input::Get().OnUpdate();
 
 			//Update the Window.
 			m_window->Update();

@@ -10,6 +10,11 @@ namespace VampEngine
 	class Application
 	{
 
+		//Static Public Methods.
+		public:
+			inline static Application& Get() { return *s_Instance; }
+
+
 		//Public Methods.
 		public:
 
@@ -39,6 +44,8 @@ namespace VampEngine
 
 		//Private Methods.
 		private:
+
+			static Application* s_Instance;
 
 			void PrepareEvents();
 
