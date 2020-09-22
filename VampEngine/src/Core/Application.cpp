@@ -66,8 +66,9 @@ namespace VampEngine
 
 
 
-	void Application::PushLayer(Layer* layer)
+	void Application::PushLayer(Layer* layer, const std::string& name)
 	{
+		layer->name = name;
 		m_layers.push_back(layer);
 		layer->OnAttach();
 	}
@@ -75,10 +76,12 @@ namespace VampEngine
 
 
 
-	void Application::PushOverlayer(Layer* layer)
+	void Application::PushOverlayer(Layer* overlayer, const std::string& name)
 	{
-		m_overlayers.push_back(layer);
-		layer->OnAttach();
+
+		overlayer->name = name;
+		m_overlayers.push_back(overlayer);
+		overlayer->OnAttach();
 	}
 
 

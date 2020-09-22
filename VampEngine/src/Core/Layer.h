@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 namespace VampEngine
 {
@@ -13,6 +14,7 @@ namespace VampEngine
 		//Public Members.
 		public:
 			bool active = true;
+			std::string name;
 
 		//Public Methods.
 		public:

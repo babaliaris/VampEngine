@@ -5,7 +5,7 @@ workspace "VampEngine"
 	architecture "x64"
 	platforms "x64"
 	configurations {"Debug", "Release", "Dist"}
-	startproject "Sandbox"
+	startproject "LayerTests"
 	
 	--Windows Filter for ALL Projects.
 	filter "system:windows"
@@ -34,6 +34,7 @@ workspace "VampEngine"
 	--Include The All The Projects.
 	include "VampEngine"
 	include "Sandbox"
+	include "LayerTests"
 	
 	--Include All The Depedency Projects.
 	group "Depedencies"

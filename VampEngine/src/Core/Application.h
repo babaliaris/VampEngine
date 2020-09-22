@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 
 namespace VampEngine
 {
@@ -20,8 +21,8 @@ namespace VampEngine
 			void Run();
 
 			//Push Layer Methods.
-			void PushLayer(Layer* layer);
-			void PushOverlayer(Layer* layer);
+			void PushLayer(Layer* layer, const std::string& name = "Layer");
+			void PushOverlayer(Layer* overlayer, const std::string& name = "Layer");
 
 			//Inline Methods.
 			inline Window& GetWindow() { return *m_window; }
