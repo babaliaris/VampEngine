@@ -10,6 +10,11 @@
 #include "Input/Input.h"
 #include "Input/Keycodes.h"
 
+//Include Renderer Stuff.
+#include "Renderer/Buffer.h"
+#include "Renderer/Renderer.h"
+#include "Renderer/RendererCommand.h"
+
 //Include Events.
 #include "Events/WindowEvents.h"
 #include "Events/KeyEvents.h"

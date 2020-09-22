@@ -7,6 +7,9 @@ workspace "VampEngine"
 	configurations {"Debug", "Release", "Dist"}
 	startproject "LayerTests"
 	
+	--To Be Abstracted.
+	defines "VAMP_OPENGL"
+	
 	--Windows Filter for ALL Projects.
 	filter "system:windows"
 		defines "VAMP_WINDOWS"

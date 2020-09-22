@@ -3,6 +3,7 @@
 
 #include "Layers/EventsLayer.h"
 #include "Layers/InputLayer.h"
+#include "Layers/BufferLayer.h"
 
 
 class LayerTests : public VampEngine::Application
@@ -13,7 +14,8 @@ public:
 	LayerTests()
 	{
 		//PushLayer(new EventsLayer(), "EventsLayer");
-		PushLayer(new InputLayer(), "InputLayer");
+		//PushLayer(new InputLayer(), "InputLayer");
+		PushLayer(new BufferLayer(), "BufferLayer");
 	}
 
 	~LayerTests()
