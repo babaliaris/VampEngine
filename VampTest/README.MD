@@ -57,3 +57,13 @@ VAMP_TEST(successes, fals)
 	VAMP_TEST_FALSE(0);
 }
 ```
+
+## Running Tests
+
+```bash
+VampTest.exe (Without Parameters) => Run ALL TESTS.
+VampTest.exe --list	          => List All Tests.
+VampTest.exe --list case_name	  => List All Tests of that specific case.
+VampTest.exe case_name		  => Run All Tests of that specific case.
+VampTest.exe case_name.test_name  => Run a specific test.
+```
