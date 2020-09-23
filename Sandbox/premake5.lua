@@ -15,6 +15,8 @@ project "Sandbox"
 		"%{wks.location}/VampEngine/src",
 		"%{wks.location}/VampAssert/src",
 		"%{wks.location}/VampLogger/src",
+		"%{wks.location}/VampProfiler/src",
+		"%{wks.location}/VampProfiler/vendor/json/include",
 		"%{wks.location}/VampEngine/vendor/glm-9.9.8"
 	}
 	

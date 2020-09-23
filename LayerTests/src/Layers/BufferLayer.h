@@ -18,6 +18,6 @@ class BufferLayer : public VampEngine::Layer
 
 	private:
 		VampEngine::VertexArray *m_vao = nullptr;
-		VampEngine::Shader* m_shader = nullptr;
+		VampEngine::Shader* m_shader   = nullptr;
 };
 

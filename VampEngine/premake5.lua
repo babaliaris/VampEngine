@@ -18,6 +18,8 @@ project "VampEngine"
 		"%{wks.location}/%{prj.name}/src",
 		"%{wks.location}/VampLogger/src",
 		"%{wks.location}/VampAssert/src",
+		"%{wks.location}/VampProfiler/src",
+		"%{wks.location}/VampProfiler/vendor/json/include",
 		"%{wks.location}/VampEngine/vendor/glfw-3.3.2/include",
 		"%{wks.location}/VampEngine/vendor/glad/include",
 		"%{wks.location}/VampEngine/vendor/stb_image/src",
