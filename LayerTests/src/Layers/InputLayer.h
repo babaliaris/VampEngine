@@ -17,6 +17,6 @@ class InputLayer : public VampEngine::Layer
 		virtual void OnEvent(VampEngine::Event& e) override;
 
 	private:
-		VampEngine::Input& m_Input;
+		VampEngine::Input* m_Input;
 };
 

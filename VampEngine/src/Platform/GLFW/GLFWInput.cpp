@@ -13,8 +13,8 @@ namespace VampEngine
 
 	GLFWInput::GLFWInput()
 	{
-		Application& app = Application::Get();
-		GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
+		Application* app	= Application::Get();
+		GLFWwindow* window	= static_cast<GLFWwindow*>(app->GetWindow()->GetNativeWindow());
 
 		//Set Scroll Callback.
 		glfwSetScrollCallback(window, [](GLFWwindow* window, double x, double y)
@@ -34,8 +34,8 @@ namespace VampEngine
 
 	bool GLFWInput::KeyDown(unsigned int keycode)
 	{
-		Application& app	= Application::Get();
-		GLFWwindow* window	= static_cast<GLFWwindow *>(app.GetWindow().GetNativeWindow());
+		Application* app = Application::Get();
+		GLFWwindow* window = static_cast<GLFWwindow*>(app->GetWindow()->GetNativeWindow());
 
 		//Keycode is pressed.
 		if (glfwGetKey(window, keycode) == GLFW_PRESS)
@@ -48,8 +48,8 @@ namespace VampEngine
 
 	bool GLFWInput::KeyUp(unsigned int keycode)
 	{
-		Application& app = Application::Get();
-		GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
+		Application* app = Application::Get();
+		GLFWwindow* window = static_cast<GLFWwindow*>(app->GetWindow()->GetNativeWindow());
 
 		//Keycode is released.
 		if (glfwGetKey(window, keycode) == GLFW_RELEASE)
@@ -69,8 +69,8 @@ namespace VampEngine
 
 	bool GLFWInput::MouseButtonDown(unsigned int button)
 	{
-		Application& app = Application::Get();
-		GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
+		Application* app = Application::Get();
+		GLFWwindow* window = static_cast<GLFWwindow*>(app->GetWindow()->GetNativeWindow());
 
 		//Button is Pressed.
 		if (glfwGetMouseButton(window, button) == GLFW_PRESS)
@@ -83,8 +83,8 @@ namespace VampEngine
 
 	bool GLFWInput::MouseButtonUp(unsigned int button)
 	{
-		Application& app = Application::Get();
-		GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
+		Application* app = Application::Get();
+		GLFWwindow* window = static_cast<GLFWwindow*>(app->GetWindow()->GetNativeWindow());
 
 		//Button is Released.
 		if (glfwGetMouseButton(window, button) == GLFW_RELEASE)
@@ -104,8 +104,8 @@ namespace VampEngine
 
 	double GLFWInput::GetMouseX()
 	{
-		Application& app = Application::Get();
-		GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
+		Application* app = Application::Get();
+		GLFWwindow* window = static_cast<GLFWwindow*>(app->GetWindow()->GetNativeWindow());
 
 		double x, y;
 
@@ -118,8 +118,8 @@ namespace VampEngine
 
 	double GLFWInput::GetMouseY()
 	{
-		Application& app = Application::Get();
-		GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
+		Application* app = Application::Get();
+		GLFWwindow* window = static_cast<GLFWwindow*>(app->GetWindow()->GetNativeWindow());
 
 		double x, y;
 
@@ -139,8 +139,8 @@ namespace VampEngine
 
 	MousePos GLFWInput::GetMousePos()
 	{
-		Application& app = Application::Get();
-		GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
+		Application* app = Application::Get();
+		GLFWwindow* window = static_cast<GLFWwindow*>(app->GetWindow()->GetNativeWindow());
 
 		double x, y;
 

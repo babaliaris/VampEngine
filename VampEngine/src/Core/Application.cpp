@@ -50,7 +50,7 @@ namespace VampEngine
 			delete overlayer;
 
 		//Delete Input Static Varaible.
-		delete &Input::Get();
+		delete Input::Get();
 
 		//Delete the file system instance.
 		delete FileSystem::Get();
@@ -97,7 +97,7 @@ namespace VampEngine
 
 
 			//Update the Inputs.
-			Input::Get().OnUpdate();
+			Input::Get()->OnUpdate();
 
 			//Update the Window.
 			m_window->Update();

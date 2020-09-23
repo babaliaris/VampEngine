@@ -23,7 +23,7 @@ namespace VampEngine
 		//Public Static Methods.
 		public:
 			static void Create();
-			inline static Input& Get() { return *s_Instance; };
+			inline static Input* Get() { return s_Instance; };
 
 
 

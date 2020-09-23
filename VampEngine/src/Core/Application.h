@@ -12,7 +12,7 @@ namespace VampEngine
 
 		//Static Public Methods.
 		public:
-			inline static Application& Get() { return *s_Instance; }
+			inline static Application* Get() { return s_Instance; }
 
 
 		//Public Methods.
@@ -30,7 +30,7 @@ namespace VampEngine
 			void PushOverlayer(Layer* overlayer, const std::string& name = "Layer");
 
 			//Inline Methods.
-			inline Window& GetWindow() { return *m_window; }
+			inline Window* GetWindow() { return m_window; }
 
 
 		//Private Members.
