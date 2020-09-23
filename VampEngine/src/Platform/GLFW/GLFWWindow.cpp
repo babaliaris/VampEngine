@@ -4,8 +4,8 @@
 #include "Events/KeyEvents.h"
 #include "Events/MouseEvents.h"
 #include "Events/WindowEvents.h"
-#include <glad/glad.h> //Graphics API call should be abstracted!!!
 #include <GLFW/glfw3.h>
+#include "Renderer/RendererCommand.h"
 
 namespace VampEngine
 {
@@ -36,6 +36,15 @@ namespace VampEngine
 
 
 
+	void* GLFWWindow::GetProcAddress() const
+	{
+		return glfwGetProcAddress;
+	}
+
+
+
+
+
 	void GLFWWindow::Init()
 	{
 		//Initialize GLFW.
@@ -54,12 +63,11 @@ namespace VampEngine
 		//Create the OpenGL Context.
 		glfwMakeContextCurrent(m_glfwWindow);
 
-		//Initialize Glad.
-		int gladSuccess = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		VAMP_ASSERT(gladSuccess, "GLAD failed to be initialized!");
+		//Init the Renderer.
+		RendererCommand::Get()->Init(this);
 
 		//Set The Viewport.
-		glViewport(0, 0, m_data.width, m_data.height);
+		RendererCommand::Get()->SetViewport(0, 0, m_data.width, m_data.height);
 
 		//Set User Pointer.
 		glfwSetWindowUserPointer(m_glfwWindow, (void*)&m_data);
@@ -90,7 +98,7 @@ namespace VampEngine
 				data.height = e.GetHeight();
 
 				//Update The Viewport.
-				glViewport(0, 0, data.width, data.height);
+				RendererCommand::Get()->SetViewport(0, 0, data.width, data.height);
 
 				//Check if the window is minimized.
 				if (data.width == 0 || data.height == 0)

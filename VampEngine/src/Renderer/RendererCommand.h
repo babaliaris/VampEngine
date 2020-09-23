@@ -4,6 +4,11 @@
 
 namespace VampEngine
 {
+
+	//Forward Declerations//
+	class Window;
+	//Forward Declerations//
+
 	class RendererCommand
 	{
 		friend class Application;
@@ -20,8 +25,13 @@ namespace VampEngine
 			//Virtual Deconstructor.
 			virtual ~RendererCommand() = default;
 
+			virtual void Init(Window *window) const = 0;
+
 			virtual void SetClearColor(const glm::vec4& color)	const = 0;
 			virtual void Clear()								const = 0;
+
+			virtual void SetViewport(int x, int y, unsigned int width, unsigned int height) const = 0;
+
 			virtual void DrawIndexed(VertexArray *vao)			const = 0;
 
 		//Private Methods.

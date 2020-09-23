@@ -46,5 +46,8 @@ namespace VampEngine
 			//Get Native Window.
 			virtual void* GetNativeWindow() = 0;
 
+			//Get Proc Address.
+			virtual void* GetProcAddress() const = 0;
+
 	};
 }

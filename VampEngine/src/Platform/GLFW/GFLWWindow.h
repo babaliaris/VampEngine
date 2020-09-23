@@ -43,6 +43,9 @@ namespace VampEngine
 			//Get Native Window.
 			virtual inline void* GetNativeWindow() override { return (void *)m_glfwWindow; };
 
+			//Get Proc Address.
+			virtual void* GetProcAddress() const override;
+
 
 
 		//Private Methods.

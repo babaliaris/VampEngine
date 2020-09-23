@@ -17,20 +17,23 @@ namespace VampEngine
 
 
 	Application::Application()
-		: m_window(Window::Create())
+		: m_window(nullptr)
 	{
 		//Set the instance.
 		VAMP_ASSERT(s_Instance == nullptr, "s_Instance should be null at this point!");
 		s_Instance = this;
+
+		//Create The Renderer Command.
+		RendererCommand::Create();
+
+		//Create the Window.
+		m_window = Window::Create();
 
 		//Create The Input Instance.
 		Input::Create();
 
 		//Create The File System.
 		FileSystem::Create();
-
-		//Create The Renderer Command.
-		RendererCommand::Create();
 
 		//Prepare The Events.
 		this->PrepareEvents();
