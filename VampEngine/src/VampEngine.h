@@ -6,6 +6,7 @@
 #include "Core/Window.h"
 #include "Core/Layer.h"
 #include "Core/FileSystem.h"
+#include "Renderer/Texture.h"
 
 //Include Input and Keycodes.
 #include "Input/Input.h"

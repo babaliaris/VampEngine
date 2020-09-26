@@ -1,5 +1,4 @@
 #include "BufferLayer.h"
-#include <glad/glad.h>
 
 BufferLayer::BufferLayer()
 	: m_vao(nullptr)
@@ -38,9 +37,6 @@ void BufferLayer::OnAttach()
 
 	vbo->Bind();
 	ebo->Bind();
-
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 12, 0);
 
 	m_vao->AddBuffer(vbo);
 	m_vao->SetIndexBuffer(ebo);
