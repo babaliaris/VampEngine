@@ -44,4 +44,40 @@ namespace VampEngine
 		private:
 			unsigned int m_id, m_count;
 	};
+
+
+
+	class OpenGLFrameBuffer : public FrameBuffer
+	{
+
+		//Public Methods.
+		public:
+			OpenGLFrameBuffer(const FrameBufferProps& props);
+
+		//Public Virtual Methods.
+		public:
+
+			//Default Virtual Deconstructor.
+			virtual ~OpenGLFrameBuffer();
+
+			//Bind and Unbind.
+			virtual void Bind()		const override;
+			virtual void Unbind()	const override;
+
+			//Update Method.
+			virtual void Update(unsigned int width, unsigned int height) override;
+
+			//Get Methods.
+			virtual Texture2D* GetColorTexture() const override;
+			virtual Texture2D* GetDepthTexture() const override;
+
+		//Private Members.
+		private:
+			unsigned int		m_id, m_renderbuffer;
+			FrameBufferProps	m_props;
+
+			Texture2D* m_colorTexture;
+			Texture2D* m_depthTexture;
+
+	};
 }

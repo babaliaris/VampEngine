@@ -21,10 +21,10 @@ namespace VampEngine
 		VAMP_GLCALL(glBindTexture(GL_TEXTURE_2D, m_id));
 
 		//Set Wrapping and Filtering Options.
-		VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->ConvertWrap(m_props.wrap)));
-		VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->ConvertWrap(m_props.wrap)));
-		VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, this->ConvertFilter(m_props.filter)));
-		VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, this->ConvertMipmapFilter(m_props.filter)));
+		VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, ConvertWrap(m_props.wrap)));
+		VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, ConvertWrap(m_props.wrap)));
+		VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, ConvertFilter(m_props.filter)));
+		VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, ConvertMipmapFilter(m_props.filter)));
 
 		//Unbind The Texture.
 		VAMP_GLCALL(glBindTexture(GL_TEXTURE_2D, 0));
@@ -38,6 +38,95 @@ namespace VampEngine
 		else
 			this->CreateEmptyTexture();
 	}
+
+
+
+
+
+	OpenGLTexture2D::OpenGLTexture2D(unsigned width, unsigned int height, TextureAttachment attachment)
+		: m_id(0), m_props(width, height, attachment)
+	{
+
+		//Create and bind the texture.
+		VAMP_GLCALL(glGenTextures(1, &m_id));
+		VAMP_GLCALL(glBindTexture(GL_TEXTURE_2D, m_id));
+
+		//Create Color Attachment.
+		if (attachment == TextureAttachment::COLOR)
+		{
+
+			//Set the props formats.
+			m_props.internalFormat = ConvertFormat(GL_RGBA);
+			m_props.externalFormat = ConvertFormat(GL_RGBA);
+
+			//Set props wrap and filter options.
+			m_props.wrap	= ConvertWrap(GL_REPEAT);
+			m_props.filter  = ConvertFilter(GL_LINEAR);
+
+			//Set Wrapping and Filtering Options.
+			VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
+			VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
+			VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+			VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+
+			//Allocate Memory for the Attachment texture.
+			VAMP_GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL));
+		}
+
+
+
+
+		//Create Depth Attachment.
+		else if (attachment == TextureAttachment::DEPTH)
+		{
+
+			//Set the props formats.
+			m_props.internalFormat = ConvertFormat(GL_DEPTH_COMPONENT);
+			m_props.externalFormat = ConvertFormat(GL_DEPTH_COMPONENT);
+
+			//Set props wrap and filter options.
+			m_props.wrap   = ConvertWrap(GL_REPEAT);
+			m_props.filter = ConvertFilter(GL_LINEAR);
+
+			//Set Wrapping and Filtering Options.
+			VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
+			VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
+			VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+			VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+
+			//Allocate Memory for the Attachment texture.
+			VAMP_GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL));
+		}
+
+
+
+		//Create Depth_Stencil Attachment.
+		else if (attachment == TextureAttachment::DEPTH_STENCIL)
+		{
+
+			//Set the props formats.
+			m_props.internalFormat = ConvertFormat(GL_DEPTH24_STENCIL8);
+			m_props.externalFormat = ConvertFormat(GL_DEPTH24_STENCIL8);
+
+			//Set props wrap and filter options.
+			m_props.wrap	= ConvertWrap(GL_REPEAT);
+			m_props.filter	= ConvertFilter(GL_LINEAR);
+
+			//Set Wrapping and Filtering Options.
+			VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
+			VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
+			VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+			VAMP_GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+
+			//Allocate Memory for the Attachment texture.
+			VAMP_GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH24_STENCIL8, width, height, 0, GL_DEPTH_STENCIL, GL_UNSIGNED_INT_24_8, NULL));
+		}
+
+		//Unbind The ID.
+		VAMP_GLCALL(glBindTexture(GL_TEXTURE_2D, 0));
+	}
+
+
 
 
 
@@ -66,7 +155,7 @@ namespace VampEngine
 	{
 
 		//Assert size with the actual texture size.
-		VAMP_ASSERT(size == m_props.width * m_props.height * this->GetFormatSize(m_props.externalFormat),
+		VAMP_ASSERT(size == m_props.width * m_props.height * GetFormatSize(m_props.externalFormat),
 			"The size is not right!");
 
 		//Bind.
@@ -74,7 +163,7 @@ namespace VampEngine
 
 		//Upload the data to the GPU.
 		VAMP_GLCALL(glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_props.width, m_props.height,
-			this->ConvertFormat(m_props.externalFormat), GL_UNSIGNED_BYTE, data));
+			ConvertFormat(m_props.externalFormat), GL_UNSIGNED_BYTE, data));
 
 		//Unbind.
 		this->Unbind();
@@ -82,9 +171,53 @@ namespace VampEngine
 
 
 
+
+
+	void OpenGLTexture2D::UpdateAttachment(unsigned int width, unsigned int height)
+	{
+
+		//If this is an attachment.
+		if (m_props.attachment != TextureAttachment::NONE)
+		{
+			m_props.width  = width;
+			m_props.height = height;
+		}
+
+
+		//Update Color Attachment.
+		if (m_props.attachment == TextureAttachment::COLOR)
+		{
+			//Re-Allocate Memory for the Attachment texture.
+			VAMP_GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL));
+		}
+
+
+		//Update Depth Attachment.
+		else if (m_props.attachment == TextureAttachment::DEPTH)
+		{
+			//Re-Allocate Memory for the Attachment texture.
+			VAMP_GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL));
+		}
+
+
+		//Update Depth Attachment.
+		else if (m_props.attachment == TextureAttachment::DEPTH_STENCIL)
+		{
+			//Re-Allocate Memory for the Attachment texture.
+			VAMP_GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH24_STENCIL8, width, height, 0, GL_DEPTH_STENCIL, GL_UNSIGNED_INT_24_8, NULL));
+		}
+	}
+
+
+
 	const Texture2DProps& OpenGLTexture2D::GetProps() const
 	{
 		return m_props;
+	}
+
+	unsigned int OpenGLTexture2D::GetID() const
+	{
+		return m_id;
 	}
 
 
@@ -129,7 +262,7 @@ namespace VampEngine
 
 
 		//Override the external format with the actual format of the texture file image.
-		m_props.externalFormat = this->ConvertFormat(source_format);
+		m_props.externalFormat = ConvertFormat(source_format);
 
 
 		//Bind.
@@ -140,7 +273,7 @@ namespace VampEngine
 		{
 
 			//Upload the data to the GPU.
-			VAMP_GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, this->ConvertFormat(m_props.internalFormat), m_props.width, m_props.height,
+			VAMP_GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, ConvertFormat(m_props.internalFormat), m_props.width, m_props.height,
 				0, source_format, GL_UNSIGNED_BYTE, data));
 
 
@@ -164,8 +297,8 @@ namespace VampEngine
 		this->Bind();
 
 		//Allocate memory in the GPU.
-		VAMP_GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, this->ConvertFormat(m_props.internalFormat), m_props.width, m_props.height,
-			0, this->ConvertFormat(m_props.externalFormat), GL_UNSIGNED_BYTE, NULL));
+		VAMP_GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, ConvertFormat(m_props.internalFormat), m_props.width, m_props.height,
+			0, ConvertFormat(m_props.externalFormat), GL_UNSIGNED_BYTE, NULL));
 
 		//Unbind.
 		this->Unbind();
@@ -173,7 +306,7 @@ namespace VampEngine
 
 
 
-	unsigned int OpenGLTexture2D::ConvertFormat(TextureFormat format) const
+	unsigned int ConvertFormat(TextureFormat format)
 	{
 		switch (format)
 		{
@@ -182,6 +315,9 @@ namespace VampEngine
 			case VampEngine::TextureFormat::RGB		: return GL_RGB;
 			case VampEngine::TextureFormat::RGBA	: return GL_RGBA;
 			case VampEngine::TextureFormat::RGBA8	: return GL_RGBA8;
+			case VampEngine::TextureFormat::DEPTH	: return GL_DEPTH_COMPONENT;
+
+			case VampEngine::TextureFormat::DEPTH_STENCIL		: return GL_DEPTH24_STENCIL8;
 		}
 
 		VAMP_ASSERT(0, "Uknown TextureFormat.");
@@ -191,14 +327,16 @@ namespace VampEngine
 
 
 
-	TextureFormat OpenGLTexture2D::ConvertFormat(unsigned int gl_format) const
+	TextureFormat ConvertFormat(unsigned int gl_format)
 	{
 		switch (gl_format)
 		{
-			case GL_R	: return TextureFormat::R;
-			case GL_RG	: return TextureFormat::RG;
-			case GL_RGB	: return TextureFormat::RGB;
-			case GL_RGBA: return TextureFormat::RGBA;
+			case GL_R				 : return TextureFormat::R;
+			case GL_RG				 : return TextureFormat::RG;
+			case GL_RGB				 : return TextureFormat::RGB;
+			case GL_RGBA			 : return TextureFormat::RGBA;
+			case GL_DEPTH_COMPONENT	 : return TextureFormat::DEPTH;
+			case GL_DEPTH24_STENCIL8 : return TextureFormat::DEPTH_STENCIL;
 		}
 
 		VAMP_ASSERT(0, "Uknown OpenGL Texture Format.");
@@ -207,7 +345,7 @@ namespace VampEngine
 
 
 
-	unsigned int OpenGLTexture2D::ConvertWrap(TextureWrap wrap) const
+	unsigned int ConvertWrap(TextureWrap wrap)
 	{
 		switch (wrap)
 		{
@@ -223,7 +361,24 @@ namespace VampEngine
 
 
 
-	unsigned int OpenGLTexture2D::ConvertFilter(TextureFilter filter) const
+
+	TextureWrap ConvertWrap(unsigned int gl_wrap)
+	{
+		switch (gl_wrap)
+		{
+			case GL_REPEAT			: return TextureWrap::REPEAT;
+			case GL_MIRRORED_REPEAT	: return TextureWrap::MIRROR_REPEAT;
+			case GL_CLAMP_TO_EDGE	: return TextureWrap::CLAMP_TO_EDGE;
+			case GL_CLAMP_TO_BORDER	: return TextureWrap::CLAMP_TO_BORDER;
+		}
+
+		VAMP_ASSERT(0, "Uknown TextureWrap.");
+		return TextureWrap::NONE;
+	}
+
+
+
+	unsigned int ConvertFilter(TextureFilter filter)
 	{
 		switch (filter)
 		{
@@ -238,7 +393,22 @@ namespace VampEngine
 
 
 
-	unsigned int OpenGLTexture2D::ConvertMipmapFilter(TextureFilter filter) const
+	TextureFilter ConvertFilter(unsigned int gl_filter)
+	{
+		switch (gl_filter)
+		{
+			case GL_LINEAR : return TextureFilter::LINEAR;
+			case GL_NEAREST: return TextureFilter::NEAREST;
+		}
+
+		VAMP_ASSERT(0, "Uknown TextureFilter.");
+		return TextureFilter::NONE;
+	}
+
+
+
+
+	unsigned int ConvertMipmapFilter(TextureFilter filter)
 	{
 		switch (filter)
 		{
@@ -252,7 +422,7 @@ namespace VampEngine
 
 
 
-	unsigned int OpenGLTexture2D::GetFormatCount(TextureFormat format) const
+	unsigned int GetFormatCount(TextureFormat format)
 	{
 		switch (format)
 		{
@@ -269,7 +439,7 @@ namespace VampEngine
 
 
 
-	unsigned int OpenGLTexture2D::GetFormatSize(TextureFormat format) const
+	unsigned int GetFormatSize(TextureFormat format)
 	{
 		switch (format)
 		{

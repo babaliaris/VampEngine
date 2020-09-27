@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Buffer.h"
+#include <VampAssert.h>
 
 #ifdef VAMP_OPENGL
 	#include "Platform/OpenGL/OpenGLBuffer.h"
@@ -38,6 +39,30 @@ namespace VampEngine
 		#endif
 	}
 	//=========================Index Buffer Class Implementation=========================//
+
+
+
+
+	//=========================Frame Buffer Class Implementation=========================//
+	FrameBuffer* FrameBuffer::Create(const FrameBufferProps& props)
+	{
+		#ifdef VAMP_OPENGL
+			return new OpenGLFrameBuffer(props);
+		#endif
+	}
+
+
+	FrameBufferProps::FrameBufferProps()
+		: mask(VAMP_FRAMEBUFFER_COLOR | VAMP_FRAMEBUFFER_DEPTH_STENCIL), width(0), height(0), colorSamples(0)
+	{
+	}
+
+
+	FrameBufferProps::FrameBufferProps(unsigned int mask, unsigned int width, unsigned int height)
+		: mask(mask), width(width), height(height), colorSamples(0)
+	{
+	}
+	//=========================Frame Buffer Class Implementation=========================//
 
 
 

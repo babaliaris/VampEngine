@@ -44,7 +44,7 @@ void TextureLayer::OnAttach()
 	m_shader = VampEngine::Shader::Create(shaderProps);
 
 	VampEngine::Texture2DProps  textureProps("Assets/Checkerboard.jpg");
-	m_texture = VampEngine::Texture2D::CreateTexture2D(textureProps);
+	m_texture = VampEngine::Texture2D::Create(textureProps);
 }
 
 void TextureLayer::OnDetatch()

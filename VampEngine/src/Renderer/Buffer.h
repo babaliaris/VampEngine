@@ -1,10 +1,15 @@
 #pragma once
-#include "VampAssert.h"
 #include <vector>
 #include <string>
 
 namespace VampEngine
 {
+
+	//Forward Declerations//
+	class Texture2D;
+	//Forward Declerations//
+
+
 
 	enum class BufferDataType
 	{
@@ -133,4 +138,63 @@ namespace VampEngine
 			//Get Count.
 			virtual unsigned int GetCount() const = 0;
 	};
+
+
+
+
+
+
+
+	//==========================FrameBuffer Stuff==========================//
+
+
+	#define VAMP_FRAMEBUFFER_COLOR	   (1 << 0)
+	#define VAMP_FRAMEBUFFER_DEPTH	   (1 << 1)
+	#define VAMP_FRAMEBUFFER_DEPTH_STENCIL   (1 << 2)
+
+
+
+	struct FrameBufferProps
+	{
+		unsigned int mask;
+		unsigned int width;
+		unsigned int height;
+		unsigned int colorSamples;
+
+		FrameBufferProps();
+		FrameBufferProps(unsigned int mask, unsigned int width, unsigned int height);
+	};
+
+
+
+
+	class FrameBuffer
+	{
+
+		//Public Static Methods.
+		public:
+
+			//Create METHOD.
+			static FrameBuffer* Create(const FrameBufferProps& props);
+
+
+		//Public Virtual Methods.
+		public:
+
+			//Default Virtual Deconstructor.
+			virtual ~FrameBuffer() = default;
+
+			//Bind and Unbind.
+			virtual void Bind()		const = 0;
+			virtual void Unbind()	const = 0;
+
+			//Update Method.
+			virtual void Update(unsigned int width, unsigned int height) = 0;
+
+			//Get Methods.
+			virtual Texture2D* GetColorTexture() const = 0;
+			virtual Texture2D* GetDepthTexture() const = 0;
+	};
+
+	//==========================FrameBuffer Stuff==========================//
 }
