@@ -24,6 +24,9 @@
 #include "Events/KeyEvents.h"
 #include "Events/MouseEvents.h"
 
+//Include Data Structures.
+#include "DataStructures/HeapSort.h"
+
 
 //Entry Point Must Be Included Last!
 #include "Core/EntryPoint.h"

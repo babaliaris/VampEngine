@@ -1,4 +1,4 @@
-project "VampProfiler"
+project "UnitTests"
 	kind "ConsoleApp"
 	language "C++"
 	targetdir "%{wks.location}/bin/%{prj.name}_%{cfg.shortname}"
@@ -11,6 +11,11 @@ project "VampProfiler"
 	}
 
 	includedirs{
-		"%{wks.location}/%{prj.name}/src",
-		"%{wks.location}/VampProfiler/vendor/json/include"
+		"src",
+		
+		"%{wks.location}/VampLogger/src",
+		"%{wks.location}/VampAssert/src",
+		"%{wks.location}/VampTest/src",
+		"%{wks.location}/VampEngine/src",
+		"%{wks.location}/VampEngine/vendor/glm-9.9.8",
 	}

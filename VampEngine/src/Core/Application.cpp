@@ -8,6 +8,7 @@
 #include "Events/MouseEvents.h"
 #include "FileSystem.h"
 #include "Renderer/RendererCommand.h"
+#include "Renderer/Renderer.h"
 
 
 namespace VampEngine
@@ -35,6 +36,9 @@ namespace VampEngine
 		//Create The File System.
 		FileSystem::Create();
 
+		//Create the Renderer.
+		Renderer::Create();
+
 		//Prepare The Events.
 		this->PrepareEvents();
 	}
@@ -60,6 +64,9 @@ namespace VampEngine
 
 		//Delete the Renderer command.
 		delete RendererCommand::Get();
+
+		//Delete the renderer.
+		delete Renderer::Get();
 
 		//Delete the window.
 		delete m_window;

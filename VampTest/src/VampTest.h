@@ -3,8 +3,15 @@
 //Make sure VAMP_DEBUG and VAMP_ENABLE_ASSERTS are defined.
 //This testing framework is intented to work in debug mode even
 //when you build it for release or distribution!!!
-#define VAMP_DEBUG
-#define VAMP_ENABLE_ASSERTS
+//############################################################
+#ifndef VAMP_DEBUG
+	#define VAMP_DEBUG
+#endif
+
+#ifndef VAMP_ENABLE_ASSERTS
+	#define VAMP_ENABLE_ASSERTS
+#endif
+//############################################################
 
 #include <VampLogger.h>
 #include <iostream>

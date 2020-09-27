@@ -38,6 +38,7 @@ workspace "VampEngine"
 	include "VampEngine"
 	include "Sandbox"
 	include "LayerTests"
+	include "UnitTests"
 	
 	--Include All The Depedency Projects.
 	group "Depedencies"

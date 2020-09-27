@@ -10,6 +10,7 @@
 
 #include <memory>
 #include <functional>
+#include <type_traits>
 
 #include <string>
 #include <map>
