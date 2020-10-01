@@ -5,8 +5,7 @@
 
 VAMP_TEST(heap_sort, create)
 {
-	std::vector<int> v;
-	VampEngine::DataStructs::HeapSort<int, int> h;
+	VampEngine::DataStructs::HeapSort<int, int> h(7);
 
 	h.Push(1, 1);		//Root  => 0
 	h.Push(8, 8);		//Inner => 1
@@ -22,8 +21,7 @@ VAMP_TEST(heap_sort, create)
 
 VAMP_TEST(heap_sort, one_item)
 {
-	std::vector<int> v;
-	VampEngine::DataStructs::HeapSort<int, int> h;
+	VampEngine::DataStructs::HeapSort<int, int> h(1);
 
 	h.Push(1, 1); //Root  => 0
 
@@ -36,8 +34,7 @@ VAMP_TEST(heap_sort, one_item)
 
 VAMP_TEST(heap_sort, two_items)
 {
-	std::vector<int> v;
-	VampEngine::DataStructs::HeapSort<int, int> h;
+	VampEngine::DataStructs::HeapSort<int, int> h(2);
 
 	h.Push(1, 1); //Root  => 0
 	h.Push(2, 2); //Root  => 0
@@ -53,8 +50,7 @@ VAMP_TEST(heap_sort, two_items)
 
 VAMP_TEST(heap_sort, leaf)
 {
-	std::vector<int> v;
-	VampEngine::DataStructs::HeapSort<int, int> h;
+	VampEngine::DataStructs::HeapSort<int, int> h(7);
 
 	h.Push(1, 1);		//Root  => 0
 	h.Push(8, 8);		//Full  => 1
@@ -77,8 +73,7 @@ VAMP_TEST(heap_sort, leaf)
 
 VAMP_TEST(heap_sort, inner)
 {
-	std::vector<int> v;
-	VampEngine::DataStructs::HeapSort<int, int> h;
+	VampEngine::DataStructs::HeapSort<int, int> h(7);
 
 	h.Push(1, 1);		//Root  => 0
 	h.Push(8, 8);		//Full  => 1
@@ -95,8 +90,7 @@ VAMP_TEST(heap_sort, inner)
 
 VAMP_TEST(heap_sort, sort_and_pop1)
 {
-	std::vector<int> v;
-	VampEngine::DataStructs::HeapSort<int, int> h;
+	VampEngine::DataStructs::HeapSort<int, int> h(7);
 
 	h.Push(1, 1);		//Root  => 0
 	h.Push(8, 8);		//Full  => 1
@@ -124,8 +118,7 @@ VAMP_TEST(heap_sort, sort_and_pop1)
 
 VAMP_TEST(heap_sort, sort_and_pop2)
 {
-	std::vector<int> v;
-	VampEngine::DataStructs::HeapSort<int, int> h;
+	VampEngine::DataStructs::HeapSort<int, int> h(10);
 
 	h.Push(20, 20);
 	h.Push(15, 15);
@@ -158,8 +151,7 @@ VAMP_TEST(heap_sort, sort_and_pop2)
 
 VAMP_TEST(heap_sort, sorted_push)
 {
-	std::vector<int> v;
-	VampEngine::DataStructs::HeapSort<int, int> h;
+	VampEngine::DataStructs::HeapSort<int, int> h(10);
 
 	h.Push(1, 1);
 	h.Push(8, 8);

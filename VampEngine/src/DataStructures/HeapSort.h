@@ -16,27 +16,36 @@ namespace VampEngine
 			public:
 
 				//Constructor.
-				HeapSort()
+				HeapSort(unsigned int count)
+					: m_count(count)
 				{
 					VAMP_ASSERT( (std::is_same_v<int, key> || std::is_same_v<float, key> || std::is_same_v<double, key>) , 
 						"HeapSort only supports int, float and double as the key!");
+
+					m_list.reserve(count);
 				}
 
 				//Deconstructor.
 				~HeapSort()
 				{
-					//Delete all the nodes.
-					for (HeapNode* node : m_list)
-						delete node;
 				}
 
 				//Push Method.
 				inline void Push(key key, data data)
 				{
+					//Check it the index does not overflow the array item count.
+					VAMP_ASSERT(m_index < m_count, "You overflowed the array!");
 
 					//Push a new item into the list.
-					if (!m_isOrdered) m_list.push_back(new HeapNode(key, data));
-					else this->PushOrdered(key, data);
+					if (!m_isOrdered) 
+					{
+						m_list.emplace(m_list.begin() + m_index, key, data);
+						m_index++;
+					}
+
+					//Push Ordered.
+					else 
+						this->PushOrdered(key, data);
 				}
 
 
@@ -106,8 +115,11 @@ namespace VampEngine
 					{}
 				};
 
+				unsigned int m_count;
+				unsigned int m_index = 0;
+
 				//The heap list.
-				std::vector<HeapNode *> m_list;
+				std::vector<HeapNode> m_list;
 
 				//Is this heap ordered?
 				bool m_isOrdered = false;
@@ -122,7 +134,8 @@ namespace VampEngine
 				void PushOrdered(key key, data data)
 				{
 					//Push the new item at the end of the list.
-					m_list.push_back(new HeapNode(key, data));
+					m_list.emplace(m_list.begin() + m_index, key, data);
+					m_index++;
 
 					//Sort it.
 					this->SortOnPush( (unsigned int)m_list.size() - 1);
@@ -137,7 +150,7 @@ namespace VampEngine
 					//One item in the list.
 					if (m_list.size() == 1)
 					{
-						data extracted_data = m_list.back()->m_data;
+						data extracted_data = m_list.back().m_data;
 						m_list.pop_back();
 
 						return extracted_data;
@@ -150,7 +163,7 @@ namespace VampEngine
 						this->Swap(0, (unsigned int)m_list.size() - 1);
 
 						//Pop the last item.
-						data extracted_data = m_list.back()->m_data;
+						data extracted_data = m_list.back().m_data;
 						m_list.pop_back();
 
 						//Sort On Pop.
@@ -177,7 +190,7 @@ namespace VampEngine
 					unsigned int parent = this->GetParent(index);
 
 					//If this is greater than the parents key.
-					if (m_list[index]->m_key > m_list[parent]->m_key)
+					if (m_list[index].m_key > m_list[parent].m_key)
 					{
 						this->Swap(index, parent);
 						this->SortHeap(parent);
@@ -200,14 +213,14 @@ namespace VampEngine
 					{
 
 						//It's the left child.
-						if (left < m_list.size() && m_list[left]->m_key > m_list[index]->m_key)
+						if (left < m_list.size() && m_list[left].m_key > m_list[index].m_key)
 						{
 							this->Swap(left, index);
 							this->SortOnPop(left);
 						}
 
 						//It's the right child.
-						else if (right < m_list.size() && m_list[right]->m_key > m_list[index]->m_key)
+						else if (right < m_list.size() && m_list[right].m_key > m_list[index].m_key)
 						{
 							this->Swap(right, index);
 							this->SortOnPop(right);
@@ -220,14 +233,14 @@ namespace VampEngine
 					else
 					{
 						//The left child's key is greater.
-						if (m_list[left]->m_key > m_list[right]->m_key && m_list[left]->m_key > m_list[index]->m_key)
+						if (m_list[left].m_key > m_list[right].m_key && m_list[left].m_key > m_list[index].m_key)
 						{
 							this->Swap(left, index);
 							this->SortOnPop(left);
 						}
 
 						//The right child's key is greater.
-						else if (m_list[right]->m_key > m_list[index]->m_key)
+						else if (m_list[right].m_key > m_list[index].m_key)
 						{
 							this->Swap(right, index);
 							this->SortOnPop(right);
@@ -248,7 +261,7 @@ namespace VampEngine
 					unsigned int parent = this->GetParent(index);
 
 					//If this key is greater than the parent's.
-					if (m_list[index]->m_key > m_list[parent]->m_key)
+					if (m_list[index].m_key > m_list[parent].m_key)
 					{
 						this->Swap(index, parent);
 						this->SortOnPush(parent);
@@ -279,14 +292,14 @@ namespace VampEngine
 				//Swap the content of two Nodes.
 				inline void Swap(unsigned int index1, unsigned int index2)
 				{
-					key key_1   = m_list[index1]->m_key;
-					data data_1 = m_list[index1]->m_data;
+					key key_1   = m_list[index1].m_key;
+					data data_1 = m_list[index1].m_data;
 
-					m_list[index1]->m_key  = m_list[index2]->m_key;
-					m_list[index1]->m_data = m_list[index2]->m_data;
+					m_list[index1].m_key  = m_list[index2].m_key;
+					m_list[index1].m_data = m_list[index2].m_data;
 
-					m_list[index2]->m_key  = key_1;
-					m_list[index2]->m_data = data_1;
+					m_list[index2].m_key  = key_1;
+					m_list[index2].m_data = data_1;
 				}
 		};
 	}
