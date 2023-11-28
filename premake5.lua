@@ -4,7 +4,9 @@ workspace "VampEngine Workspace"
     startproject "Sandbox"
 
     group "Depedencies"
+        include "depedencies/vamptest/projects/VampTest"
     group ""
 
     include "projects/VampEngine"
     include "projects/Sandbox"
+    include "projects/Tests"
