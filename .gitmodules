@@ -1,0 +1,3 @@
+[submodule "depedencies/vamptest"]
+	path = depedencies/vamptest
+	url = https://github.com/babaliaris/VampTest.git
