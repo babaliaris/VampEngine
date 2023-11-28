@@ -1,3 +1,6 @@
 [submodule "depedencies/vamptest"]
 	path = depedencies/vamptest
 	url = https://github.com/babaliaris/VampTest.git
+[submodule "depedencies/vampstring"]
+	path = depedencies/vampstring
+	url = https://github.com/babaliaris/VampString.git

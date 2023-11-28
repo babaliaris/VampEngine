@@ -12,11 +12,13 @@ project "Sandbox"
 
     includedirs {
         "src/",
-        "%{_WORKING_DIR}/projects/VampEngine/src"
+        "%{_WORKING_DIR}/projects/VampEngine/src",
+        "%{_WORKING_DIR}/depedencies/vampstring/projects/VampString/src"
     }
 
     links {
-        "VampEngine"
+        "VampEngine",
+        "VampString"
     }
 
     filter "configurations:debug"

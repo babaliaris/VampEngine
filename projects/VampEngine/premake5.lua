@@ -10,7 +10,8 @@ project "VampEngine"
     }
 
     includedirs {
-        "src/"
+        "src/",
+        "%{_WORKING_DIR}/depedencies/vampstring/projects/VampString/src"
     }
 
     filter "configurations:debug"
