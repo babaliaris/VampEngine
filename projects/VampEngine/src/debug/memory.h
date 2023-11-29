@@ -1,0 +1,4 @@
+#ifndef VAMP_ENGINE_MEMORY_H
+#define VAMP_ENGINE_MEMORY_H
+
+#endif

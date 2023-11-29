@@ -1,11 +1,16 @@
 #include <VampTest/VampTest.h>
 
-VAMP_TEST(TestingSuite, TestingTest)
-{
-    VAMP_EXPECT(1==1, "1 should be equal to 1");
-}
+VAMP_DECLARE_TEST(VampList, CreateAndDestroyTest);
+VAMP_DECLARE_TEST(VampList, IsEmptyTest);
+VAMP_DECLARE_TEST(VampList, AppendDataTest);
+VAMP_DECLARE_TEST(VampList, GetAtTest);
+VAMP_DECLARE_TEST(VampList, RemoveAtTest);
 
 
 VAMP_TEST_FRAMEWORK(
-    VAMP_REGISTER_TEST(TestingSuite, TestingTest);
+    VAMP_REGISTER_TEST(VampList, CreateAndDestroyTest);
+    VAMP_REGISTER_TEST(VampList, IsEmptyTest);
+    VAMP_REGISTER_TEST(VampList, AppendDataTest);
+    VAMP_REGISTER_TEST(VampList, GetAtTest);
+    VAMP_REGISTER_TEST(VampList, RemoveAtTest);
 );
