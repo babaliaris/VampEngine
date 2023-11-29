@@ -177,6 +177,25 @@ void *VampListRemoveByCondition(struct VampList *vampList, VampListConditionFunc
 }
 
 
+void *VampListGetByCondition(struct VampList *vampList, VampListConditionFunc condFunc, void *cond)
+{
+    if (!vampList || !condFunc) return NULL;
+
+    __VampListNode__ *current = vampList->__head__->__next__;
+
+    //Loop through the list.
+    while(current && current->__next__)
+    {
+        if ( condFunc(current->__data__, cond)  )
+            return current->__data__;
+
+        current = current->__next__;
+    }
+
+    return NULL;
+}
+
+
 VampList *VampNewList()
 {
     VampList *new_list = (VampList *)malloc( sizeof(VampList) );
@@ -192,6 +211,7 @@ VampList *VampNewList()
     new_list->IsEmpty               = VampListIsEmpty;
     new_list->GetLength             = VampListGetLength;
     new_list->RemoveByCondition     = VampListRemoveByCondition;
+    new_list->GetByCondition        = VampListGetByCondition;
 
     return new_list;
 }

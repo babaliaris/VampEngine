@@ -31,6 +31,8 @@ typedef struct VampList
     unsigned int (*GetLength)(struct VampList *vampList);
 
     void *(*RemoveByCondition)(struct VampList *vampList, VampListConditionFunc condFunc, void *cond);
+
+    void *(*GetByCondition)(struct VampList *vampList, VampListConditionFunc condFunc, void *cond);
 }
 VampList;
 

@@ -190,3 +190,43 @@ VAMP_TEST(VampList, RemoveByConditionTest)
 
     VampDestroyList(list);
 }
+
+
+
+
+
+
+char GetByConditionFunc(void *data, void *cond)
+{
+    TestData *d = (TestData *)data;
+    TestData *c = (TestData *)cond;
+
+    return (d->__number__ == c->__number__);
+}
+
+
+VAMP_TEST(VampList, GetByConditionTest)
+{
+    VampList *list = VampNewList();
+
+    TestData data0, data1, data2, data3, data4;
+    data0.__number__ = 0;
+    data1.__number__ = 1;
+    data2.__number__ = 2;
+    data3.__number__ = 3;
+    data4.__number__ = 4;
+
+    list->Append(list, (void *)&data0);
+    list->Append(list, (void *)&data1);
+    list->Append(list, (void *)&data2);
+    list->Append(list, (void *)&data3);
+    list->Append(list, (void *)&data4);
+
+    VAMP_EXPECT( ((TestData *)list->GetByCondition(list, GetByConditionFunc, &data0))->__number__ == 0, "The number should be 0.");
+    VAMP_EXPECT( ((TestData *)list->GetByCondition(list, GetByConditionFunc, &data1))->__number__ == 1, "The number should be 1.");
+    VAMP_EXPECT( ((TestData *)list->GetByCondition(list, GetByConditionFunc, &data2))->__number__ == 2, "The number should be 2.");
+    VAMP_EXPECT( ((TestData *)list->GetByCondition(list, GetByConditionFunc, &data3))->__number__ == 3, "The number should be 3.");
+    VAMP_EXPECT( ((TestData *)list->GetByCondition(list, GetByConditionFunc, &data4))->__number__ == 4, "The number should be 4.");
+
+    VampDestroyList(list);
+}
