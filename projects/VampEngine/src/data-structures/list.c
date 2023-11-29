@@ -223,14 +223,9 @@ void VampDestroyList(VampList *vampList)
     __VampListNode__ *current   = vampList->__head__->__next__;
     __VampListNode__ *temp      = current;
 
-    #ifdef VAMP_DEBUG
-    if (!vampList->IsEmpty(vampList))
-    {
-        printf("[VampDestroyList:WARNING] You are destroying a non-EMPTY list.\n\
-        You should make sure that your data across all the elements of this list\n\
-        have been destroyed first, else this might result in multiple memory leaks.\n\n");
-    }
-    #endif
+    /*TODO If the user destroys a list that is NOT empty,
+            they have to destroy/free all of their data first.
+    */
 
     while(current && current->__next__)
     {
