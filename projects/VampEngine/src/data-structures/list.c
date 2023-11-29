@@ -216,19 +216,18 @@ VampList *VampNewList()
     return new_list;
 }
 
-void VampDestroyList(VampList *vampList)
+void VampDestroyList(VampList *vampList, VampListDestroyCallback callback)
 {
      if (!vampList) return;
 
     __VampListNode__ *current   = vampList->__head__->__next__;
     __VampListNode__ *temp      = current;
 
-    /*TODO If the user destroys a list that is NOT empty,
-            they have to destroy/free all of their data first.
-    */
-
     while(current && current->__next__)
     {
+        //Call users callback, so he can destroy the data.
+        if (callback) callback(current->__data__);
+
         current = current->__next__;
         VampDestroyListNode(temp);
         temp = current;

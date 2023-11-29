@@ -1,3 +1,5 @@
 builds/
 obj/
-Makefile
+*Makefile
+
+*.leaks.txt

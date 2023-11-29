@@ -3,6 +3,7 @@
 
 
 typedef char (*VampListConditionFunc)(void *data, void *cond);
+typedef void (*VampListDestroyCallback)(void *data);
 
 
 typedef struct __VampListNode__
@@ -40,6 +41,6 @@ VampList;
 VampList *VampNewList();
 
 
-void VampDestroyList(VampList *vampList);
+void VampDestroyList(VampList *vampList, VampListDestroyCallback callback);
 
 #endif

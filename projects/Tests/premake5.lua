@@ -20,7 +20,8 @@ project "Tests"
 
     links {
         "VampEngine",
-        "VampTest"
+        "VampTest",
+        "VampString"
     }
 
     filter "configurations:debug"

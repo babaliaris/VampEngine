@@ -13,7 +13,7 @@ VAMP_TEST(VampList, CreateAndDestroyTest)
 {
     VampList *list = VampNewList();
 
-    VampDestroyList(list);
+    VampDestroyList(list, NULL);
 }
 
 
@@ -24,7 +24,7 @@ VAMP_TEST(VampList, IsEmptyTest)
     VAMP_EXPECT( list->IsEmpty(list), "The list should be empty at this point." );
     VAMP_EXPECT( list->GetLength(list) == 0, "The length of the list should be 0." );
 
-    VampDestroyList(list);
+    VampDestroyList(list, NULL);
 }
 
 
@@ -48,7 +48,7 @@ VAMP_TEST(VampList, AppendDataTest)
     VAMP_EXPECT( !list->IsEmpty(list), "The list should NOT be empty." );
     VAMP_EXPECT( list->GetLength(list) == 5, "There must be 5 elements in the list.")
 
-    VampDestroyList(list);
+    VampDestroyList(list, NULL);
 }
 
 
@@ -80,7 +80,7 @@ VAMP_TEST(VampList, GetAtTest)
     VAMP_EXPECT( ((TestData *)list->GetAt(list, 3))->__number__ == 3, "The number should be 3." );
     VAMP_EXPECT( ((TestData *)list->GetAt(list, 4))->__number__ == 4, "The number should be 4." );
 
-    VampDestroyList(list);
+    VampDestroyList(list, NULL);
 }
 
 
@@ -129,7 +129,7 @@ VAMP_TEST(VampList, RemoveAtTest)
 
     VAMP_EXPECT( list->IsEmpty(list), "The list should be empty." );
 
-    VampDestroyList(list);
+    VampDestroyList(list, NULL);
 }
 
 
@@ -188,7 +188,7 @@ VAMP_TEST(VampList, RemoveByConditionTest)
     VAMP_EXPECT( list->IsEmpty(list), "The list should be empty." );
 
 
-    VampDestroyList(list);
+    VampDestroyList(list, NULL);
 }
 
 
@@ -228,5 +228,35 @@ VAMP_TEST(VampList, GetByConditionTest)
     VAMP_EXPECT( ((TestData *)list->GetByCondition(list, GetByConditionFunc, &data3))->__number__ == 3, "The number should be 3.");
     VAMP_EXPECT( ((TestData *)list->GetByCondition(list, GetByConditionFunc, &data4))->__number__ == 4, "The number should be 4.");
 
-    VampDestroyList(list);
+    VampDestroyList(list, NULL);
+}
+
+
+
+
+
+void VampListDestroyClb(void *data)
+{
+    TestData* d = (TestData *)data;
+    free(d);
+}
+
+
+VAMP_TEST(VampList, DestroyListAndClearUserData)
+{
+    VampList *list = VampNewList();
+
+    TestData *data0 = (TestData *)malloc(sizeof(TestData));
+    TestData *data1 = (TestData *)malloc(sizeof(TestData));
+
+    data0->__number__ = 0;
+    data1->__number__ = 1;
+
+    list->Append(list, data0);
+    list->Append(list, data1);
+
+    VAMP_EXPECT( ((TestData *)list->GetByCondition(list, GetByConditionFunc, data0))->__number__ == 0, "The number should be 0.");
+    VAMP_EXPECT( ((TestData *)list->GetByCondition(list, GetByConditionFunc, data1))->__number__ == 1, "The number should be 1.");
+
+    VampDestroyList(list, VampListDestroyClb);
 }
