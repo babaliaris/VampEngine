@@ -4,6 +4,9 @@ project "VampEngine"
     targetdir "%{_WORKING_DIR}/builds/%{cfg.shortname}"
     objdir "%{_WORKING_DIR}/obj/%{prj.name}-%{cfg.shortname}"
 
+    pchheader "VampPCH.h"
+    pchsource "src/VampPCH.c"
+
     files {
         "src/**.h",
         "src/**.c"
