@@ -3,14 +3,19 @@
 
 
 typedef struct VampLogger VampLogger;
+typedef struct VampMemoryTracker VampMemoryTracker;
 
 typedef struct VampApplication
 {
     VampLogger *__engine_logger__;
     VampLogger *__client_logger__;
+    VampMemoryTracker *__memory_tracker__;
+
     void (*__user_entry_point__)(struct VampApplication *app);
 
     void (*Run)(struct VampApplication *app);
+
+    VampMemoryTracker * (*GetTracker)(struct VampApplication *app);
 }
 VampApplication;
 
