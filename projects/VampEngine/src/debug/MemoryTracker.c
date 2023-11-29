@@ -28,18 +28,17 @@ void VampMemoryTrackerWriteFile(VampMemoryTracker *tracker, const char *filename
 {
     if (!tracker) return;
 
+    FILE *file = fopen(filename, "w");
+
+    if (!file)
+    {
+        printf("Failed to open the memory tracker file.\n\n");
+        return;
+    }
+
     //Write the file only if the list is not empty.
     if ( !tracker->__list__->IsEmpty(tracker->__list__) )
     {
-
-        FILE *file = fopen(filename, "w");
-
-        if (!file)
-        {
-            printf("Failed to open the memory tracker file.\n\n");
-            return;
-        }
-
         //Loop through the list.
         for (unsigned int i = 0; i < tracker->__list__->__length__; i++)
         {
@@ -47,9 +46,9 @@ void VampMemoryTrackerWriteFile(VampMemoryTracker *tracker, const char *filename
 
             fprintf(file, "%s:%d\n", data->__filepath__->__str__, data->__line_number__);
         }
-
-        if ( file && fclose(file) != 0 ) printf("Failed to close the memory tracker file.\n\n");
     }
+
+    if ( file && fclose(file) != 0 ) printf("Failed to close the memory tracker file.\n\n");
 }
 
 
