@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <debug/memory.h>
-#include <debug/logger.h>
+#include <debug/MemoryTracker.h>
+#include <debug/Logger.h>
 #include <data-structures/list.h>
 #include <core/Application.h>
 

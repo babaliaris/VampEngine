@@ -1,6 +1,8 @@
 #ifndef VAMP_ENGINE_APPLICATION_H
 #define VAMP_ENGINE_APPLICATION_H
-#include <debug/logger.h>
+
+
+typedef struct VampLogger VampLogger;
 
 typedef struct VampApplication
 {

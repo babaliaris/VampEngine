@@ -4,6 +4,6 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <VampString.h>
-#include <debug/logger.h>
+#include <debug/Logger.h>
 
 #endif

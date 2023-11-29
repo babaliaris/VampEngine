@@ -1,5 +1,5 @@
 #include <VampPCH.h>
-#include "logger.h"
+#include "Logger.h"
 
 
 void VampLoggerSetLevel(VampLogger *logger, unsigned int level)
