@@ -132,6 +132,51 @@ unsigned int VampListGetLength(VampList *vampList)
 }
 
 
+void *VampListRemoveByCondition(struct VampList *vampList, VampListConditionFunc condFunc, void *cond)
+{
+    if (!vampList || !condFunc) return NULL;
+
+    __VampListNode__ *current = vampList->__head__->__next__;
+
+    //Loop through the list.
+    while(current && current->__next__)
+    {
+        if ( condFunc(current->__data__, cond)  )
+        {
+            //The list has one element.
+            if (vampList->__length__ == 1)
+            {
+                current->__next__ = NULL;
+                current->__prev__ = NULL;
+
+                vampList->__head__->__next__ = NULL;
+                vampList->__tail__->__prev__ = NULL;
+            }
+
+
+            //The list has more than 1 elements.
+            else
+            {
+                current->__next__->__prev__ = current->__prev__;
+                current->__prev__->__next__ = current->__next__;
+            }
+
+            vampList->__length__--;
+
+            void *data = current->__data__;
+
+            VampDestroyListNode(current);
+
+            return data;
+        }
+
+        current = current->__next__;
+    }
+
+    return NULL;
+}
+
+
 VampList *VampNewList()
 {
     VampList *new_list = (VampList *)malloc( sizeof(VampList) );
@@ -141,11 +186,12 @@ VampList *VampNewList()
 
     new_list->__length__ = 0;
 
-    new_list->Append    = VampListAppend;
-    new_list->GetAt     = VampListGetAt;
-    new_list->RemoveAt  = VampListRemoveAt;
-    new_list->IsEmpty   = VampListIsEmpty;
-    new_list->GetLength = VampListGetLength;
+    new_list->Append                = VampListAppend;
+    new_list->GetAt                 = VampListGetAt;
+    new_list->RemoveAt              = VampListRemoveAt;
+    new_list->IsEmpty               = VampListIsEmpty;
+    new_list->GetLength             = VampListGetLength;
+    new_list->RemoveByCondition     = VampListRemoveByCondition;
 
     return new_list;
 }

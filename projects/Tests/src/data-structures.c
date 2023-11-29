@@ -131,3 +131,62 @@ VAMP_TEST(VampList, RemoveAtTest)
 
     VampDestroyList(list);
 }
+
+
+char RemoveByConditionFunc(void *data, void *cond)
+{
+    TestData *d = (TestData *)data;
+    TestData *c = (TestData *)cond;
+
+    return (d->__number__ == c->__number__);
+}
+
+
+VAMP_TEST(VampList, RemoveByConditionTest)
+{
+    VampList *list = VampNewList();
+
+    TestData data0, data1, data2, data3, data4;
+    data0.__number__ = 0; //Third to be removed
+    data1.__number__ = 1; //Last to be removed
+    data2.__number__ = 2; //Third to be removed
+    data3.__number__ = 3; //First to be removed
+    data4.__number__ = 4; //Second to be reomoved
+
+    list->Append(list, (void *)&data0);
+    list->Append(list, (void *)&data1);
+    list->Append(list, (void *)&data2);
+    list->Append(list, (void *)&data3);
+    list->Append(list, (void *)&data4);
+
+    //5 elements on the list: 0,1,2,3,4
+    void *d3 = list->RemoveByCondition(list, RemoveByConditionFunc, &data3);
+    VAMP_EXPECT( ((TestData *)d3)->__number__ == 3, "The number should be 3" );
+    VAMP_EXPECT( list->GetLength(list) == 4 , "The length should be 4" );
+
+    //4 elements on the list: 0,1,2,3
+    void *d4 = list->RemoveByCondition(list, RemoveByConditionFunc, &data4);
+    VAMP_EXPECT( ((TestData *)d4)->__number__ == 4, "The number should be 4" );
+    VAMP_EXPECT( list->GetLength(list) == 3 , "The length should be 3" );
+
+
+    //3 elements on the list: 0,1,2
+    void *d0 = list->RemoveByCondition(list, RemoveByConditionFunc, &data0);
+    VAMP_EXPECT( ((TestData *)d0)->__number__ == 0, "The number should be 0" );
+    VAMP_EXPECT( list->GetLength(list) == 2 , "The length should be 2" );
+
+    //2 elements on the list: 0,1
+    void *d2 = list->RemoveByCondition(list, RemoveByConditionFunc, &data2);
+    VAMP_EXPECT( ((TestData *)d2)->__number__ == 2, "The number should be 2" );
+    VAMP_EXPECT( list->GetLength(list) == 1 , "The length should be 1" );
+
+    //2 element on the list: 0
+    void *d1 = list->RemoveByCondition(list, RemoveByConditionFunc, &data1);
+    VAMP_EXPECT( ((TestData *)d1)->__number__ == 1, "The number should be 1" );
+    VAMP_EXPECT( list->GetLength(list) == 0 , "The length should be 0" );
+
+    VAMP_EXPECT( list->IsEmpty(list), "The list should be empty." );
+
+
+    VampDestroyList(list);
+}

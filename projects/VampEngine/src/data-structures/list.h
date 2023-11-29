@@ -2,6 +2,9 @@
 #define VAMP_ENGINE_LIST_H
 
 
+typedef char (*VampListConditionFunc)(void *data, void *cond);
+
+
 typedef struct __VampListNode__
 {
     struct __VampListNode__ *__next__;
@@ -24,8 +27,10 @@ typedef struct VampList
     void *(*RemoveAt)(struct VampList *vampList, unsigned int position);
 
     char (*IsEmpty)(struct VampList *vampList);
-    
+
     unsigned int (*GetLength)(struct VampList *vampList);
+
+    void *(*RemoveByCondition)(struct VampList *vampList, VampListConditionFunc condFunc, void *cond);
 }
 VampList;
 

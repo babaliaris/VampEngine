@@ -5,6 +5,7 @@ VAMP_DECLARE_TEST(VampList, IsEmptyTest);
 VAMP_DECLARE_TEST(VampList, AppendDataTest);
 VAMP_DECLARE_TEST(VampList, GetAtTest);
 VAMP_DECLARE_TEST(VampList, RemoveAtTest);
+VAMP_DECLARE_TEST(VampList, RemoveByConditionTest);
 
 
 VAMP_TEST_FRAMEWORK(
@@ -13,4 +14,5 @@ VAMP_TEST_FRAMEWORK(
     VAMP_REGISTER_TEST(VampList, AppendDataTest);
     VAMP_REGISTER_TEST(VampList, GetAtTest);
     VAMP_REGISTER_TEST(VampList, RemoveAtTest);
+    VAMP_REGISTER_TEST(VampList, RemoveByConditionTest);
 );
