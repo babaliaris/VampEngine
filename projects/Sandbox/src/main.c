@@ -1,7 +1,12 @@
-#include <stdio.h>
+#define VAMP_ENGINE_ENTRY_POINT
 #include <VampEngine.h>
 
-int main()
+void MyApplication(VampApplication *app)
 {
-    return 0;
+    VAMP_INFO(app->__client_logger__, "MyApplication Created!")
+}
+
+VampApplication *VampCreateUserApplication()
+{
+    return VampNewApplication(MyApplication);
 }

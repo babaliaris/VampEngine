@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "vampengine.h": "c",
+        "vampstring.h": "c"
+    }
+}

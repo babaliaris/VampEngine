@@ -36,7 +36,7 @@ void VampDestroyLogger(VampLogger *logger);
 
 
 #ifdef VAMP_DEBUG
-    #define __VAMP_LOG__(level_name, debug_color, message_color, ...)\
+    #define __VAMP_LOG__(logger, level_name, debug_color, message_color, ...)\
         VAMP_PRINTF_COLORED(debug_color, \
             "[%s : %s]\n\t[%s : %d]\n\t[Message]: ", logger->__name__->GetCStr(logger->__name__), level_name, __FILE__, __LINE__)\
             \
@@ -47,25 +47,25 @@ void VampDestroyLogger(VampLogger *logger);
     #define VAMP_INFO(logger, ...)\
         if (logger->__level__ >= VAMP_LOGGER_LEVEL_INFO)\
         {\
-            __VAMP_LOG__("INFO", VAMP_CLI_COLOR_GREEN, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)\
+            __VAMP_LOG__(logger, "INFO", VAMP_CLI_COLOR_GREEN, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)\
         }
 
     #define VAMP_WARN(logger, ...)\
         if (logger->__level__ >= VAMP_LOGGER_LEVEL_WARN)\
         {\
-            __VAMP_LOG__("WARNING", VAMP_CLI_COLOR_YELLOW, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)\
+            __VAMP_LOG__(logger, "WARNING", VAMP_CLI_COLOR_YELLOW, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)\
         }
 
     #define VAMP_ERROR(logger, ...)\
         if (logger->__level__ >= VAMP_LOGGER_LEVEL_ERROR)\
         {\
-            __VAMP_LOG__("ERROR", VAMP_CLI_COLOR_RED, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)\
+            __VAMP_LOG__(logger, "ERROR", VAMP_CLI_COLOR_RED, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)\
         }
 
     #define VAMP_FATAL(logger, ...)\
         if (logger->__level__ >= VAMP_LOGGER_LEVEL_FATAL)\
         {\
-            __VAMP_LOG__("FATAL", VAMP_CLI_COLOR_RED, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)\
+            __VAMP_LOG__(logger, "FATAL", VAMP_CLI_COLOR_RED, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)\
         }
 
 #else

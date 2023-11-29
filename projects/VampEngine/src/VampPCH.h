@@ -3,5 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <VampString.h>
+#include <debug/logger.h>
 
 #endif
