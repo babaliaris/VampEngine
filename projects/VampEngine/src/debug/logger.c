@@ -1,3 +1,4 @@
+#include <VampPCH.h>
 #include "logger.h"
 
 
