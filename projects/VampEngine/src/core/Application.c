@@ -2,11 +2,15 @@
 #include "Application.h"
 #include <debug/MemoryTracker.h>
 #include <data-structures/list.h>
+#include <core/Window.h>
 
 
 void VampApplicationRun(VampApplication *app)
 {
-    VAMP_INFO(app->__engine_logger__, "VampApplicationRun");
+    while (app->__window__->__is_running__)
+    {
+        app->__window__->Update(app->__window__);
+    }
 }
 
 
@@ -16,7 +20,7 @@ VampMemoryTracker *VampApplicationGetTracker(VampApplication *app)
 }
 
 
-VampApplication *VampNewApplication(UserEntryPoint user)
+VampApplication *VampNewApplication(UserEntryPoint user, const char *title, int width, int height)
 {
     VampApplication *new_app = (VampApplication *)malloc( sizeof(VampApplication) );
 
@@ -24,6 +28,7 @@ VampApplication *VampNewApplication(UserEntryPoint user)
     new_app->__client_logger__      = VampNewLogger("Client");
     new_app->__user_entry_point__   = user;
     new_app->__memory_tracker__     = VampNewMemoryTracker();
+    new_app->__window__             = VampNewWindow(new_app, title, width, height);
 
     new_app->Run                    = VampApplicationRun;
     new_app->GetTracker             = VampApplicationGetTracker;
@@ -35,6 +40,8 @@ VampApplication *VampNewApplication(UserEntryPoint user)
 
 void VampDestroyApplication(VampApplication *app)
 {
+
+    VampDestroyWindow(app->__window__);
 
     //If the memory tracker list is not empty, there are memory leaks.
     #ifdef VAMP_DEBUG

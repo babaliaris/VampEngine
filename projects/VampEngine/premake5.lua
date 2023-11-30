@@ -14,7 +14,8 @@ project "VampEngine"
 
     includedirs {
         "src/",
-        "%{_WORKING_DIR}/depedencies/vampstring/projects/VampString/src"
+        "%{_WORKING_DIR}/depedencies/vampstring/projects/VampString/src",
+        "%{_WORKING_DIR}/depedencies/glfw/include"
     }
 
     filter "configurations:debug"
@@ -31,3 +32,11 @@ project "VampEngine"
         defines "VAMP_RELEASE"
         optimize "On"
         symbols "Off"
+
+    
+    filter {}
+    filter "system:windows"
+        defines "VAMP_WINDOWS"
+
+    filter "system:linux"
+        defines "VAMP_LINUX"

@@ -8,5 +8,5 @@ void Sandbox(VampApplication *app)
 
 VampApplication *VampCreateUserApplication()
 {
-    return VampNewApplication(Sandbox);
+    return VampNewApplication(Sandbox, "Sandbox", 800, 600);
 }

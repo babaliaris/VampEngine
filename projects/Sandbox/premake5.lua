@@ -18,7 +18,8 @@ project "Sandbox"
 
     links {
         "VampEngine",
-        "VampString"
+        "VampString",
+        "GLFW"
     }
 
     filter "configurations:debug"
@@ -35,3 +36,7 @@ project "Sandbox"
         defines "VAMP_RELEASE"
         optimize "On"
         symbols "Off"
+
+    filter {}
+    filter "system:linux"
+        links {"GL", "m"}

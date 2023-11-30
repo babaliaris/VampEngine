@@ -4,3 +4,6 @@
 [submodule "depedencies/vampstring"]
 	path = depedencies/vampstring
 	url = https://github.com/babaliaris/VampString.git
+[submodule "depedencies/glfw"]
+	path = depedencies/glfw
+	url = https://github.com/babaliaris/glfw.git

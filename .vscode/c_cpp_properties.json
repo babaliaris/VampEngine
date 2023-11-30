@@ -7,7 +7,8 @@
                 "${workspaceFolder}/projects/Sandbox/src",
                 "${workspaceFolder}/projects/VampEngine/src",
                 "${workspaceFolder}/depedencies/vamptest/projects/VampTest/src/include",
-                "${workspaceFolder}/depedencies/vampstring/projects/VampString"
+                "${workspaceFolder}/depedencies/vampstring/projects/VampString",
+                "${workspaceFolder}/depedencies/glfw/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",
