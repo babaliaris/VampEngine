@@ -30,6 +30,14 @@ VampLogger *VampNewLogger(const char *name);
 
 void VampDestroyLogger(VampLogger *logger);
 
+#ifdef VAMP_LOGGER_INIT
+VampLogger *GLOBAL_ENGINE_LOGGER;
+VampLogger *GLOBAL_CLIENT_LOGGER;
+#endif
+
+VampLogger *GlobalGetEngineLogger();
+VampLogger *GlobalGetClientLogger();
+
 
 #define VAMP_PRINTF_COLORED(color, ...)\
     printf(color);printf(__VA_ARGS__);printf(VAMP_CLI_COLOR_RESET);
@@ -44,36 +52,52 @@ void VampDestroyLogger(VampLogger *logger);
         printf("\n\n");
 
 
-    #define VAMP_INFO(logger, ...)\
-        if (logger->__level__ >= VAMP_LOGGER_LEVEL_INFO)\
+    #define __VAMP_LOGGER_CHECK__(logger, LEVEL, name, log_color, msg_color, ...)\
+        if (GlobalGetEngineLogger()->__level__ >= LEVEL)\
         {\
-            __VAMP_LOG__(logger, "INFO", VAMP_CLI_COLOR_GREEN, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)\
+            __VAMP_LOG__(logger, name, log_color, msg_color, __VA_ARGS__)\
         }
 
-    #define VAMP_WARN(logger, ...)\
-        if (logger->__level__ >= VAMP_LOGGER_LEVEL_WARN)\
-        {\
-            __VAMP_LOG__(logger, "WARNING", VAMP_CLI_COLOR_YELLOW, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)\
-        }
 
-    #define VAMP_ERROR(logger, ...)\
-        if (logger->__level__ >= VAMP_LOGGER_LEVEL_ERROR)\
-        {\
-            __VAMP_LOG__(logger, "ERROR", VAMP_CLI_COLOR_RED, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)\
-        }
+    #define VAMP_INFO(...)\
+        __VAMP_LOGGER_CHECK__(GlobalGetEngineLogger(), VAMP_LOGGER_LEVEL_INFO, "INFO", VAMP_CLI_COLOR_GREEN, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)
 
-    #define VAMP_FATAL(logger, ...)\
-        if (logger->__level__ >= VAMP_LOGGER_LEVEL_FATAL)\
-        {\
-            __VAMP_LOG__(logger, "FATAL", VAMP_CLI_COLOR_RED, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)\
-        }
+    #define VAMP_WARN(...)\
+        __VAMP_LOGGER_CHECK__(GlobalGetEngineLogger(), VAMP_LOGGER_LEVEL_WARN, "WARNING", VAMP_CLI_COLOR_YELLOW, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)
+
+    #define VAMP_ERROR(...)\
+        __VAMP_LOGGER_CHECK__(GlobalGetEngineLogger(), VAMP_LOGGER_LEVEL_ERROR, "ERROR", VAMP_CLI_COLOR_RED, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)
+
+    #define VAMP_FATAL(...)\
+        __VAMP_LOGGER_CHECK__(GlobalGetEngineLogger(), VAMP_LOGGER_LEVEL_FATAL, "FATAL", VAMP_CLI_COLOR_RED, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)
+
+
+    #define VAMP_CLIENT_INFO(...)\
+        __VAMP_LOGGER_CHECK__(GlobalGetClientLogger(), VAMP_LOGGER_LEVEL_INFO, "INFO", VAMP_CLI_COLOR_GREEN, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)
+
+    #define VAMP_CLIENT_WARN(...)\
+        __VAMP_LOGGER_CHECK__(GlobalGetClientLogger(), VAMP_LOGGER_LEVEL_WARN, "WARNING", VAMP_CLI_COLOR_YELLOW, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)
+
+    #define VAMP_CLIENT_ERROR(...)\
+        __VAMP_LOGGER_CHECK__(GlobalGetClientLogger(), VAMP_LOGGER_LEVEL_ERROR, "ERROR", VAMP_CLI_COLOR_RED, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)
+
+    #define VAMP_CLIENT_FATAL(...)\
+        __VAMP_LOGGER_CHECK__(GlobalGetClientLogger(), VAMP_LOGGER_LEVEL_FATAL, "FATAL", VAMP_CLI_COLOR_RED, VAMP_CLI_COLOR_CYAN, __VA_ARGS__)
 
 #else
-    #define __VAMP_LOG__(level_name, debug_color, message_color, ...)
-    #define VAMP_INFO(logger, ...)
-    #define VAMP_WARN(logger, ...)
-    #define VAMP_ERROR(logger, ...)
-    #define VAMP_FATAL(logger, ...)
+    #define __VAMP_LOG__(logger, level_name, debug_color, message_color, ...)
+    #define __VAMP_LOGGER_CHECK__(logger, LEVEL, name, log_color, msg_color, ...)
+
+    #define VAMP_INFO(...)
+    #define VAMP_WARN(...)
+    #define VAMP_ERROR(...)
+    #define VAMP_FATAL(...)
+    
+    #define VAMP_CLIENT_INFO(...)
+    #define VAMP_CLIENT_WARN(...)
+    #define VAMP_CLIENT_ERROR(...)
+    #define VAMP_CLIENT_FATAL(...)
+    
 
 #endif
 

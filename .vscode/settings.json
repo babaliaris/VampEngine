@@ -17,6 +17,7 @@
         "span": "c",
         "memory.h": "c",
         "list.h": "c",
-        "application.h": "c"
+        "application.h": "c",
+        "typeinfo": "c"
     }
 }

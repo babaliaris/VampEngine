@@ -1,4 +1,5 @@
 #include <VampPCH.h>
+#include <VampString.h>
 #include "MemoryTracker.h"
 #include <data-structures/list.h>
 

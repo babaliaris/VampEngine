@@ -8,8 +8,6 @@ typedef struct VampWindow VampWindow;
 
 typedef struct VampApplication
 {
-    VampLogger *__engine_logger__;
-    VampLogger *__client_logger__;
     VampMemoryTracker *__memory_tracker__;
     VampWindow *__window__;
 

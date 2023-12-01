@@ -1,4 +1,5 @@
 #include <VampPCH.h>
+#include <debug/Logger.h>
 #include "WindowGLFW.h"
 #include <debug/MemoryTracker.h>
 #include <core/Application.h>
@@ -7,7 +8,7 @@
 
 void ErrorCallback(int errcode, const char *desc)
 {
-    printf("[GLFW Error: %d] %s\n", errcode, desc);
+    VAMP_ERROR("[GLFW Error: %d] %s", errcode, desc)
 }
 
 void WindowCloseCallback(GLFWwindow *window)
@@ -36,7 +37,7 @@ VampWindowGLFW *VampNewWindowGLFW(VampWindow *window, const char *title, int wid
 
     if (!glfwInit())
     {
-        VAMP_ERROR(window->__app__->__engine_logger__, "GLFW failed to be initialized.");
+        VAMP_ERROR("GLFW failed to be initialized.");
 
         //Print a message on release.
         #ifndef VAMP_DEBUG
@@ -54,7 +55,7 @@ VampWindowGLFW *VampNewWindowGLFW(VampWindow *window, const char *title, int wid
 
     if (!new_windowGLFW->__glfw_window__)
     {
-        VAMP_ERROR(window->__app__->__engine_logger__, "GLFW failed to create the window.");
+        VAMP_ERROR("GLFW failed to create the window.");
 
         //Print a message on release.
         #ifndef VAMP_DEBUG

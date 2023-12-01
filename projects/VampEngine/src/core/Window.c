@@ -1,5 +1,6 @@
 #include <VampPCH.h>
 #include "Window.h"
+#include <VampString.h>
 #include <debug/MemoryTracker.h>
 #include <core/Application.h>
 

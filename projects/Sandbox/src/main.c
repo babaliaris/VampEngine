@@ -3,7 +3,6 @@
 
 void Sandbox(VampApplication *app)
 {
-    VAMP_INFO(app->__client_logger__, "Sandbox Created!")
 }
 
 VampApplication *VampCreateUserApplication()

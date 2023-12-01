@@ -1,8 +1,22 @@
+#define VAMP_LOGGER_INIT
 #include <VampPCH.h>
+#include <debug/Logger.h>
 #include "Application.h"
 #include <debug/MemoryTracker.h>
 #include <data-structures/list.h>
 #include <core/Window.h>
+
+
+VampLogger *GlobalGetEngineLogger()
+{
+    return GLOBAL_ENGINE_LOGGER;
+}
+
+
+VampLogger *GlobalGetClientLogger()
+{
+    return GLOBAL_CLIENT_LOGGER;
+}
 
 
 void VampApplicationRun(VampApplication *app)
@@ -24,8 +38,9 @@ VampApplication *VampNewApplication(UserEntryPoint user, const char *title, int 
 {
     VampApplication *new_app = (VampApplication *)malloc( sizeof(VampApplication) );
 
-    new_app->__engine_logger__      = VampNewLogger("VampEngine");
-    new_app->__client_logger__      = VampNewLogger("Client");
+    GLOBAL_ENGINE_LOGGER     = VampNewLogger("VampEngine");
+    GLOBAL_CLIENT_LOGGER     = VampNewLogger("Client");
+
     new_app->__user_entry_point__   = user;
     new_app->__memory_tracker__     = VampNewMemoryTracker();
     new_app->__window__             = VampNewWindow(new_app, title, width, height);
@@ -47,13 +62,13 @@ void VampDestroyApplication(VampApplication *app)
     #ifdef VAMP_DEBUG
     if (!app->__memory_tracker__->__list__->IsEmpty(app->__memory_tracker__->__list__))
     {
-        VAMP_WARN(app->__engine_logger__, "There are memory leaks, check out mem.leaks.txt");
+        VAMP_WARN("There are memory leaks, check out mem.leaks.txt");
     }
     #endif
 
     //Destroy the loggers.
-    VampDestroyLogger(app->__engine_logger__);
-    VampDestroyLogger(app->__client_logger__);
+    VampDestroyLogger(GLOBAL_ENGINE_LOGGER);
+    VampDestroyLogger(GLOBAL_CLIENT_LOGGER);
 
     //Log any memory leaks to a file and then destroy the tracker.
     app->__memory_tracker__->WriteMemoryLeaksFile(app->__memory_tracker__, "mem.leaks.txt");
