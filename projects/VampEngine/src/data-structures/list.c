@@ -1,10 +1,11 @@
 #include <VampPCH.h>
 #include "list.h"
+#include <debug/MemoryTracker.h>
 
 
 __VampListNode__ *VampNewListNode(void *data)
 {
-    __VampListNode__ *new_node = (__VampListNode__ *)malloc( sizeof(__VampListNode__) );
+    __VampListNode__ *VAMP_MALLOC( new_node, sizeof(__VampListNode__) );
 
     new_node->__next__ = NULL;
     new_node->__prev__ = NULL;
@@ -17,7 +18,7 @@ __VampListNode__ *VampNewListNode(void *data)
 void VampDestroyListNode(__VampListNode__ *listNode)
 {
     if (!listNode) return;
-    free(listNode);
+    VAMP_FREE(listNode);
 }
 
 
@@ -198,7 +199,7 @@ void *VampListGetByCondition(struct VampList *vampList, VampListConditionFunc co
 
 VampList *VampNewList()
 {
-    VampList *new_list = (VampList *)malloc( sizeof(VampList) );
+    VampList *VAMP_MALLOC( new_list, sizeof(VampList) );
 
     new_list->__head__ = VampNewListNode(NULL);
     new_list->__tail__ = VampNewListNode(NULL);
@@ -236,5 +237,5 @@ void VampDestroyList(VampList *vampList, VampListDestroyCallback callback)
     VampDestroyListNode(vampList->__head__);
     VampDestroyListNode(vampList->__tail__);
 
-    free(vampList);
+    VAMP_FREE(vampList);
 }

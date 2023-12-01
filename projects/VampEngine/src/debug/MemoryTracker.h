@@ -1,7 +1,51 @@
 #ifndef VAMP_ENGINE_MEMORY_H
 #define VAMP_ENGINE_MEMORY_H
 
-typedef struct VampList VampList;
+
+typedef char (*VampMemoryTrackerListConditionFunc)(void *data, void *cond);
+typedef void (*VampMemoryTrackerListDestroyCallback)(void *data);
+
+
+typedef struct __VampMemoryTrackerListNode__
+{
+    struct __VampMemoryTrackerListNode__ *__next__;
+    struct __VampMemoryTrackerListNode__ *__prev__;
+    void *__data__;
+}
+__VampMemoryTrackerListNode__;
+
+
+typedef struct VampMemoryTrackerList
+{
+    __VampMemoryTrackerListNode__ *__head__;
+    __VampMemoryTrackerListNode__ *__tail__;
+    unsigned int __length__;
+
+    void (*Append)(struct VampMemoryTrackerList *vampList, void *data);
+
+    void *(*GetAt)(struct VampMemoryTrackerList *vampList, unsigned int position);
+
+    void *(*RemoveAt)(struct VampMemoryTrackerList *vampList, unsigned int position);
+
+    char (*IsEmpty)(struct VampMemoryTrackerList *vampList);
+
+    unsigned int (*GetLength)(struct VampMemoryTrackerList *vampList);
+
+    void *(*RemoveByCondition)(struct VampMemoryTrackerList *vampList, VampMemoryTrackerListConditionFunc condFunc, void *cond);
+
+    void *(*GetByCondition)(struct VampMemoryTrackerList *vampList, VampMemoryTrackerListConditionFunc condFunc, void *cond);
+}
+VampMemoryTrackerList;
+
+
+VampMemoryTrackerList *VampNewMemoryTrackerList();
+
+
+void VampDestroyMemoryTrackerList(VampMemoryTrackerList *vampList, VampMemoryTrackerListDestroyCallback callback);
+
+
+
+
 typedef struct VampString VampString;
 
 typedef struct VampMemoryTrackerData
@@ -16,7 +60,7 @@ VampMemoryTrackerData;
 
 typedef struct VampMemoryTracker
 {
-    VampList *__list__;
+    VampMemoryTrackerList *__list__;
 
     void (*Push)(struct VampMemoryTracker *tracker, void *pointer, const char *filepath, unsigned int line);
     void (*Remove)(struct VampMemoryTracker *tracker, void *pointer);

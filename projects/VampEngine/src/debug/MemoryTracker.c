@@ -1,7 +1,259 @@
 #include <VampPCH.h>
 #include <VampString.h>
 #include "MemoryTracker.h"
-#include <data-structures/list.h>
+
+
+__VampMemoryTrackerListNode__ *VampNewMemoryTrackerListNode(void *data)
+{
+    __VampMemoryTrackerListNode__ *new_node = malloc( sizeof(__VampMemoryTrackerListNode__) );
+
+    new_node->__next__ = NULL;
+    new_node->__prev__ = NULL;
+    new_node->__data__ = data;
+
+    return new_node;
+}
+
+
+void VampDestroyMemoryTrackerListNode(__VampMemoryTrackerListNode__ *listNode)
+{
+    if (!listNode) return;
+    free(listNode);
+}
+
+
+void VampMemoryTrackerListAppend(VampMemoryTrackerList *vampList, void *data)
+{
+    if (!vampList || !data) return;
+
+    __VampMemoryTrackerListNode__ *new_node = VampNewMemoryTrackerListNode(data);
+
+    if ( vampList->IsEmpty(vampList) )
+    {
+        vampList->__head__->__next__ = new_node;
+        vampList->__tail__->__prev__ = new_node;
+
+        new_node->__next__ = vampList->__tail__;
+        new_node->__prev__ = vampList->__head__;
+    }
+
+    else
+    {
+        new_node->__next__ = vampList->__tail__;
+        new_node->__prev__ = vampList->__tail__->__prev__;
+
+        vampList->__tail__->__prev__->__next__  = new_node;
+        vampList->__tail__->__prev__            = new_node;
+    }
+
+    vampList->__length__++;
+}
+
+
+void *VampMemoryTrackerListGetAt(VampMemoryTrackerList *vampList, unsigned int position)
+{
+    if (!vampList) return NULL;
+
+    unsigned int i = 0;
+    __VampMemoryTrackerListNode__ *current = vampList->__head__->__next__;
+
+    while(current && current->__next__)
+    {
+        if (i == position) return current->__data__;
+
+        current = current->__next__;
+        i++;
+    }
+
+    return NULL;
+}
+
+
+void *VampMemoryTrackerListRemoveAt(VampMemoryTrackerList *vampList, unsigned int position)
+{
+    if (!vampList) return NULL;
+
+    unsigned int i = 0;
+    __VampMemoryTrackerListNode__ *current = vampList->__head__->__next__;
+
+    //Loop through the list.
+    while(current && current->__next__)
+    {
+        if (i == position)
+        {
+            //The list has one element.
+            if (vampList->__length__ == 1)
+            {
+                current->__next__ = NULL;
+                current->__prev__ = NULL;
+
+                vampList->__head__->__next__ = NULL;
+                vampList->__tail__->__prev__ = NULL;
+            }
+
+
+            //The list has more than 1 elements.
+            else
+            {
+                current->__next__->__prev__ = current->__prev__;
+                current->__prev__->__next__ = current->__next__;
+            }
+
+            vampList->__length__--;
+
+            void *data = current->__data__;
+
+            VampDestroyMemoryTrackerListNode(current);
+
+            //Return the data to the user, so he can free them if necessary.
+            return data;
+        }
+
+        current = current->__next__;
+        i++;
+    }
+
+    return NULL;
+}
+
+
+char VampMemoryTrackerListIsEmpty(VampMemoryTrackerList *vampList)
+{
+    if (!vampList) return 0;
+
+    return (!vampList->__head__->__next__ && !vampList->__tail__->__prev__);
+}
+
+
+unsigned int VampMemoryTrackerListGetLength(VampMemoryTrackerList *vampList)
+{
+    if (!vampList) return 0;
+
+    return vampList->__length__;
+}
+
+
+void *VampMemoryTrackerListRemoveByCondition(struct VampMemoryTrackerList *vampList, VampMemoryTrackerListConditionFunc condFunc, void *cond)
+{
+    if (!vampList || !condFunc) return NULL;
+
+    __VampMemoryTrackerListNode__ *current = vampList->__head__->__next__;
+
+    //Loop through the list.
+    while(current && current->__next__)
+    {
+        if ( condFunc(current->__data__, cond)  )
+        {
+            //The list has one element.
+            if (vampList->__length__ == 1)
+            {
+                current->__next__ = NULL;
+                current->__prev__ = NULL;
+
+                vampList->__head__->__next__ = NULL;
+                vampList->__tail__->__prev__ = NULL;
+            }
+
+
+            //The list has more than 1 elements.
+            else
+            {
+                current->__next__->__prev__ = current->__prev__;
+                current->__prev__->__next__ = current->__next__;
+            }
+
+            vampList->__length__--;
+
+            void *data = current->__data__;
+
+            VampDestroyMemoryTrackerListNode(current);
+
+            return data;
+        }
+
+        current = current->__next__;
+    }
+
+    return NULL;
+}
+
+
+void *VampMemoryTrackerListGetByCondition(VampMemoryTrackerList *vampList, VampMemoryTrackerListConditionFunc condFunc, void *cond)
+{
+    if (!vampList || !condFunc) return NULL;
+
+    __VampMemoryTrackerListNode__ *current = vampList->__head__->__next__;
+
+    //Loop through the list.
+    while(current && current->__next__)
+    {
+        if ( condFunc(current->__data__, cond)  )
+            return current->__data__;
+
+        current = current->__next__;
+    }
+
+    return NULL;
+}
+
+
+VampMemoryTrackerList *VampNewMemoryTrackerList()
+{
+    VampMemoryTrackerList *new_list = malloc( sizeof(VampMemoryTrackerList) );
+
+    new_list->__head__ = VampNewMemoryTrackerListNode(NULL);
+    new_list->__tail__ = VampNewMemoryTrackerListNode(NULL);
+
+    new_list->__length__ = 0;
+
+    new_list->Append                = VampMemoryTrackerListAppend;
+    new_list->GetAt                 = VampMemoryTrackerListGetAt;
+    new_list->RemoveAt              = VampMemoryTrackerListRemoveAt;
+    new_list->IsEmpty               = VampMemoryTrackerListIsEmpty;
+    new_list->GetLength             = VampMemoryTrackerListGetLength;
+    new_list->RemoveByCondition     = VampMemoryTrackerListRemoveByCondition;
+    new_list->GetByCondition        = VampMemoryTrackerListGetByCondition;
+
+    return new_list;
+}
+
+void VampDestroyMemoryTrackerList(VampMemoryTrackerList *vampList, VampMemoryTrackerListDestroyCallback callback)
+{
+     if (!vampList) return;
+
+    __VampMemoryTrackerListNode__ *current   = vampList->__head__->__next__;
+    __VampMemoryTrackerListNode__ *temp      = current;
+
+    while(current && current->__next__)
+    {
+        //Call users callback, so he can destroy the data.
+        if (callback) callback(current->__data__);
+
+        current = current->__next__;
+        VampDestroyMemoryTrackerListNode(temp);
+        temp = current;
+    }
+
+    VampDestroyMemoryTrackerListNode(vampList->__head__);
+    VampDestroyMemoryTrackerListNode(vampList->__tail__);
+
+    free(vampList);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 char RemoveTrackerDataConditionCallback(void *trackerData, void *pointer)
@@ -64,7 +316,7 @@ VampMemoryTracker *VampNewMemoryTracker()
 {
     VampMemoryTracker *new_tracker = (VampMemoryTracker *)malloc(sizeof(VampMemoryTracker));
 
-    new_tracker->__list__               = VampNewList();
+    new_tracker->__list__               = VampNewMemoryTrackerList();
     new_tracker->Push                   = VampMemoryTrackerPush;
     new_tracker->Remove                 = VampMemoryTrackerRemove;
     new_tracker->WriteMemoryLeaksFile   = VampMemoryTrackerWriteFile;
@@ -86,7 +338,7 @@ void VampDestroyMemoryTracker(VampMemoryTracker *tracker)
 {
     if (!tracker) return;
 
-    VampDestroyList(tracker->__list__, VampListDeconstructor);
+    VampDestroyMemoryTrackerList(tracker->__list__, VampListDeconstructor);
 
     free(tracker);
 }
