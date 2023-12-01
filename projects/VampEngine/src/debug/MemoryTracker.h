@@ -2,6 +2,8 @@
 #define VAMP_ENGINE_MEMORY_H
 
 
+//List
+/*=======================Its Important that MemoryTracker will have it's OWN List Implementation.=======================*/
 typedef char (*VampMemoryTrackerListConditionFunc)(void *data, void *cond);
 typedef void (*VampMemoryTrackerListDestroyCallback)(void *data);
 
@@ -42,10 +44,14 @@ VampMemoryTrackerList *VampNewMemoryTrackerList();
 
 
 void VampDestroyMemoryTrackerList(VampMemoryTrackerList *vampList, VampMemoryTrackerListDestroyCallback callback);
+/*=======================Its Important that MemoryTracker will have it's OWN List Implementation.=======================*/
 
 
 
 
+
+
+/*===================================================== Memory Tracker===================================================*/
 typedef struct VampString VampString;
 
 typedef struct VampMemoryTrackerData
@@ -95,3 +101,4 @@ VampMemoryTracker *VampGlobalGetMemoryTracker();
 
 
 #endif
+/*===================================================== Memory Tracker===================================================*/

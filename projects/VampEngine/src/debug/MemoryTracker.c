@@ -3,6 +3,9 @@
 #include "MemoryTracker.h"
 
 
+
+//List
+/*=======================Its Important that MemoryTracker will have it's OWN List Implementation.=======================*/
 __VampMemoryTrackerListNode__ *VampNewMemoryTrackerListNode(void *data)
 {
     __VampMemoryTrackerListNode__ *new_node = malloc( sizeof(__VampMemoryTrackerListNode__) );
@@ -239,6 +242,7 @@ void VampDestroyMemoryTrackerList(VampMemoryTrackerList *vampList, VampMemoryTra
 
     free(vampList);
 }
+/*=======================Its Important that MemoryTracker will have it's OWN List Implementation.=======================*/
 
 
 
@@ -255,7 +259,7 @@ void VampDestroyMemoryTrackerList(VampMemoryTrackerList *vampList, VampMemoryTra
 
 
 
-
+/*===================================================== Memory Tracker===================================================*/
 char RemoveTrackerDataConditionCallback(void *trackerData, void *pointer)
 {
     VampMemoryTrackerData *d = (VampMemoryTrackerData *)trackerData;
@@ -361,3 +365,4 @@ void VampDestroyMemoryTrackerData(VampMemoryTrackerData *data)
     VampDestroyString(data->__filepath__);
     free(data);
 }
+/*===================================================== Memory Tracker===================================================*/
