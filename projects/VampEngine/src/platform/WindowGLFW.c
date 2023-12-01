@@ -29,7 +29,7 @@ void VampWindowUpdate(VampWindow *window)
 
 VampWindowGLFW *VampNewWindowGLFW(VampWindow *window, const char *title, int width, int height)
 {
-    VampWindowGLFW *VAMP_MALLOC(new_windowGLFW, sizeof(VampWindowGLFW), window->__app__->__memory_tracker__);
+    VampWindowGLFW *VAMP_MALLOC( new_windowGLFW, sizeof(VampWindowGLFW) );
 
     new_windowGLFW->__app__ = window->__app__;
     new_windowGLFW->__glfw_window__ = NULL;
@@ -80,5 +80,5 @@ VampWindowGLFW *VampNewWindowGLFW(VampWindow *window, const char *title, int wid
 void VampDestroyWindowGLFW(VampWindowGLFW *window)
 {
     glfwTerminate();
-    VAMP_FREE(window->__app__->__memory_tracker__, window);
+    VAMP_FREE(window);
 }

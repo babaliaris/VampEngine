@@ -35,7 +35,7 @@ const char *VampGetWindowTitle(VampWindow *window)
 
 VampWindow *VampNewWindow(VampApplication *app, const char *title, int width, int height)
 {
-    VampWindow *VAMP_MALLOC(new_window, sizeof(VampWindow), app->__memory_tracker__);
+    VampWindow *VAMP_MALLOC( new_window, sizeof(VampWindow) );
 
     new_window->__app__ = app;
     new_window->__width__ = width;
@@ -84,5 +84,5 @@ void VampDestroyWindow(VampWindow *window)
             break;
     }
 
-    VAMP_FREE(window->__app__->__memory_tracker__, window);
+    VAMP_FREE(window);
 }

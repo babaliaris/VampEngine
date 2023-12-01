@@ -34,12 +34,19 @@ VampMemoryTrackerData *VampNewMemoryTrackerData(void *pointer, const char *filep
 void VampDestroyMemoryTrackerData(VampMemoryTrackerData *data);
 
 
-#define VAMP_MALLOC(variable, size, memory_tracker)\
-    variable = malloc( size );\
-    memory_tracker->Push(memory_tracker, variable, __FILE__, __LINE__)
+#ifdef VAMP_MEMORY_TRACKER_INIT
+VampMemoryTracker *VAMP_GLOBAL_MEMORY_TRACKER;
+#endif
 
-#define VAMP_FREE(memory_tracker, pointer)\
-    memory_tracker->Remove(memory_tracker, pointer);\
+VampMemoryTracker *VampGlobalGetMemoryTracker();
+
+
+#define VAMP_MALLOC(variable, size)\
+    variable = malloc( size );\
+    VampGlobalGetMemoryTracker()->Push(VampGlobalGetMemoryTracker(), variable, __FILE__, __LINE__)
+
+#define VAMP_FREE(pointer)\
+    VampGlobalGetMemoryTracker()->Remove(VampGlobalGetMemoryTracker(), pointer);\
     free(pointer)
 
 

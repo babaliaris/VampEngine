@@ -1,5 +1,5 @@
 #include <VampTest/VampTest.h>
-#include <VampEngine.h>
+#include <data-structures/list.h>
 
 
 typedef struct TestData

@@ -21,7 +21,8 @@ project "Tests"
     links {
         "VampEngine",
         "VampTest",
-        "VampString"
+        "VampString",
+        "GLFW"
     }
 
     filter "configurations:debug"
@@ -38,3 +39,7 @@ project "Tests"
         defines "VAMP_RELEASE"
         optimize "On"
         symbols "Off"
+
+    filter {}
+    filter "system:linux"
+        links {"GL", "m"}

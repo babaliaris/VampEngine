@@ -1,5 +1,15 @@
+#define VAMP_MEMORY_TRACKER_INIT
 #include <VampTest/VampTest.h>
-#include <VampEngine.h>
+#include <data-structures/list.h> //TODO Remove that and make a standalone list for the MemoryTracker!
+#include <debug/MemoryTracker.h>
+
+
+VampMemoryTracker *VampGlobalGetMemoryTracker()
+{
+    return VAMP_GLOBAL_MEMORY_TRACKER;
+}
+
+
 
 VAMP_TEST(MemoryTracker, CreateAndDestroy)
 {
@@ -11,32 +21,32 @@ VAMP_TEST(MemoryTracker, CreateAndDestroy)
 
 VAMP_TEST(MemoryTracker, CheckMallocAndFreeBalance)
 {
-    VampMemoryTracker *tracker = VampNewMemoryTracker();
+    VAMP_GLOBAL_MEMORY_TRACKER = VampNewMemoryTracker();
 
-    char *VAMP_MALLOC(char1, sizeof(char), tracker);
-    VAMP_EXPECT(tracker->__list__->GetLength(tracker->__list__) == 1, "The trackers list should have 1 element at this point.");
+    char *VAMP_MALLOC(char1, sizeof(char));
+    VAMP_EXPECT(VAMP_GLOBAL_MEMORY_TRACKER->__list__->GetLength(VAMP_GLOBAL_MEMORY_TRACKER->__list__) == 1, "The trackers list should have 1 element at this point.");
 
-    char * VAMP_MALLOC(char2, sizeof(char), tracker);
-    VAMP_EXPECT(tracker->__list__->GetLength(tracker->__list__) == 2, "The trackers list should have 2 elements at this point.");
+    char * VAMP_MALLOC(char2, sizeof(char));
+    VAMP_EXPECT(VAMP_GLOBAL_MEMORY_TRACKER->__list__->GetLength(VAMP_GLOBAL_MEMORY_TRACKER->__list__) == 2, "The trackers list should have 2 elements at this point.");
 
-    VAMP_FREE(tracker, char2);
-    VAMP_EXPECT(tracker->__list__->GetLength(tracker->__list__) == 1, "The trackers list should have 1 element at this point.");
+    VAMP_FREE(char2);
+    VAMP_EXPECT(VAMP_GLOBAL_MEMORY_TRACKER->__list__->GetLength(VAMP_GLOBAL_MEMORY_TRACKER->__list__) == 1, "The trackers list should have 1 element at this point.");
 
-    VAMP_FREE(tracker, char1);
-    VAMP_EXPECT( tracker->__list__->IsEmpty(tracker->__list__) , "The trackers list should be empty." );
+    VAMP_FREE(char1);
+    VAMP_EXPECT( VAMP_GLOBAL_MEMORY_TRACKER->__list__->IsEmpty(VAMP_GLOBAL_MEMORY_TRACKER->__list__) , "The trackers list should be empty." );
 
-    VampDestroyMemoryTracker(tracker);
+    VampDestroyMemoryTracker(VAMP_GLOBAL_MEMORY_TRACKER);
 }
 
 
 VAMP_TEST(MemoryTracker, WriteMemoryLeaksToFile)
 {
-    VampMemoryTracker *tracker = VampNewMemoryTracker();
+    VAMP_GLOBAL_MEMORY_TRACKER = VampNewMemoryTracker();
 
-    char *VAMP_MALLOC(char1, sizeof(char), tracker);
-    char *VAMP_MALLOC(char2, sizeof(char), tracker);
+    char *VAMP_MALLOC(char1, sizeof(char));
+    char *VAMP_MALLOC(char2, sizeof(char));
 
-    tracker->WriteMemoryLeaksFile(tracker, "memory.leaks.txt");
+    VAMP_GLOBAL_MEMORY_TRACKER->WriteMemoryLeaksFile(VAMP_GLOBAL_MEMORY_TRACKER, "memory.leaks.txt");
 
     FILE *file = fopen("memory.leaks.txt", "r");
 
@@ -45,5 +55,5 @@ VAMP_TEST(MemoryTracker, WriteMemoryLeaksToFile)
 
     if (file) fclose(file);
 
-    VampDestroyMemoryTracker(tracker);
+    VampDestroyMemoryTracker(VAMP_GLOBAL_MEMORY_TRACKER);
 }

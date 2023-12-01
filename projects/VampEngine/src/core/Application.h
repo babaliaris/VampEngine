@@ -8,14 +8,11 @@ typedef struct VampWindow VampWindow;
 
 typedef struct VampApplication
 {
-    VampMemoryTracker *__memory_tracker__;
     VampWindow *__window__;
 
     void (*__user_entry_point__)(struct VampApplication *app);
 
     void (*Run)(struct VampApplication *app);
-
-    VampMemoryTracker * (*GetTracker)(struct VampApplication *app);
 }
 VampApplication;
 
