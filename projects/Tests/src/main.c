@@ -7,6 +7,19 @@ VampMemoryTracker *VampGlobalGetMemoryTracker()
     return VAMP_GLOBAL_MEMORY_TRACKER;
 }
 
+
+void VampRunBeforeAllTests()
+{
+    VAMP_GLOBAL_MEMORY_TRACKER = VampNewMemoryTracker();
+}
+
+
+
+void VampRunAfterAllTests()
+{
+    VampDestroyMemoryTracker(VAMP_GLOBAL_MEMORY_TRACKER);
+}
+
 VAMP_DECLARE_TEST(VampList, CreateAndDestroyTest);
 VAMP_DECLARE_TEST(VampList, IsEmptyTest);
 VAMP_DECLARE_TEST(VampList, AppendDataTest);
@@ -20,9 +33,6 @@ VAMP_DECLARE_TEST(MemoryTracker, WriteMemoryLeaksToFile);
 
 
 VAMP_TEST_FRAMEWORK(
-    VAMP_GLOBAL_MEMORY_TRACKER = VampNewMemoryTracker(); //TODO Update the test framework so it can call a constructor and destructor function!!!
-
-    
     VAMP_REGISTER_TEST(VampList, CreateAndDestroyTest);
     VAMP_REGISTER_TEST(VampList, IsEmptyTest);
     VAMP_REGISTER_TEST(VampList, AppendDataTest);
