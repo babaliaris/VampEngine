@@ -14,15 +14,6 @@ typedef struct VampString VampString;
 */
 typedef struct VampWindow
 {
-    void *__child__; /**< @private This holds the child class object (The one that extends VampWindow)*/
-    void (*__child_deconstructor__)(void *child); /**< @private Holds the deconstruction function of the child class.*/
-
-    int __width__; /**< @private*/
-    int __height__; /**< @private*/
-    char __is_running__; /**< @private*/
-    VampString *__title__; /**< @private*/
-    VampApplication *__app__; /**< @private*/
-
     /**
      * Get the width of the window.
      * @param[in] window The VampWindow object.
@@ -50,6 +41,17 @@ typedef struct VampWindow
      *
     */
     void (*Update)(struct VampWindow *window);
+
+
+
+    void *__child__; /**< @private This holds the child class object (The one that extends VampWindow)*/
+    void (*__child_deconstructor__)(void *child); /**< @private Holds the deconstruction function of the child class.*/
+
+    int __width__; /**< @private*/
+    int __height__; /**< @private*/
+    char __is_running__; /**< @private*/
+    VampString *__title__; /**< @private*/
+    VampApplication *__app__; /**< @private*/
 }
 VampWindow;
 

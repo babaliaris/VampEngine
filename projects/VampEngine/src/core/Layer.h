@@ -16,13 +16,22 @@ typedef struct VampString VampString;
 typedef struct VampLayer
 {
 
-
+    /**
+     * Get the VampApplication object.
+     * 
+     * @param[in] layer The VampLayer object.
+     * @returns The VampApplication object.
+    */
     VampApplication *(*GetApp)(struct VampLayer *layer);
 
-    const char *(*GetDebugName)(struct VampLayer *layer);
 
-    VampApplication *__app__; /**< @private*/
-    VampString *__debug_name__; /**< @private*/
+    /**
+     * Get the debug name string.
+     * 
+     * @param[in] layer The VampLayer object.
+     * @returns The debug name string.
+    */
+    const char *(*GetDebugName)(struct VampLayer *layer);
 
     /**
      * Gets called only ONCE after the layer has been
@@ -52,6 +61,9 @@ typedef struct VampLayer
      * @param[in] layer The layer that updates.
     */
     void (*__OnUpdate__)(struct VampLayer *layer);
+
+    VampApplication *__app__; /**< @private*/
+    VampString *__debug_name__; /**< @private*/
 }
 VampLayer;
 

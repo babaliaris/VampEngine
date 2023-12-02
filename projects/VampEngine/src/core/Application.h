@@ -18,10 +18,6 @@ typedef struct VampGraphicsContext VampGraphicsContext;
 */
 typedef struct VampApplication
 {
-    VampWindow *__window__; /**< @private.*/
-    VampList *__layers_list; /**< @private.*/
-    VampGraphicsContext *__graphics_context__; /**< @private.*/
-
     /**
      * Appends a layer into the application.
      * 
@@ -58,6 +54,11 @@ typedef struct VampApplication
      * @param[in] The application object.
     */
     void (*__Run__)(struct VampApplication *app);
+
+
+    VampWindow *__window__; /**< @private.*/
+    VampList *__layers_list; /**< @private.*/
+    VampGraphicsContext *__graphics_context__; /**< @private.*/
 }
 VampApplication;
 

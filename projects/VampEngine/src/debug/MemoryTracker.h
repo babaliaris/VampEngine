@@ -88,8 +88,6 @@ VampMemoryTrackerData;
 */
 typedef struct VampMemoryTracker
 {
-    VampMemoryTrackerList *__list__; /**< @private*/
-
     /**
      * Push the location = "file:line" where the allocation has happened.
      * 
@@ -118,6 +116,9 @@ typedef struct VampMemoryTracker
      * @param[in] filename The filename to be created.
     */
     void (*WriteMemoryLeaksFile)(struct VampMemoryTracker *tracker, const char *filename);
+
+
+    VampMemoryTrackerList *__list__; /**< @private*/
 }
 VampMemoryTracker;
 

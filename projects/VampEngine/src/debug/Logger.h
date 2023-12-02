@@ -29,9 +29,6 @@
 */
 typedef struct VampLogger
 {
-    unsigned int __level__; /**< @private*/
-    VampString *__name__; /**< @private*/
-
     /**
      * Set the level of the logger.
      * 
@@ -39,6 +36,10 @@ typedef struct VampLogger
      * @param[in] level The level (Macro defined enum, starts with VAMP_LOGGER_LEVEL).
     */
     void (*SetLevel)(struct VampLogger *logger, unsigned int level);
+
+
+    unsigned int __level__; /**< @private*/
+    VampString *__name__; /**< @private*/
 }
 VampLogger;
 

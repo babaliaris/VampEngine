@@ -51,10 +51,6 @@ __VampListNode__;
 */
 typedef struct VampList
 {
-    __VampListNode__ *__head__; /**< This is the head of the list. @private*/
-    __VampListNode__ *__tail__; /**< This is the tail of the list. @private*/
-    unsigned int __length__;  /**< @private*/
-
     /**
      * Append at the end of the list some data.
      * 
@@ -125,6 +121,11 @@ typedef struct VampList
      * @returns The data that have been found, NULL if not found.
     */
     void *(*GetByCondition)(struct VampList *vampList, VampListConditionFunc condFunc, void *cond);
+
+
+    __VampListNode__ *__head__; /**< This is the head of the list. @private*/
+    __VampListNode__ *__tail__; /**< This is the tail of the list. @private*/
+    unsigned int __length__;  /**< @private*/
 }
 VampList;
 
