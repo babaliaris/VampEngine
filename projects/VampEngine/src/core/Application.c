@@ -1,6 +1,8 @@
+#include <VampPCH.h>
+
 #define VAMP_LOGGER_INIT
 #define VAMP_MEMORY_TRACKER_INIT
-#include <VampPCH.h>
+
 #include <debug/Logger.h>
 #include <debug/MemoryTracker.h>
 #include "Application.h"
