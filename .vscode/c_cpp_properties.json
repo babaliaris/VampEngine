@@ -8,10 +8,11 @@
                 "${workspaceFolder}/projects/VampEngine/src",
                 "${workspaceFolder}/depedencies/vamptest/projects/VampTest/src/include",
                 "${workspaceFolder}/depedencies/vampstring/projects/VampString",
-                "${workspaceFolder}/depedencies/glfw/include"
+                "${workspaceFolder}/depedencies/glfw/include",
+                "${workspaceFolder}/depedencies/glad/include"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/clang",
+            "compilerPath": "/usr/bin/gcc",
             "cStandard": "c17",
             "cppStandard": "c++17",
             "intelliSenseMode": "linux-clang-x64"

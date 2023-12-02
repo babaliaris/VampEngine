@@ -22,7 +22,8 @@ project "Tests"
         "VampEngine",
         "VampTest",
         "VampString",
-        "GLFW"
+        "GLFW",
+        "GLAD"
     }
 
     filter "configurations:debug"

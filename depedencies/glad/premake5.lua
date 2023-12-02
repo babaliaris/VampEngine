@@ -1,22 +1,16 @@
-project "VampEngine"
+project "GLAD"
     kind "StaticLib"
     language "C"
     targetdir "%{_WORKING_DIR}/builds/%{cfg.shortname}"
     objdir "%{_WORKING_DIR}/obj/%{prj.name}-%{cfg.shortname}"
 
-    pchheader "VampPCH.h"
-    pchsource "src/VampPCH.c"
-
     files {
-        "src/**.h",
-        "src/**.c"
+        "**.h",
+        "**.c"
     }
 
     includedirs {
-        "src/",
-        "%{_WORKING_DIR}/depedencies/vampstring/projects/VampString/src",
-        "%{_WORKING_DIR}/depedencies/glfw/include",
-        "%{_WORKING_DIR}/depedencies/glad/include"
+        "include",
     }
 
     filter "configurations:debug"
@@ -33,11 +27,3 @@ project "VampEngine"
         defines "VAMP_RELEASE"
         optimize "On"
         symbols "Off"
-
-    
-    filter {}
-    filter "system:windows"
-        defines "VAMP_WINDOWS"
-
-    filter "system:linux"
-        defines "VAMP_LINUX"

@@ -7,6 +7,7 @@ workspace "VampEngine Workspace"
         include "depedencies/vamptest/projects/VampTest"
         include "depedencies/vampstring/projects/VampString"
         include "depedencies/glfw"
+        include "depedencies/glad"
     group ""
 
     include "projects/VampEngine"

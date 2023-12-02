@@ -4,6 +4,7 @@
 #include <debug/MemoryTracker.h>
 #include <core/Application.h>
 #include <core/Window.h>
+#include <core/graphics/GraphicsContext.h>
 #include <GLFW/glfw3.h>
 
 
@@ -80,7 +81,11 @@ VampWindowGLFW *VampNewWindowGLFW(VampApplication *app, const char *title, int w
         return NULL;
     }
 
+    //Make the OpenGL Context.
     glfwMakeContextCurrent(new_windowGLFW->__glfw_window__);
+
+    //Initialize the Graphics Context.
+    VampInitGraphicsContext(glfwGetProcAddress);
 
     glfwSetWindowUserPointer(new_windowGLFW->__glfw_window__, new_window);
 

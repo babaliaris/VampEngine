@@ -10,6 +10,7 @@
 #include <data-structures/list.h>
 #include <core/Window.h>
 #include <core/Layer.h>
+#include <core/graphics/GraphicsContext.h>
 
 
 VampLogger *GlobalGetEngineLogger()
@@ -40,8 +41,12 @@ void VampListLayersDecontructor(void *data)
 
 void VampApplicationRun(VampApplication *app)
 {
+    app->__graphics_context__->SetClearColor(app->__graphics_context__, 0.4f, 0.4f, 0.4f);
+
     while (app->__window__->__is_running__)
     {
+        app->__graphics_context__->ClearBuffers(app->__graphics_context__);
+
         //Run all the layers.
         for (unsigned int i = 0; i < app->__layers_list->__length__; i++)
         {
@@ -94,6 +99,7 @@ VampApplication *VampNewApplication(UserEntryPoint user, const char *title, int 
     new_app->__user_entry_point__   = user;
     new_app->__window__             = VampCreateWindow(new_app, title, width, height);
     new_app->__layers_list          = VampNewList();
+    new_app->__graphics_context__   = VampCreateGraphicsContext(new_app);
 
     new_app->__Run__                = VampApplicationRun;
     new_app->AppendLayer            = VampApplicationAppendLayer;
@@ -108,6 +114,9 @@ void VampDestroyApplication(VampApplication *app)
 {
     //Destroy all the layers.
     VampDestroyList(app->__layers_list, VampListLayersDecontructor);
+
+    //Destroy Graphics Context.
+    VampDestroyGraphicsContext(app->__graphics_context__);
 
     //Destroy the window.
     VampDestroyWindow(app->__window__);

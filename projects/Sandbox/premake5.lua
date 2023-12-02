@@ -19,7 +19,8 @@ project "Sandbox"
     links {
         "VampEngine",
         "VampString",
-        "GLFW"
+        "GLFW",
+        "GLAD"
     }
 
     filter "configurations:debug"

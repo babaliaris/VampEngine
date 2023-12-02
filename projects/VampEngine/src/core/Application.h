@@ -11,6 +11,7 @@ typedef struct VampMemoryTracker VampMemoryTracker;
 typedef struct VampWindow VampWindow;
 typedef struct VampList VampList;
 typedef struct VampLayer VampLayer;
+typedef struct VampGraphicsContext VampGraphicsContext;
 
 /**
  * The application object.
@@ -19,6 +20,7 @@ typedef struct VampApplication
 {
     VampWindow *__window__; /**< @private.*/
     VampList *__layers_list; /**< @private.*/
+    VampGraphicsContext *__graphics_context__; /**< @private.*/
 
     /**
      * Appends a layer into the application.
