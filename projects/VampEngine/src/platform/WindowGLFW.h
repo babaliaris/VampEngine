@@ -7,6 +7,11 @@ typedef struct VampApplication VampApplication;
 
 
 /**
+ * @file
+*/
+
+
+/**
  * The implementation of a GLFW window. Inherits VampWindow.
 */
 typedef struct VampWindowGLFW

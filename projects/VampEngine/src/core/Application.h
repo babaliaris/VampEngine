@@ -3,35 +3,59 @@
 
 /**
  * @file
- * @brief The Application.h header file.
 */
 
 
 typedef struct VampLogger VampLogger;
 typedef struct VampMemoryTracker VampMemoryTracker;
 typedef struct VampWindow VampWindow;
+typedef struct VampList VampList;
+typedef struct VampLayer VampLayer;
 
 /**
  * The application object.
 */
 typedef struct VampApplication
 {
-    VampWindow *__window__; /**< The window to draw stuff in it.*/
+    VampWindow *__window__; /**< @private.*/
+    VampList *__layers_list; /**< @private.*/
+
+    /**
+     * Appends a layer into the application.
+     * 
+     * @param[in] app The VampApplication object.
+     * @param[in] layer The VampLayer object to be appended.
+    */
+    void (*AppendLayer)(struct VampApplication *app, VampLayer *layer);
+
+
+    /**
+     * Removes a layer from the application. The removed layer IS NOT destroyed.
+     * It's up to the USER to destroy it by calling VampDestroyLayer().
+     * 
+     * @param[in] app The VampApplication object.
+     * @param[in] layer The VampLayer object to be removed.
+     * 
+     * @returns The VampLayer object that has been removed, NULL if not found.
+    */
+    VampLayer *(*RemoveLayer)(struct VampApplication *app, VampLayer *layer);
 
     /**
      * The entry point of the user.
-     * 
+     * @private
      * @param[in] app The application object.
     */
     void (*__user_entry_point__)(struct VampApplication *app);
 
     /**
      * Runs the application. It is called automatically 
-     * by the the EntryPoint.h
+     * by the EntryPoint.h
+     * 
+     * @private
      * 
      * @param[in] The application object.
     */
-    void (*Run)(struct VampApplication *app);
+    void (*__Run__)(struct VampApplication *app);
 }
 VampApplication;
 

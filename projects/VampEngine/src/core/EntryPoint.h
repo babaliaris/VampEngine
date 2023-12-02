@@ -15,7 +15,7 @@ int main(int argc, char **argv)
     new_app->__user_entry_point__(new_app);
 
     //Run the app.
-    new_app->Run(new_app);
+    new_app->__Run__(new_app);
 
     //Destroy the application (which was created by the user).
     VampDestroyApplication(new_app);
