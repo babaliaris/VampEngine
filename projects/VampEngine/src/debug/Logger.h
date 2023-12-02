@@ -2,6 +2,11 @@
 #define VAMP_ENGINE_LOGGER_H
 #include <VampString.h>
 
+
+/**
+ * @file
+*/
+
 #define VAMP_LOGGER_LEVEL_INFO  0
 #define VAMP_LOGGER_LEVEL_WARN  1
 #define VAMP_LOGGER_LEVEL_ERROR 2
@@ -16,27 +21,81 @@
 #define VAMP_CLI_COLOR_CYAN     "\033[0;36m"
 #define VAMP_CLI_COLOR_WHITE    "\033[0;37m"
 
+
+
+
+/**
+ * The structure that describes a logger object.
+*/
 typedef struct VampLogger
 {
-    unsigned int __level__;
-    VampString *__name__;
+    unsigned int __level__; /**< @private*/
+    VampString *__name__; /**< @private*/
 
+    /**
+     * Set the level of the logger.
+     * 
+     * @param[in] logger The logger object.
+     * @param[in] level The level (Macro defined enum, starts with VAMP_LOGGER_LEVEL).
+    */
     void (*SetLevel)(struct VampLogger *logger, unsigned int level);
 }
 VampLogger;
 
 
+/**
+ * Creates a new logger object.
+ * 
+ * @param[in] name The name of the logger.
+ * 
+ * @returns The newly created logger object.
+*/
 VampLogger *VampNewLogger(const char *name);
 
+
+/**
+ * Destroys the Logger.
+ * 
+ * @param[in] logger The logger object to be destroyed.
+*/
 void VampDestroyLogger(VampLogger *logger);
 
+
+
+/**
+ * Define VAMP_LOGGER_INIT in only ONE .c file. Then
+ * create two loggers using VampNewLogger() and assign
+ * their value to the following global pointers:
+ * GLOBAL_ENGINE_LOGGER and GLOBAL_CLIENT_LOGGER.
+*/
 #ifdef VAMP_LOGGER_INIT
 VampLogger *GLOBAL_ENGINE_LOGGER;
 VampLogger *GLOBAL_CLIENT_LOGGER;
 #endif
 
+
+/**
+ * User defined function.
+ * MUST be implemented in the same .c file where #define VAMP_LOGGER_INIT
+ * took place.
+ * 
+ * @returns MUST return then GLOBAL_ENGINE_LOGGER pointer.
+*/
 VampLogger *GlobalGetEngineLogger();
+
+
+/**
+ * User defined function.
+ * MUST be implemented in the same .c file where #define VAMP_LOGGER_INIT
+ * took place.
+ * 
+ * @returns MUST return the GLOBAL_CLIENT_LOGGER pointer.
+*/
 VampLogger *GlobalGetClientLogger();
+
+
+
+
 
 
 #define VAMP_PRINTF_COLORED(color, ...)\

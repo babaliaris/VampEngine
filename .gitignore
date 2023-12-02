@@ -4,6 +4,8 @@ obj/
 
 *.leaks.txt
 
+documentation/
+
 #Visual Studio
 .vs/
 *.sln

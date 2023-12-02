@@ -2,12 +2,20 @@
 #define VAMP_ENGINE_MEMORY_H
 
 
+/**
+ * @file
+*/
+
+
 //List
 /*=======================Its Important that MemoryTracker will have it's OWN List Implementation.=======================*/
-typedef char (*VampMemoryTrackerListConditionFunc)(void *data, void *cond);
-typedef void (*VampMemoryTrackerListDestroyCallback)(void *data);
+typedef char (*VampMemoryTrackerListConditionFunc)(void *data, void *cond); /**< @private*/
+typedef void (*VampMemoryTrackerListDestroyCallback)(void *data); /**< @private*/
 
 
+/**
+ * @private
+*/
 typedef struct __VampMemoryTrackerListNode__
 {
     struct __VampMemoryTrackerListNode__ *__next__;
@@ -17,6 +25,9 @@ typedef struct __VampMemoryTrackerListNode__
 __VampMemoryTrackerListNode__;
 
 
+/**
+ * @private
+*/
 typedef struct VampMemoryTrackerList
 {
     __VampMemoryTrackerListNode__ *__head__;
@@ -39,10 +50,14 @@ typedef struct VampMemoryTrackerList
 }
 VampMemoryTrackerList;
 
-
+/**
+ * @private
+*/
 VampMemoryTrackerList *VampNewMemoryTrackerList();
 
-
+/**
+ * @private
+*/
 void VampDestroyMemoryTrackerList(VampMemoryTrackerList *vampList, VampMemoryTrackerListDestroyCallback callback);
 /*=======================Its Important that MemoryTracker will have it's OWN List Implementation.=======================*/
 
@@ -54,6 +69,9 @@ void VampDestroyMemoryTrackerList(VampMemoryTrackerList *vampList, VampMemoryTra
 /*===================================================== Memory Tracker===================================================*/
 typedef struct VampString VampString;
 
+/**
+ * @private
+*/
 typedef struct VampMemoryTrackerData
 {
     VampString *__filepath__;
@@ -64,24 +82,75 @@ VampMemoryTrackerData;
 
 
 
+/**
+ * Memory tracker object structure.
+ * 
+*/
 typedef struct VampMemoryTracker
 {
-    VampMemoryTrackerList *__list__;
+    VampMemoryTrackerList *__list__; /**< @private*/
 
+    /**
+     * Push the location = "file:line" where the allocation has happened.
+     * 
+     * @param[in] tracker The memory tracker object.
+     * @param[in] pointer The actual memory address that returned by malloc.
+     * @param[in] filepath The __FILE__ where the allocation has happened.
+     * @param[in] line The line number where the allocation has happened.
+    */
     void (*Push)(struct VampMemoryTracker *tracker, void *pointer, const char *filepath, unsigned int line);
+
+
+    /**
+     * Remove the "file:line" where an allocation has happened, because the memory has been freed.
+     * 
+     * @param[in] tracker The memory tracker object.
+     * @param[in] pointer The actual memory address that was freed.
+    */
     void (*Remove)(struct VampMemoryTracker *tracker, void *pointer);
+
+
+     /**
+     * Write a log file that contains entries of filepath:line seperated by the new line character.
+     * If there are no memory leaks, this file should be empty.
+     * 
+     * @param[in] tracker The memory tracker object.
+     * @param[in] filename The filename to be created.
+    */
     void (*WriteMemoryLeaksFile)(struct VampMemoryTracker *tracker, const char *filename);
 }
 VampMemoryTracker;
 
 
+/**
+ * Creates a new VampMemoryTracker object.
+ * 
+ * @returns The newly created object.
+*/
 VampMemoryTracker *VampNewMemoryTracker();
 
+
+/**
+ * Destroys the VampMemoryTracker object.
+ * 
+ * @param[in] tracker The object to be destroyed.
+*/
 void VampDestroyMemoryTracker(VampMemoryTracker *tracker);
 
+
+/**
+ * @private
+*/
 VampMemoryTrackerData *VampNewMemoryTrackerData(void *pointer, const char *filepath, unsigned int line);
 
+
+/**
+ * @private
+*/
 void VampDestroyMemoryTrackerData(VampMemoryTrackerData *data);
+
+
+
 
 
 #ifdef VAMP_MEMORY_TRACKER_INIT
