@@ -1,19 +1,19 @@
 #ifndef VAMP_ENGINE_WINDOW_GLFW
 #define VAMP_ENGINE_WINDOW_GLFW
-#include <core/Window.h>
-#include <core/Application.h>
 
 typedef struct GLFWwindow GLFWwindow;
+typedef struct VampWindow VampWindow;
+typedef struct VampApplication VampApplication;
 
 typedef struct VampWindowGLFW
 {
+    VampWindow *__base__;
     GLFWwindow *__glfw_window__;
-    VampApplication *__app__;
 }
 VampWindowGLFW;
 
 
-VampWindowGLFW *VampNewWindowGLFW(VampWindow *window, const char *title, int width, int height);
+VampWindowGLFW *VampNewWindowGLFW(VampApplication *app, const char *title, int width, int height);
 
 void VampDestroyWindowGLFW(VampWindowGLFW *window);
 

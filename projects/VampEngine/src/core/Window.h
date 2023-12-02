@@ -8,7 +8,7 @@ typedef struct VampString VampString;
 typedef struct VampWindow
 {
     void *__child__;
-    unsigned int __child_type__;
+    void (*__child_deconstructor__)(void *child);
 
     int __width__;
     int __height__;
@@ -27,7 +27,9 @@ typedef struct VampWindow
 VampWindow;
 
 
-VampWindow *VampNewWindow(VampApplication *app, const char *title, int width, int height);
+VampWindow *__VampNewWindow__(VampApplication *app, const char *title, int width, int height);
+
+VampWindow *VampCreateWindow(VampApplication *app, const char *title, int width, int height);
 
 void VampDestroyWindow(VampWindow *window);
 

@@ -45,7 +45,7 @@ VampApplication *VampNewApplication(UserEntryPoint user, const char *title, int 
     VAMP_GLOBAL_MEMORY_TRACKER  = VampNewMemoryTracker();
 
     new_app->__user_entry_point__   = user;
-    new_app->__window__             = VampNewWindow(new_app, title, width, height);
+    new_app->__window__             = VampCreateWindow(new_app, title, width, height);
 
     new_app->Run                    = VampApplicationRun;
 

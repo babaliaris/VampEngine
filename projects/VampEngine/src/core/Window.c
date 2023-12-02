@@ -13,9 +13,6 @@
 #include <platform/WindowGLFW.h>
 #endif
 
-#define VAMP_WINDOW_TYPE_GLFW 0
-#define VAMP_WINDOW_TYPE_WINDOWS 1
-#define VAMP_WINDOW_TYPE_MAC 2
 
 
 int VampWindowGetWidth(VampWindow *window)
@@ -33,32 +30,34 @@ const char *VampGetWindowTitle(VampWindow *window)
     return window->__title__->__str__;
 }
 
-VampWindow *VampNewWindow(VampApplication *app, const char *title, int width, int height)
+VampWindow *__VampNewWindow__(VampApplication *app, const char *title, int width, int height)
 {
     VampWindow *VAMP_MALLOC( new_window, sizeof(VampWindow) );
 
-    new_window->__app__ = app;
-    new_window->__width__ = width;
-    new_window->__height__ = height;
-    new_window->__is_running__ = 1;
-    new_window->__title__ = VampNewString(title);
+    new_window->__app__         = app;
+    new_window->__width__       = width;
+    new_window->__height__      = height;
+    new_window->__is_running__  = 1;
+    new_window->__title__       = VampNewString(title);
 
 
-    new_window->GetWidth = VampWindowGetWidth;
-    new_window->GetHeight = VampWindowGetHeight;
-    new_window->GetTitle = VampGetWindowTitle;
+    new_window->GetWidth    = VampWindowGetWidth;
+    new_window->GetHeight   = VampWindowGetHeight;
+    new_window->GetTitle    = VampGetWindowTitle;
 
+    return new_window;
+}
+
+
+VampWindow *VampCreateWindow(VampApplication *app, const char *title, int width, int height)
+{
     #ifdef VAMP_LINUX
-    new_window->__child_type__ = VAMP_WINDOW_TYPE_GLFW;
-    new_window->__child__ = VampNewWindowGLFW(new_window, title, width, height);
+    return VampNewWindowGLFW(app, title, width, height)->__base__;
     #endif
 
     #ifdef VAMP_WINDOWS
-    new_window->__child_type__ = VAMP_WINDOW_TYPE_GLFW;
-    new_window->__child__ = VampNewWindowGLFW(new_window, title, width, height);
+    return VampNewWindowGLFW(app, title, width, height)->__base__;
     #endif
-
-    return new_window;
 }
 
 
@@ -66,23 +65,7 @@ void VampDestroyWindow(VampWindow *window)
 {
     VampDestroyString(window->__title__);
 
-    switch (window->__child_type__)
-    {
-        case VAMP_WINDOW_TYPE_GLFW:
-            #ifdef VAMP_LINUX
-            VampDestroyWindowGLFW(window->__child__);
-            #endif
-            break;
-
-        case VAMP_WINDOW_TYPE_WINDOWS:
-            #ifdef VAMP_WINDOWS
-            VampDestroyWindowGLFW(window->__child__);
-            #endif
-            break;
-        
-        default:
-            break;
-    }
+    window->__child_deconstructor__(window->__child__);
 
     VAMP_FREE(window);
 }

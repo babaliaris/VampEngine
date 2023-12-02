@@ -3,6 +3,7 @@
 #include "WindowGLFW.h"
 #include <debug/MemoryTracker.h>
 #include <core/Application.h>
+#include <core/Window.h>
 #include <GLFW/glfw3.h>
 
 
@@ -27,13 +28,27 @@ void VampWindowUpdate(VampWindow *window)
 }
 
 
-VampWindowGLFW *VampNewWindowGLFW(VampWindow *window, const char *title, int width, int height)
+void VampWindowGLFWDeconstructor(void *windowGLFW)
 {
-    VampWindowGLFW *VAMP_MALLOC( new_windowGLFW, sizeof(VampWindowGLFW) );
+    VampWindowGLFW *w = (VampWindowGLFW *)windowGLFW;
+    VampDestroyWindowGLFW(windowGLFW);
+}
 
-    new_windowGLFW->__app__ = window->__app__;
+
+VampWindowGLFW *VampNewWindowGLFW(VampApplication *app, const char *title, int width, int height)
+{
+    //Create base Window and override methods.
+    VampWindow *new_window              = __VampNewWindow__(app, title, width, height);
+    new_window->Update                  = VampWindowUpdate;
+    new_window->__child_deconstructor__ = VampWindowGLFWDeconstructor;
+
+    //Create WindowGLFW and init it.
+    VampWindowGLFW *VAMP_MALLOC( new_windowGLFW, sizeof(VampWindowGLFW) );
+    new_windowGLFW->__base__        = new_window;
     new_windowGLFW->__glfw_window__ = NULL;
-    window->Update = VampWindowUpdate;
+
+    //Final inheritance connection.
+    new_window->__child__ = new_windowGLFW;
 
     if (!glfwInit())
     {
@@ -67,7 +82,7 @@ VampWindowGLFW *VampNewWindowGLFW(VampWindow *window, const char *title, int wid
 
     glfwMakeContextCurrent(new_windowGLFW->__glfw_window__);
 
-    glfwSetWindowUserPointer(new_windowGLFW->__glfw_window__, window);
+    glfwSetWindowUserPointer(new_windowGLFW->__glfw_window__, new_window);
 
     glfwSetErrorCallback(ErrorCallback);
 
