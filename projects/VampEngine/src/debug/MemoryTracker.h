@@ -91,13 +91,21 @@ VampMemoryTracker *VAMP_GLOBAL_MEMORY_TRACKER;
 VampMemoryTracker *VampGlobalGetMemoryTracker();
 
 
-#define VAMP_MALLOC(variable, size)\
-    variable = malloc( size );\
-    VampGlobalGetMemoryTracker()->Push(VampGlobalGetMemoryTracker(), variable, __FILE__, __LINE__)
 
-#define VAMP_FREE(pointer)\
-    VampGlobalGetMemoryTracker()->Remove(VampGlobalGetMemoryTracker(), pointer);\
-    free(pointer)
+#ifdef VAMP_DEBUG
+    #define VAMP_MALLOC(variable, size)\
+        variable = malloc( size );\
+        VampGlobalGetMemoryTracker()->Push(VampGlobalGetMemoryTracker(), variable, __FILE__, __LINE__)
+
+    #define VAMP_FREE(pointer)\
+        VampGlobalGetMemoryTracker()->Remove(VampGlobalGetMemoryTracker(), pointer);\
+        free(pointer)
+
+#else
+    #define VAMP_MALLOC(variable, size) variable = malloc( size )
+    #define VAMP_FREE(pointer) free(pointer)
+
+#endif
 
 
 #endif
