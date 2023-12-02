@@ -15,17 +15,17 @@
 
 
 
-int VampWindowGetWidth(VampWindow *window)
+static int GetWidth(VampWindow *window)
 {
     return window->__width__;
 }
 
-int VampWindowGetHeight(VampWindow *window)
+static int GetHeight(VampWindow *window)
 {
     return window->__height__;
 }
 
-const char *VampGetWindowTitle(VampWindow *window)
+static const char *GetWindowTitle(VampWindow *window)
 {
     return window->__title__->__str__;
 }
@@ -41,9 +41,9 @@ VampWindow *__VampNewWindow__(VampApplication *app, const char *title, int width
     new_window->__title__       = VampNewString(title);
 
 
-    new_window->GetWidth    = VampWindowGetWidth;
-    new_window->GetHeight   = VampWindowGetHeight;
-    new_window->GetTitle    = VampGetWindowTitle;
+    new_window->GetWidth    = GetWidth;
+    new_window->GetHeight   = GetHeight;
+    new_window->GetTitle    = GetWindowTitle;
 
     return new_window;
 }

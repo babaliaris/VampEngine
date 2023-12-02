@@ -25,7 +25,7 @@ void VampDestroyMemoryTrackerListNode(__VampMemoryTrackerListNode__ *listNode)
 }
 
 
-void VampMemoryTrackerListAppend(VampMemoryTrackerList *vampList, void *data)
+static void ListAppend(VampMemoryTrackerList *vampList, void *data)
 {
     if (!vampList || !data) return;
 
@@ -53,7 +53,7 @@ void VampMemoryTrackerListAppend(VampMemoryTrackerList *vampList, void *data)
 }
 
 
-void *VampMemoryTrackerListGetAt(VampMemoryTrackerList *vampList, unsigned int position)
+static void *ListGetAt(VampMemoryTrackerList *vampList, unsigned int position)
 {
     if (!vampList) return NULL;
 
@@ -72,7 +72,7 @@ void *VampMemoryTrackerListGetAt(VampMemoryTrackerList *vampList, unsigned int p
 }
 
 
-void *VampMemoryTrackerListRemoveAt(VampMemoryTrackerList *vampList, unsigned int position)
+static void *ListRemoveAt(VampMemoryTrackerList *vampList, unsigned int position)
 {
     if (!vampList) return NULL;
 
@@ -120,7 +120,7 @@ void *VampMemoryTrackerListRemoveAt(VampMemoryTrackerList *vampList, unsigned in
 }
 
 
-char VampMemoryTrackerListIsEmpty(VampMemoryTrackerList *vampList)
+static char ListIsEmpty(VampMemoryTrackerList *vampList)
 {
     if (!vampList) return 0;
 
@@ -128,7 +128,7 @@ char VampMemoryTrackerListIsEmpty(VampMemoryTrackerList *vampList)
 }
 
 
-unsigned int VampMemoryTrackerListGetLength(VampMemoryTrackerList *vampList)
+static unsigned int ListGetLength(VampMemoryTrackerList *vampList)
 {
     if (!vampList) return 0;
 
@@ -136,7 +136,7 @@ unsigned int VampMemoryTrackerListGetLength(VampMemoryTrackerList *vampList)
 }
 
 
-void *VampMemoryTrackerListRemoveByCondition(struct VampMemoryTrackerList *vampList, VampMemoryTrackerListConditionFunc condFunc, void *cond)
+static void *ListRemoveByCondition(struct VampMemoryTrackerList *vampList, VampMemoryTrackerListConditionFunc condFunc, void *cond)
 {
     if (!vampList || !condFunc) return NULL;
 
@@ -181,7 +181,7 @@ void *VampMemoryTrackerListRemoveByCondition(struct VampMemoryTrackerList *vampL
 }
 
 
-void *VampMemoryTrackerListGetByCondition(VampMemoryTrackerList *vampList, VampMemoryTrackerListConditionFunc condFunc, void *cond)
+static void *ListGetByCondition(VampMemoryTrackerList *vampList, VampMemoryTrackerListConditionFunc condFunc, void *cond)
 {
     if (!vampList || !condFunc) return NULL;
 
@@ -209,13 +209,13 @@ VampMemoryTrackerList *VampNewMemoryTrackerList()
 
     new_list->__length__ = 0;
 
-    new_list->Append                = VampMemoryTrackerListAppend;
-    new_list->GetAt                 = VampMemoryTrackerListGetAt;
-    new_list->RemoveAt              = VampMemoryTrackerListRemoveAt;
-    new_list->IsEmpty               = VampMemoryTrackerListIsEmpty;
-    new_list->GetLength             = VampMemoryTrackerListGetLength;
-    new_list->RemoveByCondition     = VampMemoryTrackerListRemoveByCondition;
-    new_list->GetByCondition        = VampMemoryTrackerListGetByCondition;
+    new_list->Append                = ListAppend;
+    new_list->GetAt                 = ListGetAt;
+    new_list->RemoveAt              = ListRemoveAt;
+    new_list->IsEmpty               = ListIsEmpty;
+    new_list->GetLength             = ListGetLength;
+    new_list->RemoveByCondition     = ListRemoveByCondition;
+    new_list->GetByCondition        = ListGetByCondition;
 
     return new_list;
 }

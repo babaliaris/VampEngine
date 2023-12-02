@@ -2,7 +2,7 @@
 #include "Logger.h"
 
 
-void VampLoggerSetLevel(VampLogger *logger, unsigned int level)
+static void SetLevel(VampLogger *logger, unsigned int level)
 {
     logger->__level__ = level;
 }
@@ -14,7 +14,7 @@ VampLogger *VampNewLogger(const char *name)
 
     new_logger->__level__   = VAMP_LOGGER_LEVEL_ERROR;
     new_logger->__name__    = VampNewString(name);
-    new_logger->SetLevel    = VampLoggerSetLevel;
+    new_logger->SetLevel    = SetLevel;
 
     return new_logger;
 }

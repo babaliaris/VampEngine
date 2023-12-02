@@ -5,13 +5,13 @@
 #include <debug/MemoryTracker.h>
 
 
-VampApplication *VampLayerGetApp(VampLayer *layer)
+static VampApplication *GetApp(VampLayer *layer)
 {
     return layer->__app__;
 }
 
 
-const char *VampLayerGetDebugName(VampLayer *layer)
+static const char *GetDebugName(VampLayer *layer)
 {
     return layer->__debug_name__->__str__;
 }
@@ -32,8 +32,8 @@ VampLayer *VampNewLayer(const char *debug_name,
     new_layer->__OnDetach__     = onDetach;
     new_layer->__OnUpdate__     = onUpdate;
 
-    new_layer->GetApp           = VampLayerGetApp;
-    new_layer->GetDebugName     = VampLayerGetDebugName;
+    new_layer->GetApp           = GetApp;
+    new_layer->GetDebugName     = GetDebugName;
 }
 
 

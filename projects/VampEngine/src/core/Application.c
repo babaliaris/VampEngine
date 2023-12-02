@@ -13,15 +13,15 @@
 #include <core/graphics/GraphicsContext.h>
 
 
-VampLogger *GlobalGetEngineLogger()
+VampLogger *VampGlobalGetEngineLogger()
 {
-    return GLOBAL_ENGINE_LOGGER;
+    return VAMP_GLOBAL_ENGINE_LOGGER;
 }
 
 
-VampLogger *GlobalGetClientLogger()
+VampLogger *VampGlobalGetClientLogger()
 {
-    return GLOBAL_CLIENT_LOGGER;
+    return VAMP_GLOBAL_CLIENT_LOGGER;
 }
 
 
@@ -92,8 +92,8 @@ VampApplication *VampNewApplication(UserEntryPoint user, const char *title, int 
 {
     VampApplication *new_app = (VampApplication *)malloc( sizeof(VampApplication) );
 
-    GLOBAL_ENGINE_LOGGER        = VampNewLogger("VampEngine");
-    GLOBAL_CLIENT_LOGGER        = VampNewLogger("Client");
+    VAMP_GLOBAL_ENGINE_LOGGER        = VampNewLogger("VampEngine");
+    VAMP_GLOBAL_CLIENT_LOGGER        = VampNewLogger("Client");
     VAMP_GLOBAL_MEMORY_TRACKER  = VampNewMemoryTracker();
 
     new_app->__user_entry_point__   = user;
@@ -130,8 +130,8 @@ void VampDestroyApplication(VampApplication *app)
     #endif
 
     //Destroy the loggers.
-    VampDestroyLogger(GLOBAL_ENGINE_LOGGER);
-    VampDestroyLogger(GLOBAL_CLIENT_LOGGER);
+    VampDestroyLogger(VAMP_GLOBAL_ENGINE_LOGGER);
+    VampDestroyLogger(VAMP_GLOBAL_CLIENT_LOGGER);
 
     //Log any memory leaks to a file and then destroy the tracker.
     VAMP_GLOBAL_MEMORY_TRACKER->WriteMemoryLeaksFile(VAMP_GLOBAL_MEMORY_TRACKER, "mem.leaks.txt");

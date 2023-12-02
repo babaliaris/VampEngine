@@ -22,7 +22,7 @@ void VampDestroyListNode(__VampListNode__ *listNode)
 }
 
 
-void VampListAppend(VampList *vampList, void *data)
+static void ListAppend(VampList *vampList, void *data)
 {
     if (!vampList || !data) return;
 
@@ -50,7 +50,7 @@ void VampListAppend(VampList *vampList, void *data)
 }
 
 
-void *VampListGetAt(VampList *vampList, unsigned int position)
+static void *ListGetAt(VampList *vampList, unsigned int position)
 {
     if (!vampList) return NULL;
 
@@ -69,7 +69,7 @@ void *VampListGetAt(VampList *vampList, unsigned int position)
 }
 
 
-void *VampListRemoveAt(VampList *vampList, unsigned int position)
+static void *ListRemoveAt(VampList *vampList, unsigned int position)
 {
     if (!vampList) return NULL;
 
@@ -117,7 +117,7 @@ void *VampListRemoveAt(VampList *vampList, unsigned int position)
 }
 
 
-char VampListIsEmpty(VampList *vampList)
+static char ListIsEmpty(VampList *vampList)
 {
     if (!vampList) return 0;
 
@@ -125,7 +125,7 @@ char VampListIsEmpty(VampList *vampList)
 }
 
 
-unsigned int VampListGetLength(VampList *vampList)
+static unsigned int ListGetLength(VampList *vampList)
 {
     if (!vampList) return 0;
 
@@ -133,7 +133,7 @@ unsigned int VampListGetLength(VampList *vampList)
 }
 
 
-void *VampListRemoveByCondition(struct VampList *vampList, VampListConditionFunc condFunc, void *cond)
+static void *ListRemoveByCondition(struct VampList *vampList, VampListConditionFunc condFunc, void *cond)
 {
     if (!vampList || !condFunc) return NULL;
 
@@ -178,7 +178,7 @@ void *VampListRemoveByCondition(struct VampList *vampList, VampListConditionFunc
 }
 
 
-void *VampListGetByCondition(struct VampList *vampList, VampListConditionFunc condFunc, void *cond)
+static void *ListGetByCondition(struct VampList *vampList, VampListConditionFunc condFunc, void *cond)
 {
     if (!vampList || !condFunc) return NULL;
 
@@ -206,13 +206,13 @@ VampList *VampNewList()
 
     new_list->__length__ = 0;
 
-    new_list->Append                = VampListAppend;
-    new_list->GetAt                 = VampListGetAt;
-    new_list->RemoveAt              = VampListRemoveAt;
-    new_list->IsEmpty               = VampListIsEmpty;
-    new_list->GetLength             = VampListGetLength;
-    new_list->RemoveByCondition     = VampListRemoveByCondition;
-    new_list->GetByCondition        = VampListGetByCondition;
+    new_list->Append                = ListAppend;
+    new_list->GetAt                 = ListGetAt;
+    new_list->RemoveAt              = ListRemoveAt;
+    new_list->IsEmpty               = ListIsEmpty;
+    new_list->GetLength             = ListGetLength;
+    new_list->RemoveByCondition     = ListRemoveByCondition;
+    new_list->GetByCondition        = ListGetByCondition;
 
     return new_list;
 }

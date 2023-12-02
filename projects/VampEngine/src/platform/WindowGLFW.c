@@ -8,12 +8,12 @@
 #include <GLFW/glfw3.h>
 
 
-void ErrorCallback(int errcode, const char *desc)
+static void ErrorCallback(int errcode, const char *desc)
 {
     VAMP_ERROR("[GLFW Error: %d] %s", errcode, desc)
 }
 
-void WindowCloseCallback(GLFWwindow *window)
+static void WindowCloseCallback(GLFWwindow *window)
 {
     VampWindow *w = (VampWindow *)glfwGetWindowUserPointer(window);
 
@@ -21,7 +21,7 @@ void WindowCloseCallback(GLFWwindow *window)
 }
 
 
-void VampWindowUpdate(VampWindow *window)
+static void WindowUpdate(VampWindow *window)
 {
     VampWindowGLFW *w = (VampWindowGLFW *)window->__child__;
     glfwSwapBuffers(w->__glfw_window__);
@@ -29,7 +29,7 @@ void VampWindowUpdate(VampWindow *window)
 }
 
 
-void VampWindowGLFWDeconstructor(void *windowGLFW)
+static void WindowGLFWDeconstructor(void *windowGLFW)
 {
     VampWindowGLFW *w = (VampWindowGLFW *)windowGLFW;
     VampDestroyWindowGLFW(windowGLFW);
@@ -40,8 +40,8 @@ VampWindowGLFW *VampNewWindowGLFW(VampApplication *app, const char *title, int w
 {
     //Create base Window and override methods.
     VampWindow *new_window              = __VampNewWindow__(app, title, width, height);
-    new_window->Update                  = VampWindowUpdate;
-    new_window->__child_deconstructor__ = VampWindowGLFWDeconstructor;
+    new_window->Update                  = WindowUpdate;
+    new_window->__child_deconstructor__ = WindowGLFWDeconstructor;
 
     //Create WindowGLFW and init it.
     VampWindowGLFW *VAMP_MALLOC( new_windowGLFW, sizeof(VampWindowGLFW) );
