@@ -32,7 +32,7 @@ VampMemoryTracker *VampGlobalGetMemoryTracker()
 }
 
 
-void VampListLayersDecontructor(void *data)
+static void VampListLayersDecontructor(void *data)
 {
     VampLayer *layer = (VampLayer *)data;
 
@@ -48,7 +48,7 @@ static char HandleWindowCloseEvent(void *event, void *userPointer)
 }
 
 
-void VampApplicationRun(VampApplication *app)
+static void VampApplicationRun(VampApplication *app)
 {
     app->__graphics_context__->SetClearColor(app->__graphics_context__, 0.4f, 0.4f, 0.4f);
 
@@ -69,7 +69,7 @@ void VampApplicationRun(VampApplication *app)
 }
 
 
-void VampApplicationAppendLayer(VampApplication *app, VampLayer *layer)
+static void VampApplicationAppendLayer(VampApplication *app, VampLayer *layer)
 {
     app->__layers_list->Append(app->__layers_list, layer);
     if (layer->__OnAttach__) layer->__OnAttach__(layer->__child__);
@@ -78,12 +78,12 @@ void VampApplicationAppendLayer(VampApplication *app, VampLayer *layer)
 
 
 
-char LayerRemoveCondition(void *data, void *cond)
+static char LayerRemoveCondition(void *data, void *cond)
 {
     return data == cond;
 }
 
-VampLayer *VampApplicationRemoveLayer(VampApplication *app, VampLayer *layer)
+static VampLayer *VampApplicationRemoveLayer(VampApplication *app, VampLayer *layer)
 {
     //Remove the layer from the list.
     VampLayer *removed_layer = app->__layers_list->RemoveByCondition(app->__layers_list, LayerRemoveCondition, layer);
