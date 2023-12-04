@@ -1,6 +1,5 @@
 #ifndef VAMP_ENGINE_LOGGER_H
 #define VAMP_ENGINE_LOGGER_H
-#include <VampString.h>
 
 
 /**
@@ -23,6 +22,8 @@
 
 
 
+typedef char * sds;
+
 
 /**
  * The structure that describes a logger object.
@@ -39,7 +40,7 @@ typedef struct VampLogger
 
 
     unsigned int __level__; /**< @private*/
-    VampString *__name__; /**< @private*/
+    sds __name__; /**< @private*/
 }
 VampLogger;
 
@@ -106,7 +107,7 @@ VampLogger *VampGlobalGetClientLogger();
 #ifdef VAMP_DEBUG
     #define __VAMP_LOG__(logger, level_name, debug_color, message_color, ...)\
         VAMP_PRINTF_COLORED(debug_color, \
-            "[%s : %s]\n\t[%s : %d]\n\t[Message]: ", logger->__name__->GetCStr(logger->__name__), level_name, __FILE__, __LINE__)\
+            "[%s : %s]\n\t[%s : %d]\n\t[Message]: ", logger->__name__, level_name, __FILE__, __LINE__)\
             \
         VAMP_PRINTF_COLORED(message_color, __VA_ARGS__)\
         printf("\n\n");

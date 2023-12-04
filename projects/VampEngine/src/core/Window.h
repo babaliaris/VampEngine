@@ -6,8 +6,8 @@
 */
 
 typedef struct VampApplication VampApplication;
-typedef struct VampString VampString;
 typedef struct VampEvent VampEvent;
+typedef char * sds;
 
 /**
  * This is the window where stuff are drew into it and that handles the
@@ -52,7 +52,7 @@ typedef struct VampWindow
     int __width__; /**< @private*/
     int __height__; /**< @private*/
     char __is_running__; /**< @private*/
-    VampString *__title__; /**< @private*/
+    sds __title__; /**< @private*/
     VampApplication *__app__; /**< @private*/
 }
 VampWindow;

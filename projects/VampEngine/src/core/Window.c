@@ -1,6 +1,6 @@
 #include <VampPCH.h>
 #include "Window.h"
-#include <VampString.h>
+#include <sds.h>
 #include <debug/MemoryTracker.h>
 #include <core/Application.h>
 
@@ -27,7 +27,7 @@ static int GetHeight(VampWindow *window)
 
 static const char *GetWindowTitle(VampWindow *window)
 {
-    return window->__title__->__str__;
+    return window->__title__;
 }
 
 VampWindow *__VampNewWindow__(VampApplication *app, const char *title, int width, int height)
@@ -38,7 +38,7 @@ VampWindow *__VampNewWindow__(VampApplication *app, const char *title, int width
     new_window->__width__               = width;
     new_window->__height__              = height;
     new_window->__is_running__          = 1;
-    new_window->__title__               = VampNewString(title);
+    new_window->__title__               = sdsnew(title);
     new_window->__child__               = NULL; //to be overridden.
     new_window->__child_deconstructor__ = NULL; //to be overridden.
     new_window->__event_callback__      = NULL; //will be set by the application.
@@ -66,7 +66,7 @@ VampWindow *VampCreateWindow(VampApplication *app, const char *title, int width,
 
 void VampDestroyWindow(VampWindow *window)
 {
-    VampDestroyString(window->__title__);
+    sdsfree(window->__title__);
 
     window->__child_deconstructor__(window->__child__);
 

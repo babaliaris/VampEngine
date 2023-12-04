@@ -67,14 +67,14 @@ void VampDestroyMemoryTrackerList(VampMemoryTrackerList *vampList, VampMemoryTra
 
 
 /*===================================================== Memory Tracker===================================================*/
-typedef struct VampString VampString;
+typedef char * sds;
 
 /**
  * @private
 */
 typedef struct VampMemoryTrackerData
 {
-    VampString *__filepath__;
+    sds __filepath__;
     unsigned int __line_number__;
     void *__point_in_memory__;
 }

@@ -1,6 +1,6 @@
 #include <VampPCH.h>
-#include <VampString.h>
 #include "MemoryTracker.h"
+#include <sds.h>
 
 
 
@@ -301,7 +301,7 @@ void VampMemoryTrackerWriteFile(VampMemoryTracker *tracker, const char *filename
         {
             VampMemoryTrackerData *data = (VampMemoryTrackerData *)tracker->__list__->GetAt(tracker->__list__, i);
 
-            fprintf(file, "%s:%d\n", data->__filepath__->__str__, data->__line_number__);
+            fprintf(file, "%s:%d\n", data->__filepath__, data->__line_number__);
         }
     }
 
@@ -351,7 +351,7 @@ VampMemoryTrackerData *VampNewMemoryTrackerData(void *pointer, const char *filep
 {
     VampMemoryTrackerData *new_data = (VampMemoryTrackerData *)malloc(sizeof(VampMemoryTrackerData));
 
-    new_data->__filepath__          = VampNewString(filepath);
+    new_data->__filepath__          = sdsnew(filepath);
     new_data->__line_number__       = line;
     new_data->__point_in_memory__   = pointer;
 
@@ -362,7 +362,7 @@ void VampDestroyMemoryTrackerData(VampMemoryTrackerData *data)
 {
     if (!data) return;
 
-    VampDestroyString(data->__filepath__);
+    sdsfree(data->__filepath__);
     free(data);
 }
 /*===================================================== Memory Tracker===================================================*/
