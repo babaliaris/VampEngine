@@ -1,8 +1,7 @@
-#include "TestingLayer.h"
-#include <VampEngine.h>
+#include "TestingEventsLayer.h"
 
 
-char HandleKeyPressedEvent(void *event)
+static char HandleKeyPressedEvent(void *event)
 {
     VampKeyboardEvent *e = (VampKeyboardEvent *)event;
 
@@ -12,7 +11,7 @@ char HandleKeyPressedEvent(void *event)
 }
 
 
-char HandleMouseButtonPressedEvent(void *event)
+static char HandleMouseButtonPressedEvent(void *event)
 {
     VampMouseButtonEvent *e = (VampMouseButtonEvent *)event;
 
@@ -22,7 +21,7 @@ char HandleMouseButtonPressedEvent(void *event)
 }
 
 
-char HandleMouseButtonReleasedEvent(void *event)
+static char HandleMouseButtonReleasedEvent(void *event)
 {
     VampMouseButtonEvent *e = (VampMouseButtonEvent *)event;
 
@@ -32,7 +31,7 @@ char HandleMouseButtonReleasedEvent(void *event)
 }
 
 
-char HandleMousePosEvent(void *event)
+static char HandleMousePosEvent(void *event)
 {
     VampMousePosEvent *e = (VampMousePosEvent *)event;
 
@@ -42,7 +41,7 @@ char HandleMousePosEvent(void *event)
 }
 
 
-char HandleWindowFocusedEvent(void *event)
+static char HandleWindowFocusedEvent(void *event)
 {
     VampWindowEvent *e = (VampWindowEvent *)event;
 
@@ -52,7 +51,7 @@ char HandleWindowFocusedEvent(void *event)
 }
 
 
-char HandleWindowLostFocusEvent(void *event)
+static char HandleWindowLostFocusEvent(void *event)
 {
     VampWindowEvent *e = (VampWindowEvent *)event;
 
@@ -62,7 +61,7 @@ char HandleWindowLostFocusEvent(void *event)
 }
 
 
-char HandleWindowMaximizedEvent(void *event)
+static char HandleWindowMaximizedEvent(void *event)
 {
     VampWindowEvent *e = (VampWindowEvent *)event;
 
@@ -72,7 +71,7 @@ char HandleWindowMaximizedEvent(void *event)
 }
 
 
-char HandleWindowMinimizedEvent(void *event)
+static char HandleWindowMinimizedEvent(void *event)
 {
     VampWindowEvent *e = (VampWindowEvent *)event;
 
@@ -82,7 +81,7 @@ char HandleWindowMinimizedEvent(void *event)
 }
 
 
-char HandleWindowRestoredEvent(void *event)
+static char HandleWindowRestoredEvent(void *event)
 {
     VampWindowEvent *e = (VampWindowEvent *)event;
 
@@ -92,7 +91,7 @@ char HandleWindowRestoredEvent(void *event)
 }
 
 
-char HandleWindowMovedEvent(void *event)
+static char HandleWindowMovedEvent(void *event)
 {
     VampWindowMovedEvent *e = (VampWindowMovedEvent *)event;
 
@@ -102,7 +101,7 @@ char HandleWindowMovedEvent(void *event)
 }
 
 
-char HandleWindowResizedEvent(void *event)
+static char HandleWindowResizedEvent(void *event)
 {
     VampWindowResizedEvent *e = (VampWindowResizedEvent *)event;
 
@@ -120,23 +119,24 @@ char HandleWindowResizedEvent(void *event)
 
 
 
-void TestingLayerOnAttach(VampLayer *layer)
+static void OnAttach(VampLayer *layer)
 {
     VAMP_CLIENT_INFO("[%s] OnAttach()", layer->GetDebugName(layer));
 }
 
 
-void TestingLayerOnDetach(VampLayer *layer)
+static void OnDetach(VampLayer *layer)
 {
     VAMP_CLIENT_INFO("[%s] OnDetach()", layer->GetDebugName(layer));
 }
 
 
-void TestingLayerOnUpdate(VampLayer *layer)
+static void OnUpdate(VampLayer *layer)
 {
 }
 
-void TestingLayerOnEvent(VampLayer *layer, VampEvent *event)
+
+static void OnEvent(VampLayer *layer, VampEvent *event)
 {
     event->Dispatch(event, VAMP_EVENT_KEY_PRESSED, HandleKeyPressedEvent);
     event->Dispatch(event, VAMP_EVENT_MOUSE_PRESSED, HandleMouseButtonPressedEvent);
@@ -149,4 +149,26 @@ void TestingLayerOnEvent(VampLayer *layer, VampEvent *event)
     event->Dispatch(event, VAMP_EVENT_WINDOW_RESTORED, HandleWindowRestoredEvent);
     event->Dispatch(event, VAMP_EVENT_WINDOW_MOVED, HandleWindowMovedEvent);
     event->Dispatch(event, VAMP_EVENT_WINDOW_RESIZED, HandleWindowResizedEvent);
+}
+
+
+static void Deconstructor(void *layer)
+{   
+    TestingEventsLayer *l = (TestingEventsLayer *)layer;
+    VAMP_FREE(l);
+}
+
+
+
+VampLayer *SandboxNewTestingEventsLayer(const char *debug_name, VampApplication *app)
+{
+    TestingEventsLayer *VAMP_MALLOC(testing_events_layer, sizeof(TestingEventsLayer));
+
+    VAMP_LAYER_IMPLEMENTATION(testing_events_layer,
+                              app,
+                              debug_name,
+                              OnAttach,
+                              OnDetach,
+                              OnUpdate,
+                              OnEvent);
 }

@@ -72,6 +72,8 @@ typedef struct VampLayer
     */
     void (*__OnEvent__)(struct VampLayer *layer, VampEvent *event);
 
+    void *__child__; /**< @private*/
+    void (*__ChildDeconstructor__)(void *); /**< @private*/
     VampApplication *__app__; /**< @private*/
     VampString *__debug_name__; /**< @private*/
 }
@@ -117,19 +119,12 @@ typedef void (*VampLayerOnEventFunc)(VampLayer *layer, VampEvent *event);
  * 
  * @param[in] debug_name A name for debug purposes.
  * @param[in] app The application object.
- * @param[in] onAttach The user defined VampLayerOnAttachFunc() callback.
- * @param[in] onDetach The user defined VampLayerOnDetachFunc() callback.
- * @param[in] onUpdate The user defined VampLayerOnUpdateFunc() callback.
+ * 
+ * @private
  * 
  * @returns The newly created object.
 */
-VampLayer *VampNewLayer(const char *debug_name,
-                        VampApplication *app,
-                        VampLayerOnAttachFunc onAttach,
-                        VampLayerOnDetachFunc onDetach,
-                        VampLayerOnUpdateFunc onUpdate,
-                        VampLayerOnEventFunc onEvent
-                        );
+VampLayer *__VampNewLayer__(const char *debug_name, VampApplication *app);
 
 
 
@@ -140,5 +135,24 @@ VampLayer *VampNewLayer(const char *debug_name,
  * @param[in] layer The VampLayer to be destroyed.
 */
 void VampDestroyLayer(VampLayer *layer);
+
+
+
+#define VAMP_LAYER_DECLERATION VampLayer *__vamp_base__
+
+
+#define VAMP_LAYER_IMPLEMENTATION(your_layer_object, app, debug_name, OnAttach, OnDetach, OnUpdate, OnEvent)\
+    VampLayer *__vamp_new_layer__               = __VampNewLayer__(debug_name, app);\
+    __vamp_new_layer__->__OnAttach__            = OnAttach;\
+    __vamp_new_layer__->__OnDetach__            = OnDetach;\
+    __vamp_new_layer__->__OnUpdate__            = OnUpdate;\
+    __vamp_new_layer__->__OnEvent__             = OnEvent;\
+    __vamp_new_layer__->__child__               = your_layer_object;\
+    __vamp_new_layer__->__ChildDeconstructor__  = Deconstructor;\
+    your_layer_object->__vamp_base__            = __vamp_new_layer__;\
+    return __vamp_new_layer__;
+
+
+
 
 #endif

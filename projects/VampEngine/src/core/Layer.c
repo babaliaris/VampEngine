@@ -17,22 +17,18 @@ static const char *GetDebugName(VampLayer *layer)
 }
 
 
-VampLayer *VampNewLayer(const char *debug_name,
-                        VampApplication *app,
-                        VampLayerOnAttachFunc onAttach,
-                        VampLayerOnDetachFunc onDetach,
-                        VampLayerOnUpdateFunc onUpdate,
-                        VampLayerOnEventFunc onEvent
-                        )
+VampLayer *__VampNewLayer__(const char *debug_name, VampApplication *app)
 {
     VampLayer *VAMP_MALLOC( new_layer, sizeof(VampLayer) );
 
-    new_layer->__debug_name__   = VampNewString(debug_name);
-    new_layer->__app__          = app;
-    new_layer->__OnAttach__     = onAttach;
-    new_layer->__OnDetach__     = onDetach;
-    new_layer->__OnUpdate__     = onUpdate;
-    new_layer->__OnEvent__      = onEvent;
+    new_layer->__debug_name__           = VampNewString(debug_name);
+    new_layer->__app__                  = app;
+    new_layer->__child__                = NULL;
+    new_layer->__ChildDeconstructor__   = NULL;
+    new_layer->__OnAttach__             = NULL;
+    new_layer->__OnDetach__             = NULL;
+    new_layer->__OnUpdate__             = NULL;
+    new_layer->__OnEvent__              = NULL;
 
     new_layer->GetApp           = GetApp;
     new_layer->GetDebugName     = GetDebugName;
@@ -41,6 +37,7 @@ VampLayer *VampNewLayer(const char *debug_name,
 
 void VampDestroyLayer(VampLayer *layer)
 {
+    layer->__ChildDeconstructor__(layer->__child__);
     VampDestroyString(layer->__debug_name__);
     VAMP_FREE(layer);
 }

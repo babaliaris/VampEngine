@@ -1,17 +1,12 @@
 #define VAMP_ENGINE_ENTRY_POINT
 #include <VampEngine.h>
 
-#include <layers/TestingLayer.h>
+#include <layers/TestingEventsLayer.h>
 
 void Sandbox(VampApplication *app)
 {
     
-    VampLayer *testing_layer = VampNewLayer("Testing Layer",
-                                            app,
-                                            TestingLayerOnAttach, 
-                                            TestingLayerOnDetach, 
-                                            TestingLayerOnUpdate,
-                                            TestingLayerOnEvent);
+    VampLayer *testing_layer = SandboxNewTestingEventsLayer("Testing Layer", app);
 
     app->AppendLayer(app, testing_layer);
     
