@@ -7,6 +7,7 @@
 
 typedef struct VampApplication VampApplication;
 typedef struct VampString VampString;
+typedef struct VampEvent VampEvent;
 
 /**
  * This is the window where stuff are drew into it and that handles the
@@ -46,6 +47,7 @@ typedef struct VampWindow
 
     void *__child__; /**< @private This holds the child class object (The one that extends VampWindow)*/
     void (*__child_deconstructor__)(void *child); /**< @private Holds the deconstruction function of the child class.*/
+    void (*__event_callback__)(VampEvent *event); /**< @private*/
 
     int __width__; /**< @private*/
     int __height__; /**< @private*/

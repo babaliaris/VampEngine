@@ -8,6 +8,7 @@
 
 typedef struct VampApplication VampApplication;
 typedef struct VampString VampString;
+typedef struct VampEvent VampEvent;
 
 
 /**
@@ -62,6 +63,15 @@ typedef struct VampLayer
     */
     void (*__OnUpdate__)(struct VampLayer *layer);
 
+    /**
+     * Gets called when an event occurs.
+     * 
+     * @private
+     * 
+     * @param[in] layer The layer object.
+    */
+    void (*__OnEvent__)(struct VampLayer *layer, VampEvent *event);
+
     VampApplication *__app__; /**< @private*/
     VampString *__debug_name__; /**< @private*/
 }
@@ -92,6 +102,14 @@ typedef void (*VampLayerOnDetachFunc)(VampLayer *layer);
 typedef void (*VampLayerOnUpdateFunc)(VampLayer *layer);
 
 
+/**
+ * User defined callback: Gets called when an event occurs.
+ * 
+ * @param[in] layer The layer object.
+*/
+typedef void (*VampLayerOnEventFunc)(VampLayer *layer, VampEvent *event);
+
+
 
 
 /**
@@ -109,7 +127,8 @@ VampLayer *VampNewLayer(const char *debug_name,
                         VampApplication *app,
                         VampLayerOnAttachFunc onAttach,
                         VampLayerOnDetachFunc onDetach,
-                        VampLayerOnUpdateFunc onUpdate
+                        VampLayerOnUpdateFunc onUpdate,
+                        VampLayerOnEventFunc onEvent
                         );
 
 

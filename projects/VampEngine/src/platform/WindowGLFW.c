@@ -6,11 +6,15 @@
 #include <core/Window.h>
 #include <core/graphics/GraphicsContext.h>
 #include <GLFW/glfw3.h>
+#include <core/events/Events.h>
+
+
+static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 
 static void ErrorCallback(int errcode, const char *desc)
 {
-    VAMP_ERROR("[GLFW Error: %d] %s", errcode, desc)
+    VAMP_ERROR("[GLFW Error: %d] %s", errcode, desc);
 }
 
 static void WindowCloseCallback(GLFWwindow *window)
@@ -93,6 +97,8 @@ VampWindowGLFW *VampNewWindowGLFW(VampApplication *app, const char *title, int w
 
     glfwSetWindowCloseCallback(new_windowGLFW->__glfw_window__, WindowCloseCallback);
 
+    glfwSetKeyCallback(new_windowGLFW->__glfw_window__, KeyCallback);
+
     return new_windowGLFW;
 }
 
@@ -101,4 +107,41 @@ void VampDestroyWindowGLFW(VampWindowGLFW *window)
 {
     glfwTerminate();
     VAMP_FREE(window);
+}
+
+
+
+static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    VampWindow *w = (VampWindow *)glfwGetWindowUserPointer(window);
+
+    switch (action)
+    {
+        case GLFW_PRESS:
+        {
+            VampKeyboardEvent *event = VampNewKeyboardEvent(w->__app__, VAMP_EVENT_KEY_PRESSED, key);
+            w->__event_callback__(event->__base__);
+            VampDestroyEvent(event->__base__);
+            break;
+        }
+
+        case GLFW_RELEASE:
+        {
+            VampKeyboardEvent *event = VampNewKeyboardEvent(w->__app__, VAMP_EVENT_KEY_RELEASED, key);
+            w->__event_callback__(event->__base__);
+            VampDestroyEvent(event->__base__);
+            break;
+        }
+
+        case GLFW_REPEAT:
+        {
+            VampKeyboardEvent *event = VampNewKeyboardEvent(w->__app__, VAMP_EVENT_KEY_REPEAT, key);
+            w->__event_callback__(event->__base__);
+            VampDestroyEvent(event->__base__);
+            break;
+        }
+        
+        default:
+            break;
+    }
 }

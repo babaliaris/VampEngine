@@ -21,7 +21,8 @@ VampLayer *VampNewLayer(const char *debug_name,
                         VampApplication *app,
                         VampLayerOnAttachFunc onAttach,
                         VampLayerOnDetachFunc onDetach,
-                        VampLayerOnUpdateFunc onUpdate
+                        VampLayerOnUpdateFunc onUpdate,
+                        VampLayerOnEventFunc onEvent
                         )
 {
     VampLayer *VAMP_MALLOC( new_layer, sizeof(VampLayer) );
@@ -31,6 +32,7 @@ VampLayer *VampNewLayer(const char *debug_name,
     new_layer->__OnAttach__     = onAttach;
     new_layer->__OnDetach__     = onDetach;
     new_layer->__OnUpdate__     = onUpdate;
+    new_layer->__OnEvent__      = onEvent;
 
     new_layer->GetApp           = GetApp;
     new_layer->GetDebugName     = GetDebugName;

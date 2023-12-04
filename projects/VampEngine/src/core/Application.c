@@ -11,6 +11,7 @@
 #include <core/Window.h>
 #include <core/Layer.h>
 #include <core/graphics/GraphicsContext.h>
+#include <core/events/Events.h>
 
 
 VampLogger *VampGlobalGetEngineLogger()
@@ -87,6 +88,25 @@ VampLayer *VampApplicationRemoveLayer(VampApplication *app, VampLayer *layer)
 
 
 
+static void EventHandler(VampEvent *event)
+{
+    VampList *layers = event->__app__->__layers_list;
+
+    //Propagate the event in the layers backwards.
+    //Length is unsigned int so i can not be < 0.
+    //This means i is not the actual position of the element
+    //but i-1 is. Do it carefully, else segmetation fault will happen.
+    for (unsigned int i = layers->__length__; i > 0; i--)
+    {
+        VampLayer *layer = (VampLayer *)layers->GetAt(layers, i-1);
+
+        if (layer->__OnEvent__ && !event->__has_been_handled__)
+            layer->__OnEvent__(layer, event);
+    }
+}
+
+
+
 
 VampApplication *VampNewApplication(UserEntryPoint user, const char *title, int width, int height)
 {
@@ -94,16 +114,21 @@ VampApplication *VampNewApplication(UserEntryPoint user, const char *title, int 
 
     VAMP_GLOBAL_ENGINE_LOGGER        = VampNewLogger("VampEngine");
     VAMP_GLOBAL_CLIENT_LOGGER        = VampNewLogger("Client");
-    VAMP_GLOBAL_MEMORY_TRACKER  = VampNewMemoryTracker();
+    VAMP_GLOBAL_MEMORY_TRACKER       = VampNewMemoryTracker();
 
     new_app->__user_entry_point__   = user;
-    new_app->__window__             = VampCreateWindow(new_app, title, width, height);
+
+    new_app->__window__                     = VampCreateWindow(new_app, title, width, height);
+    new_app->__window__->__event_callback__ = EventHandler;
+
     new_app->__layers_list          = VampNewList();
     new_app->__graphics_context__   = VampCreateGraphicsContext(new_app);
 
     new_app->__Run__                = VampApplicationRun;
     new_app->AppendLayer            = VampApplicationAppendLayer;
     new_app->RemoveLayer            = VampApplicationRemoveLayer;
+
+
 
     return new_app;
 

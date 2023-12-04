@@ -7,6 +7,7 @@
 #include <debug/Logger.h>
 #include <data-structures/list.h>
 
+#include <core/events/Events.h>
 #include <core/Application.h>
 #include <core/Window.h>
 #include <core/Layer.h>

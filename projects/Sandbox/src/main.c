@@ -5,15 +5,16 @@
 
 void Sandbox(VampApplication *app)
 {
-    /*
+    
     VampLayer *testing_layer = VampNewLayer("Testing Layer",
                                             app,
                                             TestingLayerOnAttach, 
                                             TestingLayerOnDetach, 
-                                            TestingLayerOnUpdate);
+                                            TestingLayerOnUpdate,
+                                            TestingLayerOnEvent);
 
     app->AppendLayer(app, testing_layer);
-    */
+    
 }
 
 VampApplication *VampCreateUserApplication()
