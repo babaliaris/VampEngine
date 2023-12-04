@@ -13,7 +13,6 @@ project "Tests"
     includedirs {
         "src/",
         "%{_WORKING_DIR}/depedencies/vamptest/projects/VampTest/src/include",
-        "%{_WORKING_DIR}/depedencies/vampstring/projects/VampString/src",
         "%{_WORKING_DIR}/projects/VampEngine/src",
         "%{_WORKING_DIR}/projects/Sandbox/src"
     }
@@ -21,7 +20,6 @@ project "Tests"
     links {
         "VampEngine",
         "VampTest",
-        "VampString",
         "GLFW",
         "GLAD",
         "SDS"
