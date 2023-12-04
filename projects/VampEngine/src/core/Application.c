@@ -40,6 +40,14 @@ void VampListLayersDecontructor(void *data)
 }
 
 
+static char HandleWindowCloseEvent(void *event)
+{
+    VampWindowEvent *e = (VampWindowEvent *)event;
+    e->__base__->__app__->__window__->__is_running__ = 0;
+    return 0;
+}
+
+
 void VampApplicationRun(VampApplication *app)
 {
     app->__graphics_context__->SetClearColor(app->__graphics_context__, 0.4f, 0.4f, 0.4f);
@@ -90,12 +98,14 @@ VampLayer *VampApplicationRemoveLayer(VampApplication *app, VampLayer *layer)
 
 static void EventHandler(VampEvent *event)
 {
-    VampList *layers = event->__app__->__layers_list;
+    //Close the application if the X button is pressed.
+    event->Dispatch(event, VAMP_EVENT_WINDOW_CLOSE, HandleWindowCloseEvent);
 
     //Propagate the event in the layers backwards.
     //Length is unsigned int so i can not be < 0.
     //This means i is not the actual position of the element
     //but i-1 is. Do it carefully, else segmetation fault will happen.
+    VampList *layers = event->__app__->__layers_list;
     for (unsigned int i = layers->__length__; i > 0; i--)
     {
         VampLayer *layer = (VampLayer *)layers->GetAt(layers, i-1);

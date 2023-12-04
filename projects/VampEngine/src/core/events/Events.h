@@ -3,5 +3,8 @@
 
 #include "keyboard/KeyboardEvent.h"
 #include "mouse/MouseEvent.h"
+#include "window/WindowEvent.h"
+#include "window/WindowMovedEvent.h"
+#include "window/WindowResizedEvent.h"
 
 #endif

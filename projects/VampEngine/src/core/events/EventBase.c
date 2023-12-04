@@ -39,6 +39,7 @@ void VampDestroyEvent(VampEvent *event)
 }
 
 
+
 const char *VampEventTypeToString(unsigned int type)
 {
     switch (type)
@@ -67,11 +68,23 @@ const char *VampEventTypeToString(unsigned int type)
         case VAMP_EVENT_WINDOW_LOST_FOCUS:
             return "VAMP_EVENT_WINDOW_LOST_FOCUS";
 
+        case VAMP_EVENT_WINDOW_RESIZED:
+            return "VAMP_EVENT_WINDOW_RESIZED";
+
+        case VAMP_EVENT_WINDOW_CLOSE:
+            return "VAMP_EVENT_WINDOW_CLOSE";
+
+        case VAMP_EVENT_WINDOW_MAXIMIZED:
+            return "VAMP_EVENT_WINDOW_MAXIMIZED";
+
         case VAMP_EVENT_WINDOW_MINIMIZED:
             return "VAMP_EVENT_WINDOW_MINIMIZED";
 
-        case VAMP_EVENT_WINDOW_RESIZED:
-            return "VAMP_EVENT_WINDOW_RESIZED";
+        case VAMP_EVENT_WINDOW_RESTORED:
+            return "VAMP_EVENT_WINDOW_RESTORED";
+
+        case VAMP_EVENT_WINDOW_MOVED:
+            return "VAMP_EVENT_WINDOW_MOVED";
         
         default:
             return "";

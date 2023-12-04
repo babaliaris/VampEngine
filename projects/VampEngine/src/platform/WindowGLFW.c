@@ -12,18 +12,17 @@
 static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 static void CursorPosCallback(GLFWwindow* window, double xpos, double ypos);
+static void WindowFocusCallback(GLFWwindow* window, int focused);
+static void WindowCloseCallback(GLFWwindow *window);
+static void WindowMaximizedCallback(GLFWwindow* window, int maximized);
+static void WindowPosCallback(GLFWwindow* window, int xpos, int ypos);
+static void WindowSizeCallback(GLFWwindow* window, int width, int height);
+static void WindowMinizedCallback(GLFWwindow* window, int iconified);
 
 
 static void ErrorCallback(int errcode, const char *desc)
 {
     VAMP_ERROR("[GLFW Error: %d] %s", errcode, desc);
-}
-
-static void WindowCloseCallback(GLFWwindow *window)
-{
-    VampWindow *w = (VampWindow *)glfwGetWindowUserPointer(window);
-
-    w->__is_running__ = 0;
 }
 
 
@@ -97,13 +96,25 @@ VampWindowGLFW *VampNewWindowGLFW(VampApplication *app, const char *title, int w
 
     glfwSetErrorCallback(ErrorCallback);
 
-    glfwSetWindowCloseCallback(new_windowGLFW->__glfw_window__, WindowCloseCallback);
-
     glfwSetKeyCallback(new_windowGLFW->__glfw_window__, KeyCallback);
 
     glfwSetMouseButtonCallback(new_windowGLFW->__glfw_window__, MouseButtonCallback);
 
     glfwSetCursorPosCallback(new_windowGLFW->__glfw_window__, CursorPosCallback);
+
+    glfwSetWindowFocusCallback(new_windowGLFW->__glfw_window__, WindowFocusCallback);
+
+    glfwSetWindowCloseCallback(new_windowGLFW->__glfw_window__, WindowCloseCallback);
+
+    glfwSetWindowMaximizeCallback(new_windowGLFW->__glfw_window__, WindowMaximizedCallback);
+
+    glfwSetWindowPosCallback(new_windowGLFW->__glfw_window__, WindowPosCallback);
+
+    glfwSetWindowSizeCallback(new_windowGLFW->__glfw_window__, WindowSizeCallback);
+
+    glfwSetWindowIconifyCallback(new_windowGLFW->__glfw_window__, WindowMinizedCallback);
+
+
 
     return new_windowGLFW;
 }
@@ -187,6 +198,106 @@ static void CursorPosCallback(GLFWwindow* window, double xpos, double ypos)
     VampWindow *w = (VampWindow *)glfwGetWindowUserPointer(window);
 
     VampMousePosEvent *event = VampNewMousePosEvent(w->__app__, VAMP_EVENT_MOUSE_POS, xpos, ypos);
+    w->__event_callback__(event->__base__);
+    VampDestroyEvent(event->__base__);
+}
+
+
+static void WindowFocusCallback(GLFWwindow* window, int focused)
+{
+    VampWindow *w = (VampWindow *)glfwGetWindowUserPointer(window);
+
+    switch (focused)
+    {
+        case GLFW_TRUE:
+        {
+            VampWindowEvent *event = VampNewWindowEvent(w->__app__, VAMP_EVENT_WINDOW_FOCUSED);
+            w->__event_callback__(event->__base__);
+            VampDestroyEvent(event->__base__);
+            break;
+        }
+
+        case GLFW_FALSE:
+        {
+            VampWindowEvent *event = VampNewWindowEvent(w->__app__, VAMP_EVENT_WINDOW_LOST_FOCUS);
+            w->__event_callback__(event->__base__);
+            VampDestroyEvent(event->__base__);
+            break;
+        }
+    
+    default:
+        break;
+    }
+}
+
+
+static void WindowCloseCallback(GLFWwindow *window)
+{
+    VampWindow *w = (VampWindow *)glfwGetWindowUserPointer(window);
+
+    VampWindowEvent *event = VampNewWindowEvent(w->__app__, VAMP_EVENT_WINDOW_CLOSE);
+    w->__event_callback__(event->__base__);
+    VampDestroyEvent(event->__base__);
+}
+
+
+static void WindowMaximizedCallback(GLFWwindow* window, int maximized)
+{
+    VampWindow *w = (VampWindow *)glfwGetWindowUserPointer(window);
+
+    if (maximized == GLFW_TRUE)
+    {
+        VampWindowEvent *event = VampNewWindowEvent(w->__app__, VAMP_EVENT_WINDOW_MAXIMIZED);
+        w->__event_callback__(event->__base__);
+        VampDestroyEvent(event->__base__);
+    }
+
+
+    else
+    {
+        VampWindowEvent *event = VampNewWindowEvent(w->__app__, VAMP_EVENT_WINDOW_RESTORED);
+        w->__event_callback__(event->__base__);
+        VampDestroyEvent(event->__base__);
+    }
+}
+
+
+static void WindowMinizedCallback(GLFWwindow* window, int iconified)
+{
+    VampWindow *w = (VampWindow *)glfwGetWindowUserPointer(window);
+
+    if (iconified == GLFW_TRUE)
+    {
+        VampWindowEvent *event = VampNewWindowEvent(w->__app__, VAMP_EVENT_WINDOW_MINIMIZED);
+        w->__event_callback__(event->__base__);
+        VampDestroyEvent(event->__base__);
+    }
+
+
+    else
+    {
+        VampWindowEvent *event = VampNewWindowEvent(w->__app__, VAMP_EVENT_WINDOW_RESTORED);
+        w->__event_callback__(event->__base__);
+        VampDestroyEvent(event->__base__);
+    }
+}
+
+
+static void WindowPosCallback(GLFWwindow* window, int xpos, int ypos)
+{
+    VampWindow *w = (VampWindow *)glfwGetWindowUserPointer(window);
+
+    VampWindowMovedEvent *event = VampNewWindowMovedEvent(w->__app__, VAMP_EVENT_WINDOW_MOVED, xpos, ypos);
+    w->__event_callback__(event->__base__);
+    VampDestroyEvent(event->__base__);
+}
+
+
+static void WindowSizeCallback(GLFWwindow* window, int width, int height)
+{
+    VampWindow *w = (VampWindow *)glfwGetWindowUserPointer(window);
+
+    VampWindowResizedEvent *event = VampNewWindowResizedEvent(w->__app__, VAMP_EVENT_WINDOW_RESIZED, width, height);
     w->__event_callback__(event->__base__);
     VampDestroyEvent(event->__base__);
 }

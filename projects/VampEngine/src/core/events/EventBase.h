@@ -13,8 +13,12 @@
 #define VAMP_EVENT_MOUSE_POS                5
 #define VAMP_EVENT_WINDOW_FOCUSED           6
 #define VAMP_EVENT_WINDOW_LOST_FOCUS        7
-#define VAMP_EVENT_WINDOW_RESIZED           8
+#define VAMP_EVENT_WINDOW_CLOSE             8
 #define VAMP_EVENT_WINDOW_MINIMIZED         9
+#define VAMP_EVENT_WINDOW_MAXIMIZED         10
+#define VAMP_EVENT_WINDOW_RESTORED          11
+#define VAMP_EVENT_WINDOW_RESIZED           12
+#define VAMP_EVENT_WINDOW_MOVED             13
 
 
 /**
