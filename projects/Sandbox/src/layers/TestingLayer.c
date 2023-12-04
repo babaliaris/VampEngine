@@ -12,6 +12,36 @@ char HandleKeyPressedEvent(void *event)
 }
 
 
+char HandleMouseButtonPressedEvent(void *event)
+{
+    VampMouseButtonEvent *e = (VampMouseButtonEvent *)event;
+
+    VAMP_INFO(e->GetDebugString(e));
+
+    return 0;
+}
+
+
+char HandleMouseButtonReleasedEvent(void *event)
+{
+    VampMouseButtonEvent *e = (VampMouseButtonEvent *)event;
+
+    VAMP_INFO(e->GetDebugString(e));
+
+    return 0;
+}
+
+
+char HandleMousePosEvent(void *event)
+{
+    VampMousePosEvent *e = (VampMousePosEvent *)event;
+
+    VAMP_INFO(e->GetDebugString(e));
+
+    return 0;
+}
+
+
 void TestingLayerOnAttach(VampLayer *layer)
 {
     VAMP_CLIENT_INFO("[%s] OnAttach()", layer->GetDebugName(layer));
@@ -31,4 +61,8 @@ void TestingLayerOnUpdate(VampLayer *layer)
 void TestingLayerOnEvent(VampLayer *layer, VampEvent *event)
 {
     event->Dispatch(event, VAMP_EVENT_KEY_PRESSED, HandleKeyPressedEvent);
+    event->Dispatch(event, VAMP_EVENT_MOUSE_PRESSED, HandleMouseButtonPressedEvent);
+    event->Dispatch(event, VAMP_EVENT_MOUSE_RELEASED, HandleMouseButtonReleasedEvent);
+    event->Dispatch(event, VAMP_EVENT_MOUSE_POS, HandleMousePosEvent);
+    
 }

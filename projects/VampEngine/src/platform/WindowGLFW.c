@@ -10,6 +10,8 @@
 
 
 static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+static void CursorPosCallback(GLFWwindow* window, double xpos, double ypos);
 
 
 static void ErrorCallback(int errcode, const char *desc)
@@ -99,6 +101,10 @@ VampWindowGLFW *VampNewWindowGLFW(VampApplication *app, const char *title, int w
 
     glfwSetKeyCallback(new_windowGLFW->__glfw_window__, KeyCallback);
 
+    glfwSetMouseButtonCallback(new_windowGLFW->__glfw_window__, MouseButtonCallback);
+
+    glfwSetCursorPosCallback(new_windowGLFW->__glfw_window__, CursorPosCallback);
+
     return new_windowGLFW;
 }
 
@@ -144,4 +150,43 @@ static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, i
         default:
             break;
     }
+}
+
+
+
+static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+{
+    VampWindow *w = (VampWindow *)glfwGetWindowUserPointer(window);
+
+    switch (action)
+    {
+        case GLFW_PRESS:
+        {
+            VampMouseButtonEvent *event = VampNewMouseButtonEvent(w->__app__, VAMP_EVENT_MOUSE_PRESSED, button);
+            w->__event_callback__(event->__base__);
+            VampDestroyEvent(event->__base__);
+            break;
+        }
+
+        case GLFW_RELEASE:
+        {
+            VampMouseButtonEvent *event = VampNewMouseButtonEvent(w->__app__, VAMP_EVENT_MOUSE_RELEASED, button);
+            w->__event_callback__(event->__base__);
+            VampDestroyEvent(event->__base__);
+            break;
+        }
+        
+        default:
+            break;
+    }
+}
+
+
+static void CursorPosCallback(GLFWwindow* window, double xpos, double ypos)
+{
+    VampWindow *w = (VampWindow *)glfwGetWindowUserPointer(window);
+
+    VampMousePosEvent *event = VampNewMousePosEvent(w->__app__, VAMP_EVENT_MOUSE_POS, xpos, ypos);
+    w->__event_callback__(event->__base__);
+    VampDestroyEvent(event->__base__);
 }

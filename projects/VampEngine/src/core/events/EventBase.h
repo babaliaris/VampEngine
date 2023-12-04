@@ -10,10 +10,11 @@
 #define VAMP_EVENT_KEY_REPEAT               2
 #define VAMP_EVENT_MOUSE_PRESSED            3
 #define VAMP_EVENT_MOUSE_RELEASED           4
-#define VAMP_EVENT_WINDOW_FOCUSED           5
-#define VAMP_EVENT_WINDOW_LOST_FOCUS        6
-#define VAMP_EVENT_WINDOW_RESIZED           7
-#define VAMP_EVENT_WINDOW_MINIMIZED         8
+#define VAMP_EVENT_MOUSE_POS                5
+#define VAMP_EVENT_WINDOW_FOCUSED           6
+#define VAMP_EVENT_WINDOW_LOST_FOCUS        7
+#define VAMP_EVENT_WINDOW_RESIZED           8
+#define VAMP_EVENT_WINDOW_MINIMIZED         9
 
 
 /**

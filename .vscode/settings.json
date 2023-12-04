@@ -18,6 +18,7 @@
         "memory.h": "c",
         "list.h": "c",
         "application.h": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "eventbase.h": "c"
     }
 }

@@ -58,6 +58,9 @@ const char *VampEventTypeToString(unsigned int type)
         case VAMP_EVENT_MOUSE_RELEASED:
             return "VAMP_EVENT_MOUSE_RELEASED";
 
+        case VAMP_EVENT_MOUSE_POS:
+            return "VAMP_EVENT_MOUSE_POS";
+
         case VAMP_EVENT_WINDOW_FOCUSED:
             return "VAMP_EVENT_WINDOW_FOCUSED";
 
