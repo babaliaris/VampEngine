@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <sds.h>
 #include <debug/MemoryTracker.h>
 #include <debug/Logger.h>
 #include <data-structures/list.h>

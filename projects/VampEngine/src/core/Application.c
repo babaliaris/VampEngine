@@ -40,7 +40,7 @@ void VampListLayersDecontructor(void *data)
 }
 
 
-static char HandleWindowCloseEvent(void *event)
+static char HandleWindowCloseEvent(void *event, void *userPointer)
 {
     VampWindowEvent *e = (VampWindowEvent *)event;
     e->__base__->__app__->__window__->__is_running__ = 0;
@@ -60,7 +60,7 @@ void VampApplicationRun(VampApplication *app)
         for (unsigned int i = 0; i < app->__layers_list->__length__; i++)
         {
             VampLayer *layer = app->__layers_list->GetAt(app->__layers_list, i);
-            if (layer->__OnUpdate__) layer->__OnUpdate__(layer);
+            if (layer->__OnUpdate__) layer->__OnUpdate__(layer->__child__);
         }
 
         //Update the VampWindow.
@@ -72,7 +72,7 @@ void VampApplicationRun(VampApplication *app)
 void VampApplicationAppendLayer(VampApplication *app, VampLayer *layer)
 {
     app->__layers_list->Append(app->__layers_list, layer);
-    if (layer->__OnAttach__) layer->__OnAttach__(layer);
+    if (layer->__OnAttach__) layer->__OnAttach__(layer->__child__);
 }
 
 
@@ -89,7 +89,7 @@ VampLayer *VampApplicationRemoveLayer(VampApplication *app, VampLayer *layer)
     VampLayer *removed_layer = app->__layers_list->RemoveByCondition(app->__layers_list, LayerRemoveCondition, layer);
 
     //Layer removed and OnDetach exists.
-    if (removed_layer && layer->__OnDetach__) layer->__OnDetach__(layer);
+    if (removed_layer && layer->__OnDetach__) layer->__OnDetach__(layer->__child__);
 
     return removed_layer;
 }
@@ -99,7 +99,7 @@ VampLayer *VampApplicationRemoveLayer(VampApplication *app, VampLayer *layer)
 static void EventHandler(VampEvent *event)
 {
     //Close the application if the X button is pressed.
-    event->Dispatch(event, VAMP_EVENT_WINDOW_CLOSE, HandleWindowCloseEvent);
+    event->Dispatch(event, VAMP_EVENT_WINDOW_CLOSE, HandleWindowCloseEvent, NULL);
 
     //Propagate the event in the layers backwards.
     //Length is unsigned int so i can not be < 0.
@@ -111,7 +111,7 @@ static void EventHandler(VampEvent *event)
         VampLayer *layer = (VampLayer *)layers->GetAt(layers, i-1);
 
         if (layer->__OnEvent__ && !event->__has_been_handled__)
-            layer->__OnEvent__(layer, event);
+            layer->__OnEvent__(layer->__child__, event);
     }
 }
 

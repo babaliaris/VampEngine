@@ -5,11 +5,12 @@
 typedef struct TestingEventsLayer
 {
     VAMP_LAYER_DECLERATION;
+    char *debug_name;
 }
 TestingEventsLayer;
 
 
-VampLayer *SandboxNewTestingEventsLayer(const char *debug_name, VampApplication *app);
+VampLayer *SandboxNewTestingEventsLayer(VampApplication *app);
 
 
 #endif

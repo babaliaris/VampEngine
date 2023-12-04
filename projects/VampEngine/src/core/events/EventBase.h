@@ -28,7 +28,7 @@
  * @param[in] event The event object that has been dispatched.
  * @returns 1 (true) to stop propagating this event higher to the layers list. 0 (false) otherwise.
 */
-typedef char (*VampEventDispatchFunc)(void *event);
+typedef char (*VampEventDispatchFunc)(void *event, void *userPointer);
 
 
 typedef struct VampApplication VampApplication;
@@ -56,7 +56,7 @@ typedef struct VampEvent
      * @param[in] type The VAMP_EVENT type that is required.
      * @param[in] callback The VampEventDispatchFunc() user defined function.
     */
-    void (*Dispatch)(struct VampEvent *event, unsigned int type, VampEventDispatchFunc callback);
+    void (*Dispatch)(struct VampEvent *event, unsigned int type, VampEventDispatchFunc callback, void *userPointer);
 
 
 

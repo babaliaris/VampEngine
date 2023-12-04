@@ -1,7 +1,7 @@
 #include "TestingEventsLayer.h"
 
 
-static char HandleKeyPressedEvent(void *event)
+static char HandleKeyPressedEvent(void *event, void *layer)
 {
     VampKeyboardEvent *e = (VampKeyboardEvent *)event;
 
@@ -11,7 +11,7 @@ static char HandleKeyPressedEvent(void *event)
 }
 
 
-static char HandleMouseButtonPressedEvent(void *event)
+static char HandleMouseButtonPressedEvent(void *event, void *layer)
 {
     VampMouseButtonEvent *e = (VampMouseButtonEvent *)event;
 
@@ -21,7 +21,7 @@ static char HandleMouseButtonPressedEvent(void *event)
 }
 
 
-static char HandleMouseButtonReleasedEvent(void *event)
+static char HandleMouseButtonReleasedEvent(void *event, void *layer)
 {
     VampMouseButtonEvent *e = (VampMouseButtonEvent *)event;
 
@@ -31,7 +31,7 @@ static char HandleMouseButtonReleasedEvent(void *event)
 }
 
 
-static char HandleMousePosEvent(void *event)
+static char HandleMousePosEvent(void *event, void *layer)
 {
     VampMousePosEvent *e = (VampMousePosEvent *)event;
 
@@ -41,7 +41,7 @@ static char HandleMousePosEvent(void *event)
 }
 
 
-static char HandleWindowFocusedEvent(void *event)
+static char HandleWindowFocusedEvent(void *event, void *layer)
 {
     VampWindowEvent *e = (VampWindowEvent *)event;
 
@@ -51,7 +51,7 @@ static char HandleWindowFocusedEvent(void *event)
 }
 
 
-static char HandleWindowLostFocusEvent(void *event)
+static char HandleWindowLostFocusEvent(void *event, void *layer)
 {
     VampWindowEvent *e = (VampWindowEvent *)event;
 
@@ -61,7 +61,7 @@ static char HandleWindowLostFocusEvent(void *event)
 }
 
 
-static char HandleWindowMaximizedEvent(void *event)
+static char HandleWindowMaximizedEvent(void *event, void *layer)
 {
     VampWindowEvent *e = (VampWindowEvent *)event;
 
@@ -71,7 +71,7 @@ static char HandleWindowMaximizedEvent(void *event)
 }
 
 
-static char HandleWindowMinimizedEvent(void *event)
+static char HandleWindowMinimizedEvent(void *event, void *layer)
 {
     VampWindowEvent *e = (VampWindowEvent *)event;
 
@@ -81,7 +81,7 @@ static char HandleWindowMinimizedEvent(void *event)
 }
 
 
-static char HandleWindowRestoredEvent(void *event)
+static char HandleWindowRestoredEvent(void *event, void *layer)
 {
     VampWindowEvent *e = (VampWindowEvent *)event;
 
@@ -91,7 +91,7 @@ static char HandleWindowRestoredEvent(void *event)
 }
 
 
-static char HandleWindowMovedEvent(void *event)
+static char HandleWindowMovedEvent(void *event, void *layer)
 {
     VampWindowMovedEvent *e = (VampWindowMovedEvent *)event;
 
@@ -101,7 +101,7 @@ static char HandleWindowMovedEvent(void *event)
 }
 
 
-static char HandleWindowResizedEvent(void *event)
+static char HandleWindowResizedEvent(void *event, void *layer)
 {
     VampWindowResizedEvent *e = (VampWindowResizedEvent *)event;
 
@@ -119,54 +119,55 @@ static char HandleWindowResizedEvent(void *event)
 
 
 
-static void OnAttach(VampLayer *layer)
+static void OnAttach(void *layer)
 {
-    VAMP_CLIENT_INFO("[%s] OnAttach()", layer->GetDebugName(layer));
+    TestingEventsLayer *l = (TestingEventsLayer *)layer;
+    VAMP_CLIENT_INFO("[%s] OnAttach()", l->debug_name);
 }
 
 
-static void OnDetach(VampLayer *layer)
-{
-    VAMP_CLIENT_INFO("[%s] OnDetach()", layer->GetDebugName(layer));
-}
-
-
-static void OnUpdate(VampLayer *layer)
+static void OnDetach(void *layer)
 {
 }
 
 
-static void OnEvent(VampLayer *layer, VampEvent *event)
+static void OnUpdate(void *layer)
 {
-    event->Dispatch(event, VAMP_EVENT_KEY_PRESSED, HandleKeyPressedEvent);
-    event->Dispatch(event, VAMP_EVENT_MOUSE_PRESSED, HandleMouseButtonPressedEvent);
-    event->Dispatch(event, VAMP_EVENT_MOUSE_RELEASED, HandleMouseButtonReleasedEvent);
-    event->Dispatch(event, VAMP_EVENT_MOUSE_POS, HandleMousePosEvent);
-    event->Dispatch(event, VAMP_EVENT_WINDOW_FOCUSED, HandleWindowFocusedEvent);
-    event->Dispatch(event, VAMP_EVENT_WINDOW_LOST_FOCUS, HandleWindowLostFocusEvent);
-    event->Dispatch(event, VAMP_EVENT_WINDOW_MAXIMIZED, HandleWindowMaximizedEvent);
-    event->Dispatch(event, VAMP_EVENT_WINDOW_MINIMIZED, HandleWindowMinimizedEvent);
-    event->Dispatch(event, VAMP_EVENT_WINDOW_RESTORED, HandleWindowRestoredEvent);
-    event->Dispatch(event, VAMP_EVENT_WINDOW_MOVED, HandleWindowMovedEvent);
-    event->Dispatch(event, VAMP_EVENT_WINDOW_RESIZED, HandleWindowResizedEvent);
+}
+
+
+static void OnEvent(void *layer, VampEvent *event)
+{
+    event->Dispatch(event, VAMP_EVENT_KEY_PRESSED, HandleKeyPressedEvent, layer);
+    event->Dispatch(event, VAMP_EVENT_MOUSE_PRESSED, HandleMouseButtonPressedEvent, layer);
+    event->Dispatch(event, VAMP_EVENT_MOUSE_RELEASED, HandleMouseButtonReleasedEvent, layer);
+    event->Dispatch(event, VAMP_EVENT_MOUSE_POS, HandleMousePosEvent, layer);
+    event->Dispatch(event, VAMP_EVENT_WINDOW_FOCUSED, HandleWindowFocusedEvent, layer);
+    event->Dispatch(event, VAMP_EVENT_WINDOW_LOST_FOCUS, HandleWindowLostFocusEvent, layer);
+    event->Dispatch(event, VAMP_EVENT_WINDOW_MAXIMIZED, HandleWindowMaximizedEvent, layer);
+    event->Dispatch(event, VAMP_EVENT_WINDOW_MINIMIZED, HandleWindowMinimizedEvent, layer);
+    event->Dispatch(event, VAMP_EVENT_WINDOW_RESTORED, HandleWindowRestoredEvent, layer);
+    event->Dispatch(event, VAMP_EVENT_WINDOW_MOVED, HandleWindowMovedEvent, layer);
+    event->Dispatch(event, VAMP_EVENT_WINDOW_RESIZED, HandleWindowResizedEvent, layer);
 }
 
 
 static void Deconstructor(void *layer)
 {   
     TestingEventsLayer *l = (TestingEventsLayer *)layer;
+    sdsfree(l->debug_name);
     VAMP_FREE(l);
 }
 
 
 
-VampLayer *SandboxNewTestingEventsLayer(const char *debug_name, VampApplication *app)
+VampLayer *SandboxNewTestingEventsLayer(VampApplication *app)
 {
     TestingEventsLayer *VAMP_MALLOC(testing_events_layer, sizeof(TestingEventsLayer));
+    testing_events_layer->debug_name = sdsnew("Testing Events Layer");
 
     VAMP_LAYER_IMPLEMENTATION(testing_events_layer,
                               app,
-                              debug_name,
                               OnAttach,
                               OnDetach,
                               OnUpdate,

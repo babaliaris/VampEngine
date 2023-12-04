@@ -9,10 +9,10 @@ static VampApplication *GetApp(VampEvent *event)
 }
 
 
-static void Dispatch(VampEvent *event, unsigned int type, VampEventDispatchFunc callback)
+static void Dispatch(VampEvent *event, unsigned int type, VampEventDispatchFunc callback, void *userPointer)
 {
     if (callback && event->__type__ == type)
-        event->__has_been_handled__ = callback(event->__child__);
+        event->__has_been_handled__ = callback(event->__child__, userPointer);
 }
 
 
