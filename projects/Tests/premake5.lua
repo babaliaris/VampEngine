@@ -23,7 +23,8 @@ project "Tests"
         "VampTest",
         "VampString",
         "GLFW",
-        "GLAD"
+        "GLAD",
+        "SDS"
     }
 
     filter "configurations:debug"

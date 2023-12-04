@@ -38,7 +38,7 @@ typedef struct VampEvent
      * Get the application object.
      * 
      * @param[in] event The event object.
-     * @returns THe VampApplication object.
+     * @returns The VampApplication object.
     */
     VampApplication *(*GetApp)(struct VampEvent *event);
 

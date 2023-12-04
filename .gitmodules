@@ -7,3 +7,6 @@
 [submodule "depedencies/glfw"]
 	path = depedencies/glfw
 	url = https://github.com/babaliaris/glfw.git
+[submodule "depedencies/sds"]
+	path = depedencies/sds
+	url = https://github.com/babaliaris/sds.git

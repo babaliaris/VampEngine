@@ -6,7 +6,7 @@ char HandleKeyPressedEvent(void *event)
 {
     VampKeyboardEvent *e = (VampKeyboardEvent *)event;
 
-    VAMP_INFO("[%s:%d]", VampEventTypeToString(e->__base__->__type__), e->__keycode__);
+    VAMP_INFO(e->GetDebugString(e));
 
     return 0;
 }

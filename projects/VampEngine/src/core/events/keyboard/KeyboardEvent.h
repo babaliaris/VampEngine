@@ -16,8 +16,19 @@ typedef struct VampKeyboardEvent
     */
     int (*GetKeyCode)(struct VampKeyboardEvent *event);
 
+
+    /**
+     * Get a representation of the event.
+     * 
+     * @param[in] event The event object.
+     * @returns A string representing the object for debug reasons.
+    */
+    const char *(*GetDebugString)(struct VampKeyboardEvent *event);
+
+
     VampEvent *__base__; /**< @private*/
     int __keycode__; /**< @private*/
+    char *__debug_str__; /**< @private*/
 }
 VampKeyboardEvent;
 

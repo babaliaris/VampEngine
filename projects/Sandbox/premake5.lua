@@ -13,14 +13,17 @@ project "Sandbox"
     includedirs {
         "src/",
         "%{_WORKING_DIR}/projects/VampEngine/src",
-        "%{_WORKING_DIR}/depedencies/vampstring/projects/VampString/src"
+        "%{_WORKING_DIR}/depedencies/vampstring/projects/VampString/src",
+        "%{_WORKING_DIR}/depedencies/sds",
+        
     }
 
     links {
         "VampEngine",
         "VampString",
         "GLFW",
-        "GLAD"
+        "GLAD",
+        "SDS"
     }
 
     filter "configurations:debug"

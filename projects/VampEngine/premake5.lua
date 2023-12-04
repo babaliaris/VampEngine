@@ -16,7 +16,8 @@ project "VampEngine"
         "src/",
         "%{_WORKING_DIR}/depedencies/vampstring/projects/VampString/src",
         "%{_WORKING_DIR}/depedencies/glfw/include",
-        "%{_WORKING_DIR}/depedencies/glad/include"
+        "%{_WORKING_DIR}/depedencies/glad/include",
+        "%{_WORKING_DIR}/depedencies/sds"
     }
 
     filter "configurations:debug"
