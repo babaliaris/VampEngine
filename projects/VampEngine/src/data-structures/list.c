@@ -22,40 +22,40 @@ void VampDestroyListNode(__VampListNode__ *listNode)
 }
 
 
-static void ListAppend(VampList *vampList, void *data)
+static void ListAppend(VampList *this, void *data)
 {
-    if (!vampList || !data) return;
+    if (!this || !data) return;
 
     __VampListNode__ *new_node = VampNewListNode(data);
 
-    if ( vampList->IsEmpty(vampList) )
+    if ( this->IsEmpty(this) )
     {
-        vampList->__head__->__next__ = new_node;
-        vampList->__tail__->__prev__ = new_node;
+        this->__head__->__next__ = new_node;
+        this->__tail__->__prev__ = new_node;
 
-        new_node->__next__ = vampList->__tail__;
-        new_node->__prev__ = vampList->__head__;
+        new_node->__next__ = this->__tail__;
+        new_node->__prev__ = this->__head__;
     }
 
     else
     {
-        new_node->__next__ = vampList->__tail__;
-        new_node->__prev__ = vampList->__tail__->__prev__;
+        new_node->__next__ = this->__tail__;
+        new_node->__prev__ = this->__tail__->__prev__;
 
-        vampList->__tail__->__prev__->__next__  = new_node;
-        vampList->__tail__->__prev__            = new_node;
+        this->__tail__->__prev__->__next__  = new_node;
+        this->__tail__->__prev__            = new_node;
     }
 
-    vampList->__length__++;
+    this->__length__++;
 }
 
 
-static void *ListGetAt(VampList *vampList, unsigned int position)
+static void *ListGetAt(VampList *this, unsigned int position)
 {
-    if (!vampList) return NULL;
+    if (!this) return NULL;
 
     unsigned int i = 0;
-    __VampListNode__ *current = vampList->__head__->__next__;
+    __VampListNode__ *current = this->__head__->__next__;
 
     while(current && current->__next__)
     {
@@ -69,12 +69,12 @@ static void *ListGetAt(VampList *vampList, unsigned int position)
 }
 
 
-static void *ListRemoveAt(VampList *vampList, unsigned int position)
+static void *ListRemoveAt(VampList *this, unsigned int position)
 {
-    if (!vampList) return NULL;
+    if (!this) return NULL;
 
     unsigned int i = 0;
-    __VampListNode__ *current = vampList->__head__->__next__;
+    __VampListNode__ *current = this->__head__->__next__;
 
     //Loop through the list.
     while(current && current->__next__)
@@ -82,13 +82,13 @@ static void *ListRemoveAt(VampList *vampList, unsigned int position)
         if (i == position)
         {
             //The list has one element.
-            if (vampList->__length__ == 1)
+            if (this->__length__ == 1)
             {
                 current->__next__ = NULL;
                 current->__prev__ = NULL;
 
-                vampList->__head__->__next__ = NULL;
-                vampList->__tail__->__prev__ = NULL;
+                this->__head__->__next__ = NULL;
+                this->__tail__->__prev__ = NULL;
             }
 
 
@@ -99,7 +99,7 @@ static void *ListRemoveAt(VampList *vampList, unsigned int position)
                 current->__prev__->__next__ = current->__next__;
             }
 
-            vampList->__length__--;
+            this->__length__--;
 
             void *data = current->__data__;
 
@@ -117,27 +117,27 @@ static void *ListRemoveAt(VampList *vampList, unsigned int position)
 }
 
 
-static char ListIsEmpty(VampList *vampList)
+static char ListIsEmpty(VampList *this)
 {
-    if (!vampList) return 0;
+    if (!this) return 0;
 
-    return (!vampList->__head__->__next__ && !vampList->__tail__->__prev__);
+    return (!this->__head__->__next__ && !this->__tail__->__prev__);
 }
 
 
-static unsigned int ListGetLength(VampList *vampList)
+static unsigned int ListGetLength(VampList *this)
 {
-    if (!vampList) return 0;
+    if (!this) return 0;
 
-    return vampList->__length__;
+    return this->__length__;
 }
 
 
-static void *ListRemoveByCondition(struct VampList *vampList, VampListConditionFunc condFunc, void *cond)
+static void *ListRemoveByCondition(VampList *this, VampListConditionFunc condFunc, void *cond)
 {
-    if (!vampList || !condFunc) return NULL;
+    if (!this || !condFunc) return NULL;
 
-    __VampListNode__ *current = vampList->__head__->__next__;
+    __VampListNode__ *current = this->__head__->__next__;
 
     //Loop through the list.
     while(current && current->__next__)
@@ -145,13 +145,13 @@ static void *ListRemoveByCondition(struct VampList *vampList, VampListConditionF
         if ( condFunc(current->__data__, cond)  )
         {
             //The list has one element.
-            if (vampList->__length__ == 1)
+            if (this->__length__ == 1)
             {
                 current->__next__ = NULL;
                 current->__prev__ = NULL;
 
-                vampList->__head__->__next__ = NULL;
-                vampList->__tail__->__prev__ = NULL;
+                this->__head__->__next__ = NULL;
+                this->__tail__->__prev__ = NULL;
             }
 
 
@@ -162,7 +162,7 @@ static void *ListRemoveByCondition(struct VampList *vampList, VampListConditionF
                 current->__prev__->__next__ = current->__next__;
             }
 
-            vampList->__length__--;
+            this->__length__--;
 
             void *data = current->__data__;
 
@@ -178,11 +178,11 @@ static void *ListRemoveByCondition(struct VampList *vampList, VampListConditionF
 }
 
 
-static void *ListGetByCondition(struct VampList *vampList, VampListConditionFunc condFunc, void *cond)
+static void *ListGetByCondition(VampList *this, VampListConditionFunc condFunc, void *cond)
 {
-    if (!vampList || !condFunc) return NULL;
+    if (!this || !condFunc) return NULL;
 
-    __VampListNode__ *current = vampList->__head__->__next__;
+    __VampListNode__ *current = this->__head__->__next__;
 
     //Loop through the list.
     while(current && current->__next__)

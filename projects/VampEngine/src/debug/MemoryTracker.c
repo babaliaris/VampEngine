@@ -268,22 +268,22 @@ char RemoveTrackerDataConditionCallback(void *trackerData, void *pointer)
 }
 
 
-void VampMemoryTrackerPush(VampMemoryTracker *tracker, void * pointer, const char *filepath, unsigned int line)
+void VampMemoryTrackerPush(VampMemoryTracker *this, void * pointer, const char *filepath, unsigned int line)
 {
     VampMemoryTrackerData *data = VampNewMemoryTrackerData(pointer, filepath, line);
 
-    tracker->__list__->Append(tracker->__list__, data);
+    this->__list__->Append(this->__list__, data);
 }
 
-void VampMemoryTrackerRemove(VampMemoryTracker *tracker, void *pointer)
+void VampMemoryTrackerRemove(VampMemoryTracker *this, void *pointer)
 {
-    tracker->__list__->RemoveByCondition(tracker->__list__, RemoveTrackerDataConditionCallback, pointer);
+    this->__list__->RemoveByCondition(this->__list__, RemoveTrackerDataConditionCallback, pointer);
 }
 
 
-void VampMemoryTrackerWriteFile(VampMemoryTracker *tracker, const char *filename)
+void VampMemoryTrackerWriteFile(VampMemoryTracker *this, const char *filename)
 {
-    if (!tracker) return;
+    if (!this) return;
 
     FILE *file = fopen(filename, "w");
 
@@ -294,12 +294,12 @@ void VampMemoryTrackerWriteFile(VampMemoryTracker *tracker, const char *filename
     }
 
     //Write the file only if the list is not empty.
-    if ( !tracker->__list__->IsEmpty(tracker->__list__) )
+    if ( !this->__list__->IsEmpty(this->__list__) )
     {
         //Loop through the list.
-        for (unsigned int i = 0; i < tracker->__list__->__length__; i++)
+        for (unsigned int i = 0; i < this->__list__->__length__; i++)
         {
-            VampMemoryTrackerData *data = (VampMemoryTrackerData *)tracker->__list__->GetAt(tracker->__list__, i);
+            VampMemoryTrackerData *data = (VampMemoryTrackerData *)this->__list__->GetAt(this->__list__, i);
 
             fprintf(file, "%s:%d\n", data->__filepath__, data->__line_number__);
         }

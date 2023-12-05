@@ -29,8 +29,8 @@ VampOpenGLVao *VampNewOpenGLVao();
 /**
  * Destroyed the VampOpenGLVao object.
  * 
- * @param[in] this The VampOpenGLVao to be destroyed.
+ * @param[in] glVao The VampOpenGLVao to be destroyed.
 */
-void VampDestroyOpenGLVao(VampOpenGLVao *this);
+void VampDestroyOpenGLVao(VampOpenGLVao *glVao);
 
 #endif

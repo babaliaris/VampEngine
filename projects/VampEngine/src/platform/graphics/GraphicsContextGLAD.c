@@ -6,23 +6,23 @@
 #include <debug/Logger.h>
 #include <glad/glad.h>
 
-static void ClearBuffers(VampGraphicsContext *ctx)
+static void ClearBuffers(VampGraphicsContext *base)
 {
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-static void SetClearColor(VampGraphicsContext *ctx, float r, float g, float b)
+static void SetClearColor(VampGraphicsContext *base, float r, float g, float b)
 {
-    ctx->__clear_color_r = r;
-    ctx->__clear_color_g = g;
-    ctx->__clear_color_b = b;
+    base->__clear_color_r = r;
+    base->__clear_color_g = g;
+    base->__clear_color_b = b;
 
     glClearColor(r, g, b, 1.0f);
 }
 
-static void Deconstructor(void *ctxGLAD)
+static void Deconstructor(void *this)
 {
-    VampDestroyGraphicsContextGLAD( (VampGraphicsContextGLAD *)ctxGLAD );
+    VampDestroyGraphicsContextGLAD( (VampGraphicsContextGLAD *)this );
 }
 
 

@@ -45,8 +45,8 @@ VampOpenGLVao *VampNewOpenGLVao()
     return new_OpenGLVao;
 }
 
-void VampDestroyOpenGLVao(VampOpenGLVao *this)
+void VampDestroyOpenGLVao(VampOpenGLVao *glVao)
 {
-    VAMP_GLCALL(glDeleteVertexArrays(1, &this->__id__));
-    VAMP_FREE(this);
+    VAMP_GLCALL(glDeleteVertexArrays(1, &glVao->__id__));
+    VAMP_FREE(glVao);
 }

@@ -17,31 +17,31 @@ typedef struct VampWindow
 {
     /**
      * Get the width of the window.
-     * @param[in] window The VampWindow object.
+     * @param[in] this The VampWindow object.
      * @returns The width of the window.
     */
-    int (*GetWidth)(struct VampWindow *window);
+    int (*GetWidth)(struct VampWindow *this);
 
     /**
      * Get the height of the window.
-     * @param[in] window The VampWindow object.
+     * @param[in] this The VampWindow object.
      * @returns The height of the window.
     */
-    int (*GetHeight)(struct VampWindow *window);
+    int (*GetHeight)(struct VampWindow *this);
 
     /**
      * Get the title of the window.
-     * @param[in] window The VampWindow object.
+     * @param[in] this The VampWindow object.
      * @returns The title of the window.
     */
-    const char *(*GetTitle)(struct VampWindow *window);
+    const char *(*GetTitle)(struct VampWindow *this);
 
     /**
      * Swaps the draw buffers and polls the window events.
-     * @param[in] window The VampWindow object.
+     * @param[in] this The VampWindow object.
      *
     */
-    void (*Update)(struct VampWindow *window);
+    void (*Update)(struct VampWindow *this);
 
 
 

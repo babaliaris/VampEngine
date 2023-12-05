@@ -54,73 +54,73 @@ typedef struct VampList
     /**
      * Append at the end of the list some data.
      * 
-     * @param[in] vampList The list object to append the new data.
+     * @param[in] this The list object to append the new data.
      * @param[in] data The data to be appended in the list.
     */
-    void (*Append)(struct VampList *vampList, void *data);
+    void (*Append)(struct VampList *this, void *data);
 
     /**
      * Get the data inside the list at a specified position.
      * 
-     * @param[in] vampList The list object from where the data might be retreived.
+     * @param[in] this The list object from where the data might be retreived.
      * @param[in] position The position of the data to be retrieved.
      * 
      * @returns The data at that position, NULL if not found.
     */
-    void *(*GetAt)(struct VampList *vampList, unsigned int position);
+    void *(*GetAt)(struct VampList *this, unsigned int position);
 
     /**
      * Get the data inside the list at a specified position.
      * 
-     * @param[in] vampList The list object from where the data will be removed.
+     * @param[in] this The list object from where the data will be removed.
      * @param[in] position The position of the data to be removed.
      * 
      * @returns The data that has been removed, NULL if no data where removed.
     */
-    void *(*RemoveAt)(struct VampList *vampList, unsigned int position);
+    void *(*RemoveAt)(struct VampList *this, unsigned int position);
 
     /**
      * Checks if the list is empty.
      * 
-     * @param[in] vampList The list object to be checked.
+     * @param[in] this The list object to be checked.
      * 
      * @returns Greater than zero if empty, zero otherwise.
     */
-    char (*IsEmpty)(struct VampList *vampList);
+    char (*IsEmpty)(struct VampList *this);
     
 
     /**
      * Get the length of the list.
      * 
-     * @param[in] vampList The list object.
+     * @param[in] this The list object.
      * 
      * @returns The length (number of elements) of the list.
     */
-    unsigned int (*GetLength)(struct VampList *vampList);
+    unsigned int (*GetLength)(struct VampList *this);
 
 
     /**
      * Remove the data based on a custom condition that returns > 0 (true) if the data must be removed.
      * 
-     * @param[in] vampList The list object from where the data might be removed.
+     * @param[in] this The list object from where the data might be removed.
      * @param[in] condFunc The user defined function that returns true(>0) or false(0) 
      * @param[in] cond The object that contains the information to be checked against the data.
      * 
      * @returns The data that have been removed, NULL if no data where removed.
     */
-    void *(*RemoveByCondition)(struct VampList *vampList, VampListConditionFunc condFunc, void *cond);
+    void *(*RemoveByCondition)(struct VampList *this, VampListConditionFunc condFunc, void *cond);
 
 
     /**
      * Get the data based on a custom condition that returns > 0 (true) if the data where found.
      * 
-     * @param[in] vampList The list object from where the data might be retreived from.
+     * @param[in] this The list object from where the data might be retreived from.
      * @param[in] condFunc The user defined function that returns true(>0) or false(0) 
      * @param[in] cond The object that contains the information to be checked against the data.
      * 
      * @returns The data that have been found, NULL if not found.
     */
-    void *(*GetByCondition)(struct VampList *vampList, VampListConditionFunc condFunc, void *cond);
+    void *(*GetByCondition)(struct VampList *this, VampListConditionFunc condFunc, void *cond);
 
 
     __VampListNode__ *__head__; /**< This is the head of the list. @private*/

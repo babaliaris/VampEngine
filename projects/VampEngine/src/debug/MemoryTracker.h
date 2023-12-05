@@ -91,31 +91,31 @@ typedef struct VampMemoryTracker
     /**
      * Push the location = "file:line" where the allocation has happened.
      * 
-     * @param[in] tracker The memory tracker object.
+     * @param[in] this The memory tracker object.
      * @param[in] pointer The actual memory address that returned by malloc.
      * @param[in] filepath The __FILE__ where the allocation has happened.
      * @param[in] line The line number where the allocation has happened.
     */
-    void (*Push)(struct VampMemoryTracker *tracker, void *pointer, const char *filepath, unsigned int line);
+    void (*Push)(struct VampMemoryTracker *this, void *pointer, const char *filepath, unsigned int line);
 
 
     /**
      * Remove the "file:line" where an allocation has happened, because the memory has been freed.
      * 
-     * @param[in] tracker The memory tracker object.
+     * @param[in] this The memory tracker object.
      * @param[in] pointer The actual memory address that was freed.
     */
-    void (*Remove)(struct VampMemoryTracker *tracker, void *pointer);
+    void (*Remove)(struct VampMemoryTracker *this, void *pointer);
 
 
      /**
      * Write a log file that contains entries of filepath:line seperated by the new line character.
      * If there are no memory leaks, this file should be empty.
      * 
-     * @param[in] tracker The memory tracker object.
+     * @param[in] this The memory tracker object.
      * @param[in] filename The filename to be created.
     */
-    void (*WriteMemoryLeaksFile)(struct VampMemoryTracker *tracker, const char *filename);
+    void (*WriteMemoryLeaksFile)(struct VampMemoryTracker *this, const char *filename);
 
 
     VampMemoryTrackerList *__list__; /**< @private*/

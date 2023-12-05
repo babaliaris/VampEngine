@@ -20,10 +20,10 @@ typedef struct VampLayer
     /**
      * Get the VampApplication object.
      * 
-     * @param[in] layer The VampLayer object.
+     * @param[in] this The VampLayer object.
      * @returns The VampApplication object.
     */
-    VampApplication *(*GetApp)(struct VampLayer *layer);
+    VampApplication *(*GetApp)(struct VampLayer *this);
 
 
     /**
@@ -76,32 +76,32 @@ VampLayer;
  * User defined callback: Gets called only ONCE after the layer has been
  * attached to the application.
  * 
- * @param[in] layer The users custom layer that has been attached.
+ * @param[in] this The users custom layer that has been attached.
 */
-typedef void (*VampLayerOnAttachFunc)(void *layer);
+typedef void (*VampLayerOnAttachFunc)(void *this);
 
 /**
  * User defined callback: Gets called only ONCE after the layer has been
  * removed from the application.
  * 
- * @param[in] layer The users custom layer that has been removed.
+ * @param[in] this The users custom layer that has been removed.
 */
-typedef void (*VampLayerOnDetachFunc)(void *layer);
+typedef void (*VampLayerOnDetachFunc)(void *this);
 
 /**
  * User defined callback: Gets called in every frame update.
  * 
- * @param[in] layer The users custom layer that has been updated.
+ * @param[in] this The users custom layer that has been updated.
 */
-typedef void (*VampLayerOnUpdateFunc)(void *layer);
+typedef void (*VampLayerOnUpdateFunc)(void *this);
 
 
 /**
  * User defined callback: Gets called when an event occurs.
  * 
- * @param[in] layer The users custom layer object.
+ * @param[in] this The users custom layer object.
 */
-typedef void (*VampLayerOnEventFunc)(void *layer, VampEvent *event);
+typedef void (*VampLayerOnEventFunc)(void *this, VampEvent *event);
 
 
 

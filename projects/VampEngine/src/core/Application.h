@@ -21,29 +21,29 @@ typedef struct VampApplication
     /**
      * Appends a layer into the application.
      * 
-     * @param[in] app The VampApplication object.
+     * @param[in] this The VampApplication object.
      * @param[in] layer The VampLayer object to be appended.
     */
-    void (*AppendLayer)(struct VampApplication *app, VampLayer *layer);
+    void (*AppendLayer)(struct VampApplication *this, VampLayer *layer);
 
 
     /**
      * Removes a layer from the application. The removed layer IS NOT destroyed.
      * It's up to the USER to destroy it by calling VampDestroyLayer().
      * 
-     * @param[in] app The VampApplication object.
+     * @param[in] this The VampApplication object.
      * @param[in] layer The VampLayer object to be removed.
      * 
      * @returns The VampLayer object that has been removed, NULL if not found.
     */
-    VampLayer *(*RemoveLayer)(struct VampApplication *app, VampLayer *layer);
+    VampLayer *(*RemoveLayer)(struct VampApplication *this, VampLayer *layer);
 
     /**
      * The entry point of the user.
      * @private
-     * @param[in] app The application object.
+     * @param[in] this The application object.
     */
-    void (*__user_entry_point__)(struct VampApplication *app);
+    void (*__user_entry_point__)(struct VampApplication *this);
 
     /**
      * Runs the application. It is called automatically 
@@ -51,9 +51,9 @@ typedef struct VampApplication
      * 
      * @private
      * 
-     * @param[in] The application object.
+     * @param[in] this The application object.
     */
-    void (*__Run__)(struct VampApplication *app);
+    void (*__Run__)(struct VampApplication *this);
 
 
     VampWindow *__window__; /**< @private.*/

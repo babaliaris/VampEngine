@@ -12,19 +12,19 @@ typedef struct VampGraphicsContext
     /**
      * Sets the clear color of the color buffer.
      * 
-     * @param[in] ctx The VampGraphicsContext object.
+     * @param[in] this The VampGraphicsContext object.
      * @param[in] r The red value of the color.
      * @param[in] g The green value of the color.
      * @param[in] b The blue value of the color.
     */
-    void (*SetClearColor)(struct VampGraphicsContext *ctx, float r, float g, float b);
+    void (*SetClearColor)(struct VampGraphicsContext *this, float r, float g, float b);
 
     /**
      * Clears all the buffers.
      * 
-     * @param[in] ctx The VampGraphicsContext object.
+     * @param[in] this The VampGraphicsContext object.
     */
-    void (*ClearBuffers)(struct VampGraphicsContext *ctx);
+    void (*ClearBuffers)(struct VampGraphicsContext *this);
 
 
 

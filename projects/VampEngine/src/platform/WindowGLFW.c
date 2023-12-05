@@ -9,6 +9,7 @@
 #include <core/events/Events.h>
 
 
+static void ErrorCallback(int errcode, const char *desc);
 static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 static void CursorPosCallback(GLFWwindow* window, double xpos, double ypos);
@@ -20,24 +21,20 @@ static void WindowSizeCallback(GLFWwindow* window, int width, int height);
 static void WindowMinizedCallback(GLFWwindow* window, int iconified);
 
 
-static void ErrorCallback(int errcode, const char *desc)
-{
-    VAMP_ERROR("[GLFW Error: %d] %s", errcode, desc);
-}
 
-
-static void WindowUpdate(VampWindow *window)
+//=================================================|WindowGLFW|=================================================//
+static void WindowUpdate(VampWindow *base)
 {
-    VampWindowGLFW *w = (VampWindowGLFW *)window->__child__;
-    glfwSwapBuffers(w->__glfw_window__);
+    VampWindowGLFW *this = (VampWindowGLFW *)base->__child__;
+    glfwSwapBuffers(this->__glfw_window__);
     glfwPollEvents();
 }
 
 
-static void WindowGLFWDeconstructor(void *windowGLFW)
+static void WindowGLFWDeconstructor(void *this)
 {
-    VampWindowGLFW *w = (VampWindowGLFW *)windowGLFW;
-    VampDestroyWindowGLFW(windowGLFW);
+    VampWindowGLFW *t = (VampWindowGLFW *)this;
+    VampDestroyWindowGLFW(t);
 }
 
 
@@ -124,6 +121,22 @@ void VampDestroyWindowGLFW(VampWindowGLFW *window)
 {
     glfwTerminate();
     VAMP_FREE(window);
+}
+//=================================================|WindowGLFW|=================================================//
+
+
+
+
+
+
+
+
+
+
+//=====================================|GLFW Callback Funcion Definitions|======================================//
+static void ErrorCallback(int errcode, const char *desc)
+{
+    VAMP_ERROR("[GLFW Error: %d] %s", errcode, desc);
 }
 
 
@@ -301,3 +314,4 @@ static void WindowSizeCallback(GLFWwindow* window, int width, int height)
     w->__event_callback__(event->__base__);
     VampDestroyEvent(event->__base__);
 }
+//=====================================|GLFW Callback Funcion Definitions|======================================//

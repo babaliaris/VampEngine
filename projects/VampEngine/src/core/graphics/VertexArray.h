@@ -40,9 +40,9 @@ VampVertexArray *VampCreateVertexArray();
 /**
  * Destroys the VampVertexArray object.
  * 
- * @param[in] this The VampVertexArray to be destroyed.
+ * @param[in] vao The VampVertexArray to be destroyed.
 */
-void VampDestroyVertexArray(VampVertexArray *this);
+void VampDestroyVertexArray(VampVertexArray *vao);
 
 /**
  * @private

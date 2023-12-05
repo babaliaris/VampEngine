@@ -3,9 +3,9 @@
 #include "sds.h"
 
 
-static void SetLevel(VampLogger *logger, unsigned int level)
+static void SetLevel(VampLogger *this, unsigned int level)
 {
-    logger->__level__ = level;
+    this->__level__ = level;
 }
 
 

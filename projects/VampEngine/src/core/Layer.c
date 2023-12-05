@@ -4,9 +4,9 @@
 #include <debug/MemoryTracker.h>
 
 
-static VampApplication *GetApp(VampLayer *layer)
+static VampApplication *GetApp(VampLayer *this)
 {
-    return layer->__app__;
+    return this->__app__;
 }
 
 

@@ -41,8 +41,8 @@ VampVertexArray *__VampNewVertexArray__()
     return new_vao;
 }
 
-void VampDestroyVertexArray(VampVertexArray *this)
+void VampDestroyVertexArray(VampVertexArray *vao)
 {
-    this->__ChildDeconstructor__(this->__child__);
-    VAMP_FREE(this);
+    vao->__ChildDeconstructor__(vao->__child__);
+    VAMP_FREE(vao);
 }

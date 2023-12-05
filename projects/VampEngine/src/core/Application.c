@@ -53,35 +53,35 @@ static char HandleWindowCloseEvent(void *event, void *userPointer)
 }
 
 
-static void VampApplicationRun(VampApplication *app)
+static void VampApplicationRun(VampApplication *this)
 {
-    app->__graphics_context__->SetClearColor(app->__graphics_context__, 0.4f, 0.4f, 0.4f);
+    this->__graphics_context__->SetClearColor(this->__graphics_context__, 0.4f, 0.4f, 0.4f);
 
     VampVertexArray *vao = VampCreateVertexArray();
     vao->Bind(vao);
 
-    while (app->__window__->__is_running__)
+    while (this->__window__->__is_running__)
     {
-        app->__graphics_context__->ClearBuffers(app->__graphics_context__);
+        this->__graphics_context__->ClearBuffers(this->__graphics_context__);
 
         //Run all the layers.
-        for (unsigned int i = 0; i < app->__layers_list->__length__; i++)
+        for (unsigned int i = 0; i < this->__layers_list->__length__; i++)
         {
-            VampLayer *layer = app->__layers_list->GetAt(app->__layers_list, i);
+            VampLayer *layer = this->__layers_list->GetAt(this->__layers_list, i);
             if (layer->__OnUpdate__) layer->__OnUpdate__(layer->__child__);
         }
 
         //Update the VampWindow.
-        app->__window__->Update(app->__window__);
+        this->__window__->Update(this->__window__);
     }
 
     VampDestroyVertexArray(vao);
 }
 
 
-static void VampApplicationAppendLayer(VampApplication *app, VampLayer *layer)
+static void VampApplicationAppendLayer(VampApplication *this, VampLayer *layer)
 {
-    app->__layers_list->Append(app->__layers_list, layer);
+    this->__layers_list->Append(this->__layers_list, layer);
     if (layer->__OnAttach__) layer->__OnAttach__(layer->__child__);
 }
 
@@ -93,10 +93,10 @@ static char LayerRemoveCondition(void *data, void *cond)
     return data == cond;
 }
 
-static VampLayer *VampApplicationRemoveLayer(VampApplication *app, VampLayer *layer)
+static VampLayer *VampApplicationRemoveLayer(VampApplication *this, VampLayer *layer)
 {
     //Remove the layer from the list.
-    VampLayer *removed_layer = app->__layers_list->RemoveByCondition(app->__layers_list, LayerRemoveCondition, layer);
+    VampLayer *removed_layer = this->__layers_list->RemoveByCondition(this->__layers_list, LayerRemoveCondition, layer);
 
     //Layer removed and OnDetach exists.
     if (removed_layer && layer->__OnDetach__) layer->__OnDetach__(layer->__child__);

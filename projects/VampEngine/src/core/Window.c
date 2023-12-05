@@ -15,19 +15,19 @@
 
 
 
-static int GetWidth(VampWindow *window)
+static int GetWidth(VampWindow *this)
 {
-    return window->__width__;
+    return this->__width__;
 }
 
-static int GetHeight(VampWindow *window)
+static int GetHeight(VampWindow *this)
 {
-    return window->__height__;
+    return this->__height__;
 }
 
-static const char *GetWindowTitle(VampWindow *window)
+static const char *GetWindowTitle(VampWindow *this)
 {
-    return window->__title__;
+    return this->__title__;
 }
 
 VampWindow *__VampNewWindow__(VampApplication *app, const char *title, int width, int height)
