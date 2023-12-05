@@ -35,6 +35,7 @@ VampVertexBuffer *__VampNewVertexBuffer__()
 
     new_vbo->Bind                   = NULL; //To be ovverriden.
     new_vbo->Unbind                 = NULL; //To be ovverriden.
+    new_vbo->WriteData              = NULL; //To be ovverriden.
     new_vbo->__child__              = NULL; //To be ovverriden.
     new_vbo->__ChildDeconstructor__ = NULL; //To be ovverriden.
 

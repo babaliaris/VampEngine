@@ -8,7 +8,7 @@
 typedef struct VampVertexBuffer VampVertexBuffer;
 
 /**
- * The opengl vertex array object.
+ * The opengl vertex buffer object.
 */
 typedef struct VampOpenGLVbo
 {

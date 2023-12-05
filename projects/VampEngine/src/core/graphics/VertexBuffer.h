@@ -24,6 +24,15 @@ typedef struct VampVertexBuffer
     */
     void (*Unbind)(struct VampVertexBuffer *this);
 
+    /**
+     *Write the data to the buffer.
+     * 
+     * @param[in] this The vertex buffer object.
+     * @param[in] data The pointer from where to read the data.
+     * @param[in] size The size of the data read buffer.
+    */
+    void (*WriteData)(struct VampVertexBuffer *this, const void *data, signed long int size);
+
     void *__child__; /**< @private*/
     void (*__ChildDeconstructor__)(void *child); /**< @private*/
 }
