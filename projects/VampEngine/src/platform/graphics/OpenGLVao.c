@@ -9,7 +9,7 @@
 static void Bind(VampVertexArray *base)
 {
     VampOpenGLVao *this = (VampOpenGLVao *)base->__child__;
-    VAMP_GLCALL((this->__id__));
+    VAMP_GLCALL(glBindVertexArray(this->__id__));
 }
 
 
@@ -40,7 +40,7 @@ VampOpenGLVao *VampNewOpenGLVao()
     new_OpenGLVao->__base__ = new_vao;
     new_OpenGLVao->__id__   = 0;
 
-    glGenVertexArrays(1, &new_OpenGLVao->__id__);
+    VAMP_GLCALL(glGenVertexArrays(1, &new_OpenGLVao->__id__));
 
     return new_OpenGLVao;
 }
