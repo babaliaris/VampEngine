@@ -14,6 +14,11 @@
 #include <core/events/Events.h>
 
 
+
+
+#include <core/graphics/VertexArray.h>
+
+
 VampLogger *VampGlobalGetEngineLogger()
 {
     return VAMP_GLOBAL_ENGINE_LOGGER;
@@ -52,6 +57,9 @@ static void VampApplicationRun(VampApplication *app)
 {
     app->__graphics_context__->SetClearColor(app->__graphics_context__, 0.4f, 0.4f, 0.4f);
 
+    VampVertexArray *vao = VampCreateVertexArray();
+    vao->Bind(vao);
+
     while (app->__window__->__is_running__)
     {
         app->__graphics_context__->ClearBuffers(app->__graphics_context__);
@@ -66,6 +74,8 @@ static void VampApplicationRun(VampApplication *app)
         //Update the VampWindow.
         app->__window__->Update(app->__window__);
     }
+
+    VampDestroyVertexArray(vao);
 }
 
 

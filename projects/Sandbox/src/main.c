@@ -5,10 +5,11 @@
 
 void Sandbox(VampApplication *app)
 {
-    
+    /*
     VampLayer *testing_layer = SandboxNewTestingEventsLayer(app);
 
     app->AppendLayer(app, testing_layer);
+    */
     
 }
 
