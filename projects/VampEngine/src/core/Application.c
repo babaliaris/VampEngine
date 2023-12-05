@@ -17,6 +17,7 @@
 
 
 #include <core/graphics/VertexArray.h>
+#include <core/graphics/VertexBuffer.h>
 
 
 VampLogger *VampGlobalGetEngineLogger()
@@ -60,6 +61,9 @@ static void VampApplicationRun(VampApplication *this)
     VampVertexArray *vao = VampCreateVertexArray();
     vao->Bind(vao);
 
+    VampVertexBuffer *vbo = VampCreateVertexBuffer();
+    vbo->Bind(vbo);
+
     while (this->__window__->__is_running__)
     {
         this->__graphics_context__->ClearBuffers(this->__graphics_context__);
@@ -75,6 +79,7 @@ static void VampApplicationRun(VampApplication *this)
         this->__window__->Update(this->__window__);
     }
 
+    VampDestroyVertexBuffer(vbo);
     VampDestroyVertexArray(vao);
 }
 
