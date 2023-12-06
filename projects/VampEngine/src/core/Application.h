@@ -10,6 +10,7 @@ typedef struct VampWindow VampWindow;
 typedef struct VampList VampList;
 typedef struct VampLayer VampLayer;
 typedef struct VampGraphicsContext VampGraphicsContext;
+typedef struct VampRenderer2D VampRenderer2D;
 
 /**
  * The application object.
@@ -57,6 +58,7 @@ typedef struct VampApplication
     VampWindow *__window__; /**< @private.*/
     VampList *__layers_list; /**< @private.*/
     VampGraphicsContext *__graphics_context__; /**< @private.*/
+    VampRenderer2D *__renderer2D__; /**< @private.*/
 }
 VampApplication;
 

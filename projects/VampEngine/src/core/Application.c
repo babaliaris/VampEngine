@@ -95,13 +95,12 @@ static void VampApplicationRun(VampApplication *this)
     "projects/VampEngine/src/shaders/test_fragment.glsl");
     shader->Bind(shader);
 
+    this->__renderer2D__->PushDrawData(this->__renderer2D__, vao, shader);
 
-
-    VampRenderer2D *renderer2D = VampCreateRenderer2D();
-    renderer2D->PushDrawData(renderer2D, vao, shader);
-
+    //----------------------------------Engine Loop----------------------------------//
     while (this->__window__->__is_running__)
-    {
+    {   
+        //Clear the draw Buffers (double buffer swap in use).
         this->__graphics_context__->ClearBuffers(this->__graphics_context__);
 
         //Run all the layers.
@@ -111,13 +110,13 @@ static void VampApplicationRun(VampApplication *this)
             if (layer->__OnUpdate__) layer->__OnUpdate__(layer->__child__);
         }
 
-        renderer2D->DrawAllArrays(renderer2D);
+        //Draw all the meshes in the draw queue.
+        this->__renderer2D__->DrawAllArrays(this->__renderer2D__);
 
         //Update the VampWindow.
         this->__window__->Update(this->__window__);
     }
-
-    VampDestroyRenderer2D(renderer2D);
+    //----------------------------------Engine Loop----------------------------------//
 }
 
 
@@ -185,6 +184,7 @@ VampApplication *VampNewApplication(UserEntryPoint user, const char *title, int 
 
     new_app->__layers_list          = VampNewList();
     new_app->__graphics_context__   = VampCreateGraphicsContext(new_app);
+    new_app->__renderer2D__         = VampCreateRenderer2D();
 
     new_app->__Run__                = VampApplicationRun;
     new_app->AppendLayer            = VampApplicationAppendLayer;
@@ -199,6 +199,10 @@ VampApplication *VampNewApplication(UserEntryPoint user, const char *title, int 
 
 void VampDestroyApplication(VampApplication *app)
 {
+
+    //Destroy the Renderer2D.
+    VampDestroyRenderer2D(app->__renderer2D__);
+
     //Destroy all the layers.
     VampDestroyList(app->__layers_list, VampListLayersDecontructor);
 
