@@ -12,6 +12,7 @@
 #include <core/Layer.h>
 #include <core/graphics/GraphicsContext.h>
 #include <core/events/Events.h>
+#include <core/graphics/Renderer2D.h>
 
 
 
@@ -96,6 +97,11 @@ static void VampApplicationRun(VampApplication *this)
     "projects/VampEngine/src/shaders/test_fragment.glsl");
     shader->Bind(shader);
 
+
+
+    VampRenderer2D *renderer2D = VampCreateRenderer2D();
+    renderer2D->PushDrawData(renderer2D, vao, shader);
+
     while (this->__window__->__is_running__)
     {
         this->__graphics_context__->ClearBuffers(this->__graphics_context__);
@@ -107,14 +113,13 @@ static void VampApplicationRun(VampApplication *this)
             if (layer->__OnUpdate__) layer->__OnUpdate__(layer->__child__);
         }
 
-        VAMP_GLCALL(glDrawArrays(GL_TRIANGLES, 0, vbo->GetNumOfVerts(vbo)));
+        renderer2D->DrawAllArrays(renderer2D);
 
         //Update the VampWindow.
         this->__window__->Update(this->__window__);
     }
 
-    VampDestroyVertexArray(vao);
-    VampDestroyShader(shader);
+    VampDestroyRenderer2D(renderer2D);
 }
 
 
