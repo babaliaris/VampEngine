@@ -91,8 +91,6 @@ static void VampApplicationRun(VampApplication *this)
 
     vbo->AddAttributes(vbo, va);
 
-    va->Generate(va);
-
     VampShader *shader = VampCreateShader("projects/VampEngine/src/shaders/test_vertex.glsl", \
     "projects/VampEngine/src/shaders/test_fragment.glsl");
     shader->Bind(shader);

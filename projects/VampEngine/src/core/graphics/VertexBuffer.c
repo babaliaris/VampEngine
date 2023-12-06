@@ -17,6 +17,8 @@
 static void AddAttributes(VampVertexBuffer *this, VampVertexAttributes *attribs)
 {
     this->__attributes__ = attribs;
+
+    attribs->Generate(attribs);
 }
 
 
