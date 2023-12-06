@@ -5,6 +5,8 @@
  * @file
 */
 
+typedef struct VampVertexAttributes VampVertexAttributes;
+
 /**
  * The Vertex buffer object.
 */
@@ -24,6 +26,25 @@ typedef struct VampVertexBuffer
     */
     void (*Unbind)(struct VampVertexBuffer *this);
 
+
+    /**
+     * Add a VampVertexAttributes object associated with this buffer.
+     * Upon VampVertexBuffer destruction, the VampVertexAttributes object
+     * is destroyed as well.
+     * 
+     * @param[in] this The VampVertexBuffer object.
+     * @param[in] attribs The VampVertexAttributes object.
+    */
+    void (*AddAttributes)(struct VampVertexBuffer *this, VampVertexAttributes *attribs);
+
+
+    /**
+     * Get the number of verticies.
+     * 
+     * @param[in] this The vertex buffer object.
+    */
+    unsigned int (*GetNumOfVerts)(struct VampVertexBuffer *this);
+
     /**
      *Write the data to the buffer.
      * 
@@ -35,6 +56,8 @@ typedef struct VampVertexBuffer
 
     void *__child__; /**< @private*/
     void (*__ChildDeconstructor__)(void *child); /**< @private*/
+    signed long int __size__; /**< The buffer's size in bytes. @private*/
+    VampVertexAttributes *__attributes__; /**< @private*/
 }
 VampVertexBuffer;
 

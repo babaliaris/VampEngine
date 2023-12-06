@@ -80,11 +80,15 @@ static void VampApplicationRun(VampApplication *this)
     VampVertexBuffer *vbo = VampCreateVertexBuffer();
     vbo->Bind(vbo);
 
+    vao->AddVertexBuffer(vao, vbo);
+
     vbo->WriteData(vbo, vertices, sizeof(vertices));
 
     VampVertexAttributes *va = VampCreateVertexAttributes();
     va->Push(va, 3, VAMP_TYPES_FLOAT32);
     va->Push(va, 2, VAMP_TYPES_FLOAT32);
+
+    vbo->AddAttributes(vbo, va);
 
     va->Generate(va);
 
@@ -103,16 +107,14 @@ static void VampApplicationRun(VampApplication *this)
             if (layer->__OnUpdate__) layer->__OnUpdate__(layer->__child__);
         }
 
-        VAMP_GLCALL(glDrawArrays(GL_TRIANGLES, 0, 6));
+        VAMP_GLCALL(glDrawArrays(GL_TRIANGLES, 0, vbo->GetNumOfVerts(vbo)));
 
         //Update the VampWindow.
         this->__window__->Update(this->__window__);
     }
 
-    VampDestroyVertexBuffer(vbo);
     VampDestroyVertexArray(vao);
     VampDestroyShader(shader);
-    VampDestroyVertexAttributes(va);
 }
 
 

@@ -4,6 +4,8 @@
 #include <debug/MemoryTracker.h>
 #include <glad/glad.h>
 #include "debug/OpenGLCall.h"
+#include <core/graphics/VertexAttributes.h>
+#include "OpenGLVertexAttributes.h"
 
 
 static void Bind(VampVertexBuffer *base)
@@ -21,8 +23,16 @@ static void Unbind(VampVertexBuffer *base)
 
 static void WriteData(VampVertexBuffer *base, const void *data, signed long int size)
 {
-    VampOpenGLVbo *this = (VampOpenGLVbo *)base->__child__;
+    base->__size__ = size;
     VAMP_GLCALL(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
+}
+
+
+static unsigned int GetNumOfVerts(VampVertexBuffer *this)
+{
+    VampOpenGLVertexAttributes *openGLattribs = (VampOpenGLVertexAttributes *)this->__attributes__->__child__;
+
+    return this->__size__ / openGLattribs->__stride__;
 }
 
 
@@ -44,6 +54,7 @@ VampOpenGLVbo *VampNewOpenGLVbo()
     new_vbo->Bind                   = Bind;
     new_vbo->Unbind                 = Unbind;
     new_vbo->WriteData              = WriteData;
+    new_vbo->GetNumOfVerts          = GetNumOfVerts;
 
     new_OpenGLVbo->__base__ = new_vbo;
     new_OpenGLVbo->__id__   = 0;

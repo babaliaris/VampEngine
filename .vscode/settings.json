@@ -23,6 +23,7 @@
         "any": "c",
         "complex": "c",
         "bitset": "c",
-        "initializer_list": "c"
+        "initializer_list": "c",
+        "memorytracker.h": "c"
     }
 }
