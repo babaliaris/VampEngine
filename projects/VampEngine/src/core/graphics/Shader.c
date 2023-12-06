@@ -5,12 +5,12 @@
 
 
 #ifdef VAMP_LINUX
-    #include <platform/graphics/OpenGLShader.h>
+    #include <platform/opengl/OpenGLShader.h>
 #endif
 
 
 #ifdef VAMP_WINDOWS
-    #include <platform/graphics/OpenGLShader.h>
+    #include <platform/opengl/OpenGLShader.h>
 #endif
 
 

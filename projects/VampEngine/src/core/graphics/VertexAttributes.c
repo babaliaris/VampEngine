@@ -3,11 +3,11 @@
 #include <debug/MemoryTracker.h>
 
 #ifdef VAMP_LINUX
-    #include <platform/graphics/OpenGLVertexAttributes.h>
+    #include <platform/opengl/OpenGLVertexAttributes.h>
 #endif
 
 #ifdef VAMP_WINDOWS
-    #include <platform/graphics/OpenGLVertexAttributes.h>
+    #include <platform/opengl/OpenGLVertexAttributes.h>
 #endif
 
 VampVertexAttributes *VampCreateVertexAttributes()

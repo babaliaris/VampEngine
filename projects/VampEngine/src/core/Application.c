@@ -21,7 +21,7 @@
 #include <core/graphics/VertexBuffer.h>
 #include <core/graphics/Shader.h>
 #include <glad/glad.h>
-#include <platform/graphics/debug/OpenGLCall.h>
+#include <platform/opengl/debug/OpenGLCall.h>
 #include <core/graphics/VertexAttributes.h>
 #include <core/Types.h>
 

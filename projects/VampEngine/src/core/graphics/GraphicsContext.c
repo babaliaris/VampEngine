@@ -4,12 +4,12 @@
 #include <debug/MemoryTracker.h>
 
 #ifdef VAMP_LINUX
-#include <platform/graphics/GraphicsContextGLAD.h>
+#include <platform/opengl/GraphicsContextGLAD.h>
 #endif
 
 
 #ifdef VAMP_WINDOWS
-#include <platform/graphics/GraphicsContextGLAD.h>
+#include <platform/opengl/GraphicsContextGLAD.h>
 #endif
 
 

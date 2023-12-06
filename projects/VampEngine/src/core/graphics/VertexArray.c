@@ -4,12 +4,12 @@
 #include <core/graphics/VertexBuffer.h>
 
 #ifdef VAMP_LINUX
-    #include <platform/graphics/OpenGLVao.h>
+    #include <platform/opengl/OpenGLVao.h>
 #endif
 
 
 #ifdef VAMP_WINDOWS
-    #include <platform/graphics/OpenGLVao.h>
+    #include <platform/opengl/OpenGLVao.h>
 #endif
 
 

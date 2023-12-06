@@ -4,12 +4,12 @@
 #include <core/graphics/VertexAttributes.h>
 
 #ifdef VAMP_LINUX
-    #include <platform/graphics/OpenGLVbo.h>
+    #include <platform/opengl/OpenGLVbo.h>
 #endif
 
 
 #ifdef VAMP_WINDOWS
-    #include <platform/graphics/OpenGLVbo.h>
+    #include <platform/opengl/OpenGLVbo.h>
 #endif
 
 
