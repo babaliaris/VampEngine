@@ -6,8 +6,6 @@
 */
 
 
-typedef struct VampLogger VampLogger;
-typedef struct VampMemoryTracker VampMemoryTracker;
 typedef struct VampWindow VampWindow;
 typedef struct VampList VampList;
 typedef struct VampLayer VampLayer;
