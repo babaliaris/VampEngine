@@ -1,0 +1,11 @@
+#ifndef VAMP_ENGINE_GRAPHICS_TYPES_H
+#define VAMP_ENGINE_GRAPHICS_TYPES_H
+
+#define VAMP_TYPES_INT32        0
+#define VAMP_TYPES_INT64        1
+#define VAMP_TYPES_FLOAT32      2
+#define VAMP_TYPES_FLOAT64      3
+#define VAMP_TYPES_CHAR         4
+#define VAMP_TYPES_UNSIGNED_INT 5
+
+#endif

@@ -22,6 +22,8 @@
 #include <core/graphics/Shader.h>
 #include <glad/glad.h>
 #include <platform/graphics/debug/OpenGLCall.h>
+#include <core/graphics/VertexAttributes.h>
+#include <core/Types.h>
 
 
 VampLogger *VampGlobalGetEngineLogger()
@@ -63,9 +65,13 @@ static void VampApplicationRun(VampApplication *this)
     this->__graphics_context__->SetClearColor(this->__graphics_context__, 0.4f, 0.4f, 0.4f);
 
     float vertices[] = {
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f
+        -0.5f, -0.5f, 0.0f,     0.0f, 0.0f,
+        0.5f, -0.5f, 0.0f,     1.0f, 0.0f,
+        0.5f, 0.5f, 0.0f,     1.0f, 1.0f,
+
+        -0.5f, -0.5f, 0.0f,     0.0f, 0.0f,
+        0.5f, 0.5f, 0.0f,     1.0f, 1.0f,
+        -0.5f, 0.5f, 0.0f,     0.0f, 1.0f
     };
 
     VampVertexArray *vao = VampCreateVertexArray();
@@ -76,8 +82,11 @@ static void VampApplicationRun(VampApplication *this)
 
     vbo->WriteData(vbo, vertices, sizeof(vertices));
 
-    VAMP_GLCALL(glEnableVertexAttribArray(0));
-    VAMP_GLCALL(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, NULL));
+    VampVertexAttributes *va = VampCreateVertexAttributes();
+    va->Push(va, 3, VAMP_TYPES_FLOAT32);
+    va->Push(va, 2, VAMP_TYPES_FLOAT32);
+
+    va->Generate(va);
 
     VampShader *shader = VampCreateShader("projects/VampEngine/src/shaders/test_vertex.glsl", \
     "projects/VampEngine/src/shaders/test_fragment.glsl");
@@ -94,7 +103,7 @@ static void VampApplicationRun(VampApplication *this)
             if (layer->__OnUpdate__) layer->__OnUpdate__(layer->__child__);
         }
 
-        VAMP_GLCALL(glDrawArrays(GL_TRIANGLES, 0, 3));
+        VAMP_GLCALL(glDrawArrays(GL_TRIANGLES, 0, 6));
 
         //Update the VampWindow.
         this->__window__->Update(this->__window__);
@@ -103,6 +112,7 @@ static void VampApplicationRun(VampApplication *this)
     VampDestroyVertexBuffer(vbo);
     VampDestroyVertexArray(vao);
     VampDestroyShader(shader);
+    VampDestroyVertexAttributes(va);
 }
 
 

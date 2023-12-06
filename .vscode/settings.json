@@ -19,6 +19,10 @@
         "list.h": "c",
         "application.h": "c",
         "typeinfo": "c",
-        "eventbase.h": "c"
+        "eventbase.h": "c",
+        "any": "c",
+        "complex": "c",
+        "bitset": "c",
+        "initializer_list": "c"
     }
 }
