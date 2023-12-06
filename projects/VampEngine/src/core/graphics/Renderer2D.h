@@ -5,7 +5,14 @@ typedef struct VampList VampList;
 typedef struct VampVertexArray VampVertexArray;
 typedef struct VampShader VampShader;
 
+/**
+ * @file
+*/
 
+
+/**
+ * @private
+*/
 typedef struct VampRendererData2D
 {
     VampVertexArray *__vao__;
@@ -14,31 +21,82 @@ typedef struct VampRendererData2D
 VampRendererData2D;
 
 
+/**
+ * The renderer2D structure.
+*/
 typedef struct VampRenderer2D
 {
+    /**
+     * Push draw data to the renderer list. Upon destruction,
+     * VampVertexArray and VampShader will be destroyed as well.
+     * 
+     * @param[in] this The VampRenderer2D object.
+     * @param[in] vao The VampVertexArray object.
+     * @param[in] shader The VampShader object.
+    */
     void (*PushDrawData)(struct VampRenderer2D *this, VampVertexArray *vao, VampShader *shader);
 
+
+    /**
+     * Draw a single mesh object.
+     * 
+     * @param[in] this The VampRenderer2D object.
+     * @param[in] data2D The data2D containing the mesh object.
+    */
     void (*DrawArrays)(struct VampRenderer2D *this, VampRendererData2D *data2D);
 
+
+    /**
+     * Draw all the meshes VampRendererData2D that have been pushed into this renderer.
+     * 
+     * @param[in] this The VampRenderer2D object.
+    */
     void (*DrawAllArrays)(struct VampRenderer2D *this);
 
-    VampList *__list__;
-    void *__child__;
-    void (*__ChildDeconstructor__)(void *child);
+
+
+    VampList *__list__; /**< @private*/
+    void *__child__; /**< @private*/
+    void (*__ChildDeconstructor__)(void *child); /**< @private*/
 }
 VampRenderer2D;
 
 
+
+/**
+ * Create a new VampCreateRenderer2D implementation based on the operating system.
+ * @returns The newly created VampCreateRenderer2D object.
+*/
 VampRenderer2D *VampCreateRenderer2D();
 
 
+/**
+ * Destroy the VampCreateRenderer2D object.
+ * 
+ * @param[in] renderer2D The VampCreateRenderer2D object to be destroyed.
+*/
 void VampDestroyRenderer2D(VampRenderer2D *renderer2D);
 
 
+
+/**
+ * Creates a new VampRendererData2D object.
+ * 
+ * @param[in] vao The VampVertexArray object.
+ * @param[in] shader The VampShader object.
+ * 
+ * @returns The newly created VampRendererData2D object.
+*/
 VampRendererData2D *VampNewRendererData2D(VampVertexArray *vao, VampShader *shader);
 
 void VampDestroyRendererData2D(VampRendererData2D *data2D);
 
+
+/**
+ * Create a new VampCreateRenderer2D object.
+ * @private
+ * @returns The newly created VampCreateRenderer2D object.
+*/
 VampRenderer2D *__VampNewRenderer2D__();
 
 #endif

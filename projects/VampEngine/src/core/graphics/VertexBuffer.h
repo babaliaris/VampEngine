@@ -28,6 +28,9 @@ typedef struct VampVertexBuffer
 
 
     /**
+     * ITS IMPORTANT TO ADD THE ATTRIBUTES AFTER YOU HAVE PUSHED ALL
+     * OF THEM USING VampVertexAttributes::Push() method!!!!!!!
+     * 
      * Add a VampVertexAttributes object associated with this buffer.
      * Upon VampVertexBuffer destruction, the VampVertexAttributes object
      * is destroyed as well.
