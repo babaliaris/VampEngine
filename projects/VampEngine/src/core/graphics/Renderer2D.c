@@ -1,11 +1,8 @@
 #include <VampPCH.h>
 #include "Renderer2D.h"
 #include <debug/MemoryTracker.h>
-#include <core/graphics/VertexArray.h>
-#include <core/graphics/VertexBuffer.h>
-#include <core/graphics/VertexAttributes.h>
-#include <core/graphics/Shader.h>
 #include <data-structures/list.h>
+#include <core/graphics/Mesh.h>
 
 #ifdef VAMP_LINUX
     #include <platform/opengl/OpenGLRenderer2D.h>
@@ -16,9 +13,9 @@
 #endif
 
 
-static void PushDrawData(VampRenderer2D *this, VampVertexArray *vao, VampShader *shader)
+static void PushDrawData(VampRenderer2D *this, VampMesh *mesh)
 {
-    this->__list__->Append(this->__list__, VampNewRendererData2D(vao, shader));
+    this->__list__->Append(this->__list__, mesh);
 }
 
 
@@ -26,17 +23,17 @@ static void DrawAllArrays(VampRenderer2D *this)
 {
     for (unsigned int i = 0; i < this->__list__->__length__; i++)
     {
-        VampRendererData2D *data2D = (VampRendererData2D *)this->__list__->GetAt(this->__list__, i);
+        VampMesh *mesh = (VampMesh *)this->__list__->GetAt(this->__list__, i);
 
-        this->DrawArrays(this, data2D);
+        this->DrawArrays(this, mesh);
     }
 }
 
 
-static void Data2DListDeconstructor(void *data)
+static void MeshDeconstructor(void *data)
 {
-    VampRendererData2D *d = (VampRendererData2D *)data;
-    VampDestroyRendererData2D(d);
+    VampMesh *mesh = (VampMesh *)data;
+    VampDestroyMesh(mesh);
 }
 
 
@@ -57,28 +54,12 @@ void VampDestroyRenderer2D(VampRenderer2D *renderer2D)
 {
     renderer2D->__ChildDeconstructor__(renderer2D->__child__);
 
-    VampDestroyList(renderer2D->__list__, Data2DListDeconstructor);
+    VampDestroyList(renderer2D->__list__, MeshDeconstructor);
 
     VAMP_FREE(renderer2D);
 }
 
 
-VampRendererData2D *VampNewRendererData2D(VampVertexArray *vao, VampShader *shader)
-{
-    VampRendererData2D *VAMP_MALLOC(new_data, sizeof(VampRendererData2D));
-
-    new_data->__vao__       = vao;
-    new_data->__shader__    = shader;
-
-    return new_data;
-}
-
-void VampDestroyRendererData2D(VampRendererData2D *data2D)
-{
-    VampDestroyVertexArray(data2D->__vao__);
-    VampDestroyShader(data2D->__shader__);
-    VAMP_FREE(data2D);
-}
 
 
 VampRenderer2D *__VampNewRenderer2D__()

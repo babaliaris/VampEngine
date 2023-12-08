@@ -25,6 +25,7 @@
 #include <platform/opengl/debug/OpenGLCall.h>
 #include <core/graphics/VertexAttributes.h>
 #include <core/Types.h>
+#include <core/graphics/Mesh.h>
 
 
 VampLogger *VampGlobalGetEngineLogger()
@@ -95,7 +96,9 @@ static void VampApplicationRun(VampApplication *this)
     "projects/VampEngine/src/shaders/test_fragment.glsl");
     shader->Bind(shader);
 
-    this->__renderer2D__->PushDrawData(this->__renderer2D__, vao, shader);
+    VampMesh *mesh = VampNewMesh(vao, shader);
+
+    this->__renderer2D__->PushDrawData(this->__renderer2D__, mesh);
 
     //----------------------------------Engine Loop----------------------------------//
     while (this->__window__->__is_running__)

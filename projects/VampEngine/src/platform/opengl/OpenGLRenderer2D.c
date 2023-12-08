@@ -4,6 +4,7 @@
 #include <core/graphics/VertexArray.h>
 #include <core/graphics/VertexBuffer.h>
 #include <core/graphics/VertexAttributes.h>
+#include <core/graphics/Mesh.h>
 #include <core/graphics/Shader.h>
 #include <debug/MemoryTracker.h>
 #include <glad/glad.h>
@@ -12,15 +13,11 @@
 
 
 
-static void DrawArrays(VampRenderer2D *this, VampRendererData2D *data2D)
+static void DrawArrays(VampRenderer2D *this, VampMesh *mesh)
 {
-    data2D->__vao__->Bind(data2D->__vao__);
-    data2D->__shader__->Bind(data2D->__shader__);
-
-    VAMP_GLCALL(glDrawArrays( GL_TRIANGLES, 0, data2D->__vao__->__buffer__->GetNumOfVerts(data2D->__vao__->__buffer__) ));
-
-    data2D->__vao__->Unbind(data2D->__vao__);
-    data2D->__shader__->Unbind(data2D->__shader__);
+    mesh->Bind(mesh);
+    VAMP_GLCALL(glDrawArrays( GL_TRIANGLES, 0, mesh->__vao__->__buffer__->GetNumOfVerts(mesh->__vao__->__buffer__) ));
+    mesh->UnBind(mesh);
 }
 
 

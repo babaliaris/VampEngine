@@ -10,15 +10,7 @@ typedef struct VampShader VampShader;
 */
 
 
-/**
- * @private
-*/
-typedef struct VampRendererData2D
-{
-    VampVertexArray *__vao__;
-    VampShader      *__shader__;
-}
-VampRendererData2D;
+typedef struct VampMesh VampMesh;
 
 
 /**
@@ -31,19 +23,18 @@ typedef struct VampRenderer2D
      * VampVertexArray and VampShader will be destroyed as well.
      * 
      * @param[in] this The VampRenderer2D object.
-     * @param[in] vao The VampVertexArray object.
-     * @param[in] shader The VampShader object.
+     * @param[in] mesh The VampMesh object.
     */
-    void (*PushDrawData)(struct VampRenderer2D *this, VampVertexArray *vao, VampShader *shader);
+    void (*PushDrawData)(struct VampRenderer2D *this, VampMesh *mesh);
 
 
     /**
      * Draw a single mesh object.
      * 
      * @param[in] this The VampRenderer2D object.
-     * @param[in] data2D The data2D containing the mesh object.
+     * @param[in] mesh The VampMesh object.
     */
-    void (*DrawArrays)(struct VampRenderer2D *this, VampRendererData2D *data2D);
+    void (*DrawArrays)(struct VampRenderer2D *this, VampMesh *mesh);
 
 
     /**
@@ -77,19 +68,6 @@ VampRenderer2D *VampCreateRenderer2D();
 */
 void VampDestroyRenderer2D(VampRenderer2D *renderer2D);
 
-
-
-/**
- * Creates a new VampRendererData2D object.
- * 
- * @param[in] vao The VampVertexArray object.
- * @param[in] shader The VampShader object.
- * 
- * @returns The newly created VampRendererData2D object.
-*/
-VampRendererData2D *VampNewRendererData2D(VampVertexArray *vao, VampShader *shader);
-
-void VampDestroyRendererData2D(VampRendererData2D *data2D);
 
 
 /**
