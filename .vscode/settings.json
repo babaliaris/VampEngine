@@ -1,0 +1,27 @@
+{
+    "Lua.diagnostics.globals": [
+        "workspace",
+        "configurations",
+        "platforms",
+        "include",
+        "project",
+        "kind",
+        "language",
+        "objdir",
+        "targetdir",
+        "targetname",
+        "filter",
+        "symbols",
+        "optimize",
+        "files",
+        "links",
+        "defines",
+        "includedirs"
+    ],
+    "files.associations": {
+        "*.sqlbook": "sql",
+        "*.ndjson": "jsonl",
+        "*.dbclient-js": "javascript",
+        "vampengine.h": "c"
+    }
+}
