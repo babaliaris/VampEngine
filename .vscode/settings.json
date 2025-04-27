@@ -16,12 +16,24 @@
         "files",
         "links",
         "defines",
-        "includedirs"
+        "includedirs",
+        "warnings",
+        "cdialect"
     ],
     "files.associations": {
         "*.sqlbook": "sql",
         "*.ndjson": "jsonl",
         "*.dbclient-js": "javascript",
-        "vampengine.h": "c"
-    }
+        "vampengine.h": "c",
+        "compare": "cpp",
+        "cstdint": "cpp",
+        "array": "c",
+        "string_view": "c",
+        "format": "c",
+        "initializer_list": "c",
+        "ranges": "c",
+        "span": "c",
+        "charconv": "c"
+    },
+    "editor.fontSize": 15
 }

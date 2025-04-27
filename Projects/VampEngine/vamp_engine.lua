@@ -1,6 +1,7 @@
 project "VampEngine"
     kind "SharedLib"
     language "C"
+    cdialect "C99"
     objdir ("%{_WORKING_DIR}/%{_VAMP_OBJ_DIR}/%{cfg.shortname}_%{prj.name}")
     targetdir ("%{_WORKING_DIR}/%{_VAMP_BUILD_DIR}/%{cfg.shortname}")
 
@@ -12,6 +13,8 @@ project "VampEngine"
     includedirs {
         "include"
     }
+
+    warnings "Extra"
 
     -- Predefined macros for each major PC Platform --
     filter {"system:linux"}

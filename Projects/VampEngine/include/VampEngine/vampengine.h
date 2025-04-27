@@ -2,6 +2,10 @@
 #define VAMP_ENGINE_H
 
 #include <VampEngine/core/vamp_platform.h>
+#include <VampEngine/core/vamp_std.h>
+#include <VampEngine/core/vamp_application.h>
+
 #include <VampEngine/core/vamp_entryPoint.h>
+
 
 #endif

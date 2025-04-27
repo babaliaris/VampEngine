@@ -1,6 +1,7 @@
 project "Sandbox"
     kind "ConsoleApp"
     language "C"
+    cdialect "C99"
     targetname "sandbox"
     objdir ("%{_WORKING_DIR}/%{_VAMP_OBJ_DIR}/%{cfg.shortname}_%{prj.name}")
     targetdir ("%{_WORKING_DIR}/%{_VAMP_BUILD_DIR}/%{cfg.shortname}")
@@ -17,6 +18,8 @@ project "Sandbox"
     links {
         "VampEngine"
     }
+
+    warnings "Extra"
 
     -- Predefined macros for each major PC Platform --
     filter {"system:linux"}
