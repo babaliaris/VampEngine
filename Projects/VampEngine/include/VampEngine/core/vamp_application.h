@@ -1,5 +1,6 @@
 #ifndef VAMP_APPLICATION_H
 #define VAMP_APPLICATION_H
+#include <VampEngine/core/vamp_platform.h>
 
 typedef struct VampApplication
 {
@@ -9,9 +10,9 @@ typedef struct VampApplication
 }VampApplication;
 
 
-VampApplication *vampCreateApplication();
+VAMP_API VampApplication *vampCreateApplication();
 
-char vampDestroyApplication(VampApplication **pApp);
+VAMP_API char vampDestroyApplication(VampApplication **pApp);
 
 //The user must implement this function!
 VampApplication *userApplicationEntry();

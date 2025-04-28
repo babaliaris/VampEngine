@@ -50,13 +50,13 @@ typedef enum VampPrintColor
 } VampPrintColor;
 
 
-void vampPrintf(const char *pFmt, ...);
+VAMP_API void vampPrintf(const char *pFmt, ...);
 
-void vampPrintfColored(VampPrintColor pColor, const char *pFmt, ...);
+VAMP_API void vampPrintfColored(VampPrintColor pColor, const char *pFmt, ...);
 
-void *vampMalloc(VAMP_SIZE_T pSize);
+VAMP_API void *vampMalloc(VAMP_SIZE_T pSize);
 
-void vampFree(void *pPtr);
+VAMP_API void vampFree(void *pPtr);
 
 
 #define VAMP_DISABLE_UNUSED_VARIABLE_WARNING(variable) (void)variable

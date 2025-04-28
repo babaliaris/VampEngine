@@ -5,3 +5,10 @@ obj/
 
 #Files
 Makefile
+
+#Visual Studio Code
+.vs/
+*.vcxproj
+*.vcxproj.user
+*.vcxproj.filters
+*.sln

@@ -13,4 +13,13 @@
 
     #endif
     
+    //This is only required by the Microsoft Compiler!
+    #if defined(VAMP_WINDOWS) && defined(_MSC_VER)
+        #define VAMP_API __declspec( dllexport )
+
+    //Else, just define VAMP_API to be nothing.
+    #else
+        #define VAMP_API
+    #endif
+    
 #endif
