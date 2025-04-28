@@ -26,9 +26,9 @@
     #define VAMP_INT64 int64_t
 
     #define VAMP_UINT8 u_int8_t
-    #define VAMP_UINT16 u_int8_t
-    #define VAMP_UINT32 u_int8_t
-    #define VAMP_UINT64 u_int8_t
+    #define VAMP_UINT16 u_int16_t
+    #define VAMP_UINT32 u_int32_t
+    #define VAMP_UINT64 u_int64_t
 
     #define VAMP_SIZE_T size_t
 
