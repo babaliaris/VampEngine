@@ -34,25 +34,19 @@
 
     #define VAMP_SIZEOF(type) sizeof(type)
 
+    #define VAMP_COLOR_DEFAULT  "\033[0m"
+    #define VAMP_COLOR_RED      "\033[31m"
+    #define VAMP_COLOR_GREEN    "\033[32m"
+    #define VAMP_COLOR_YELLOW   "\033[33m"
+    #define VAMP_COLOR_BLUE     "\033[34m"
+    #define VAMP_COLOR_MAGENTA  "\033[35m"
+    #define VAMP_COLOR_CYAN     "\033[36m"
+    #define VAMP_COLOR_WHITE    "\033[37m"
+
 #endif
 
 
-typedef enum VampPrintColor
-{
-    VAMP_COLOR_DEFAULT = 0,
-    VAMP_COLOR_RED,
-    VAMP_COLOR_GREEN,
-    VAMP_COLOR_YELLOW,
-    VAMP_COLOR_BLUE,
-    VAMP_COLOR_MAGENTA,
-    VAMP_COLOR_CYAN,
-    VAMP_COLOR_WHITE
-} VampPrintColor;
-
-
 VAMP_API void vampPrintf(const char *pFmt, ...);
-
-VAMP_API void vampPrintfColored(VampPrintColor pColor, const char *pFmt, ...);
 
 VAMP_API void *vampMalloc(VAMP_SIZE_T pSize);
 

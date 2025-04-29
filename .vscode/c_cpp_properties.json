@@ -6,9 +6,15 @@
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/Projects/VampEngine/include"
             ],
-            "defines": ["VAMP_LINUX", "VAMP_WINDOWS", "VAMP_MACOS", "VAMP_ENTRY_POINT"], //This is for intellisense only, not the actual build system.
-            "compilerPath": "/usr/bin/clang",
-            "cStandard": "c17",
+            "defines": [
+                "VAMP_LINUX", 
+                "VAMP_WINDOWS", 
+                "VAMP_MACOS", 
+                "VAMP_ENTRY_POINT",
+                "VAMP_DEBUG"
+            ],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c99",
             "cppStandard": "c++17",
             "intelliSenseMode": "linux-clang-x64"
         }

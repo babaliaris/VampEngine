@@ -2,7 +2,16 @@
 #include <VampEngine/vampengine.h>
 
 VampApplication *userApplicationEntry()
-{
-    vampPrintf("This is the User Entry Point!\n");
+{   
+    VAMP_LOG_FORMAT_TYPE1(VAMP_COLOR_CYAN, "MESSAGE", "SANDBOX", __FILE__, __LINE__, "%s", "This is a message!");
+
+    VAMP_TRACE("This is a TRACE!");
+    VAMP_INFO("This is an INFO!");
+    VAMP_WARN("This is a WARNING!");
+    VAMP_ERROR("This is an ERROR!");
+    VAMP_FATAL("This is FATAL!");
+
+    VAMP_INFO("%s", "This is an INFO using a formatted string!");
+
     return vampCreateApplication();
 }

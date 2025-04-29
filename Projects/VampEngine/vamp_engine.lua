@@ -33,6 +33,7 @@ project "VampEngine"
 
     -- Configuration based options for EVERY platform --
     filter {"configurations:debug"}
+        defines {"VAMP_DEBUG"}
         symbols "On"
         optimize "Off"
 

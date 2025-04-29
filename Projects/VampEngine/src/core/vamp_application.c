@@ -5,7 +5,7 @@ static void runIMPL(VampApplication *pThis)
 {
     VAMP_DISABLE_UNUSED_VARIABLE_WARNING(pThis);
 
-    vampPrintfColored(VAMP_COLOR_CYAN, "%s\n", "Hello VampEngine!");
+    vampPrintf("%s%s%s\n", VAMP_COLOR_GREEN, "Hello VampEngine!", VAMP_COLOR_DEFAULT);
 }
 
 

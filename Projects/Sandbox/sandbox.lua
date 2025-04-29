@@ -35,6 +35,7 @@ project "Sandbox"
     filter {} --Clean all filters.
 
     filter {"configurations:debug"}
+        defines {"VAMP_DEBUG"}
         symbols "On"
         optimize "Off"
 
