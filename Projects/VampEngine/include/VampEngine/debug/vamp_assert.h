@@ -4,15 +4,15 @@
 
 #if VAMP_DEBUG
 
-    #define VAMP_ASSERT(cond, fmt, ...)\
+    #define VAMP_ASSERT(cond)\
         if ( !(cond) )\
         {\
-            VAMP_LOG_FORMAT_TYPE1(VAMP_COLOR_RED, "ASSERTION", "VampEngine", __FILE__, __LINE__, fmt, ##__VA_ARGS__);\
+            VAMP_LOG_FORMAT_ASSERTION_TYPE(#cond);\
             vampExit(-1);\
         }
 
 #else
-    #define VAMP_ASSERT(cond, fmt, ...)
+    #define VAMP_ASSERT(cond)
 
 #endif
 

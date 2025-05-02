@@ -28,7 +28,7 @@ typedef struct VampTestApplication
     VAMP_SIZE_T m_total_run;
     VAMP_SIZE_T m_total_failed;
 
-    VampUnitTest *m_tests[VAMPTEST_TOTAL_NUMBER_OF_TESTS];
+    VampUnitTest **m_tests;
 
     void (*registerTest)(struct VampTestApplication *pThis, VampUnitTest *pTest);
     void (*runAllTests)(struct VampTestApplication *pThis);

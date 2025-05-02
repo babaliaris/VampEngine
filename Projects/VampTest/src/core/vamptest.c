@@ -58,7 +58,7 @@ static void runAllTestsImpl(VampTestApplication *pThis)
     {
         VampUnitTest *test = pThis->m_tests[i];
 
-        VAMP_ASSERT(test == NULL, "Test should not be null at this point.");
+        VAMP_ASSERT(test == NULL);
 
         test->run(test);
 
@@ -101,6 +101,7 @@ VampTestApplication *vampCreateTestApplication()
     new_app->m_total_registered_tests   = 0;
     new_app->m_total_run                = 0;
     new_app->m_total_failed             = 0;
+    new_app->m_tests                    = (VampUnitTest **)vampMalloc( VAMP_SIZEOF(VampUnitTest *) * VAMPTEST_TOTAL_NUMBER_OF_TESTS );
 
     new_app->registerTest   = registerTestImpl;
     new_app->runAllTests    = runAllTestsImpl;
@@ -120,9 +121,11 @@ char vampDestroyTestApplication(VampTestApplication **pThis)
     //Destroy all the tests.
     for (VAMP_SIZE_T i = 0; i < (*pThis)->m_total_registered_tests; i++)
     {
-        VAMP_ASSERT( (*pThis)->m_tests[i] != NULL, "This should not be null at this point!");
+        VAMP_ASSERT( (*pThis)->m_tests[i] != NULL);
         vampDestroyTest(&(*pThis)->m_tests[i]);
     }
+
+    vampFree((*pThis)->m_tests);
 
     vampFree(*pThis);
 
