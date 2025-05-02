@@ -52,6 +52,8 @@ VAMP_API void *vampMalloc(VAMP_SIZE_T pSize);
 
 VAMP_API void vampFree(void *pPtr);
 
+VAMP_API void vampExit(int status);
+
 
 #define VAMP_DISABLE_UNUSED_VARIABLE_WARNING(variable) (void)variable
 

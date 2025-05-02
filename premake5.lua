@@ -8,3 +8,4 @@ workspace "VampEngineWS"
     -- Include our core projects.
     include "Projects/VampEngine/vamp_engine.lua"
     include "Projects/Sandbox/sandbox.lua"
+    include "Projects/VampTest/vamptest.lua"

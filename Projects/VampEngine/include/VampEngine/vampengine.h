@@ -4,6 +4,7 @@
 #include <VampEngine/core/vamp_platform.h>
 #include <VampEngine/core/vamp_std.h>
 #include <VampEngine/debug/vamp_logger.h>
+#include <VampEngine/debug/vamp_assert.h>
 #include <VampEngine/core/vamp_application.h>
 
 #include <VampEngine/core/vamp_entryPoint.h>

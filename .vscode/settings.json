@@ -33,7 +33,14 @@
         "initializer_list": "c",
         "ranges": "c",
         "span": "c",
-        "charconv": "c"
+        "charconv": "c",
+        "any": "c",
+        "functional": "c",
+        "ratio": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c",
+        "variant": "c"
     },
     "editor.fontSize": 15
 }

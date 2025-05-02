@@ -1,0 +1,1 @@
+#include <VampTest/vamptest.h>
