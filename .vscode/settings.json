@@ -33,7 +33,9 @@
         "initializer_list": "c",
         "ranges": "c",
         "span": "c",
-        "charconv": "c"
+        "charconv": "c",
+        "vamp_std.h": "c",
+        "vamp_logger.h": "c"
     },
     "editor.fontSize": 15
 }

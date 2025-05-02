@@ -29,3 +29,13 @@ void vampFree(void *pPtr)
         #error Platform not supported!
     #endif
 }
+
+
+VAMP_API void vampExit(int pStatus)
+{
+    #if VAMP_ALL_PC_PLATFORMS
+        exit(pStatus);
+    #else
+        #error Platform not supported!
+    #endif
+}

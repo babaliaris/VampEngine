@@ -4,7 +4,8 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/Projects/VampEngine/include"
+                "${workspaceFolder}/Projects/VampEngine/include",
+                "${workspaceFolder}/Projects/VampTest/include"
             ],
             "defines": [
                 "VAMP_LINUX", 
