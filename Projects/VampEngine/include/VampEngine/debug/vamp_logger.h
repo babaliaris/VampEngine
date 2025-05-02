@@ -45,6 +45,7 @@
 //Else define all the macros as nothing, to strip all the debug code from release and distribution versions!!!
 #else
     #define VAMP_LOG_FORMAT_TYPE1(COLOR, LOG_TYPE, CALLER, FILE, LINE, FMT, ...)
+    #define VAMP_LOG_FORMAT_ASSERTION_TYPE(reason)
     #define VAMP_TRACE(fmt, ...)
     #define VAMP_INFO(fmt, ...)
     #define VAMP_WARN(fmt, ...)
