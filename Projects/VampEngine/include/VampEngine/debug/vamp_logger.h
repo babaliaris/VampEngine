@@ -32,6 +32,12 @@
     #define VAMP_FATAL(fmt, ...)\
         VAMP_LOG_FORMAT_TYPE1(VAMP_COLOR_MAGENTA, "FATAL", "VampEngine", __FILE__, __LINE__, fmt, ##__VA_ARGS__)
 
+    #define VAMP_LOG_COND(cond, LOGGER)\
+        if ( (cond) )\
+        {\
+            LOGGER;\
+        }
+
 
 //Else define all the macros as nothing, to strip all the debug code from release and distribution versions!!!
 #else
@@ -41,6 +47,7 @@
     #define VAMP_WARN(fmt, ...)
     #define VAMP_ERROR(fmt, ...)
     #define VAMP_FATAL(fmt, ...)
+    #define VAMP_LOG_COND(cond, LOGGER)
 
 
 #endif

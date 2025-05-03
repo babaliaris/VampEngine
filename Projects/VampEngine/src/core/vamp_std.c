@@ -33,7 +33,8 @@ void vampFree(void *pPtr)
 
 
 void vampExit(int status)
-{
+{   
+    //TODO replace exit with System Shutdown!
     #if VAMP_ALL_PC_PLATFORMS
         exit(status);
     #else

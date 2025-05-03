@@ -18,13 +18,13 @@ VAMPTEST_TEST(math, mult)
 
 int main()
 {   
-    VAMPTEST_START();
+    VAMPTEST_START(vamp_app);
 
-    VAMPTEST_REGISTER(math, add);
-    VAMPTEST_REGISTER(math, subtract);
-    VAMPTEST_REGISTER(math, mult);
+    VAMPTEST_REGISTER(vamp_app, math, add);
+    VAMPTEST_REGISTER(vamp_app, math, subtract);
+    VAMPTEST_REGISTER(vamp_app, math, mult);
 
-    VAMPTEST_END();
+    VAMPTEST_END(vamp_app);
 
     return 0;
 }

@@ -8,9 +8,17 @@ static void registerTestImpl(VampTestApplication *pThis, VampUnitTest *pTest)
     VAMP_ASSERT(pThis != NULL);
     VAMP_ASSERT(pTest != NULL);
 
+    VAMP_ASSERT(pThis->m_total_tests < VAMPTEST_MAX_NUM_OF_TESTS);
+
     pThis->m_tests_list[pThis->m_total_tests] = pTest;
 
     pThis->m_total_tests++;
+
+    VAMP_LOG_COND(
+        pThis->m_total_tests == VAMPTEST_MAX_NUM_OF_TESTS,
+        VAMP_WARN("The total number of tests has been reached! Consider updating the value of VAMPTEST_MAX_NUM_OF_TESTS")
+    )
+
 }
 
 
@@ -18,7 +26,7 @@ static void registerTestImpl(VampTestApplication *pThis, VampUnitTest *pTest)
 static void runAllTestsImpl(VampTestApplication *pThis)
 {
     VAMP_ASSERT(pThis != NULL);
-    VAMP_ASSERT(pThis->m_total_tests < VAMPTEST_MAX_NUM_OF_TESTS);
+    VAMP_ASSERT(pThis->m_total_tests <= VAMPTEST_MAX_NUM_OF_TESTS);
 
     for (VAMP_SIZE_T i = 0; i < pThis->m_total_tests; i++)
     {
@@ -90,7 +98,7 @@ VampTestApplication *vampCreateTestApplication()
     new_app->m_total_run    = 0;
     new_app->m_total_failed = 0;
 
-    new_app->m_tests_list   = (VampUnitTest **)vampMalloc(VAMP_SIZEOF(VampUnitTest *));
+    new_app->m_tests_list   = (VampUnitTest **)vampMalloc(VAMP_SIZEOF(VampUnitTest *) * VAMPTEST_MAX_NUM_OF_TESTS);
 
     new_app->registerTest   = registerTestImpl;
     new_app->runAllTests    = runAllTestsImpl;
@@ -108,11 +116,16 @@ char vampDestroyTestApplication(VampTestApplication **pThis)
         return 0;
     }
 
-    VAMP_ASSERT( (*pThis)->m_total_tests < VAMPTEST_MAX_NUM_OF_TESTS );
+    VAMP_ASSERT( (*pThis)->m_total_tests <= VAMPTEST_MAX_NUM_OF_TESTS );
 
     //Destroy all the tests in the list.
     for (VAMP_SIZE_T i = 0; i < (*pThis)->m_total_tests; i++)
+    {
+        VAMP_ASSERT( (*pThis)->m_tests_list[i] != NULL );
         vampDestroyTest( &(*pThis)->m_tests_list[i] );
+    }
+
+    vampFree( (*pThis)->m_tests_list );
 
     vampFree(*pThis);
 
