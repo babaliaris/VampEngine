@@ -19,7 +19,7 @@ VampApplication *vampCreateApplication()
         vampMemoryDebuggerInit();
     #endif
 
-    VampApplication *new_app = (VampApplication *)vampMalloc( VAMP_SIZEOF(VampApplication) );
+    VampApplication *new_app = (VampApplication *)VAMP_MALLOC( VAMP_SIZEOF(VampApplication) );
 
     //TODO Log a warning or do an assertion here.
     if (!new_app) return NULL;
@@ -35,7 +35,7 @@ char vampDestroyApplication(VampApplication **pApp)
 {
     if ( !pApp || !(*pApp) ) return 0;
 
-    vampFree(*pApp);
+    VAMP_FREE(*pApp);
 
     *pApp = NULL; //Set the user variable to NULL, for safety reasons.
 

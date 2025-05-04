@@ -3,7 +3,7 @@
 
 VampApplication *userApplicationEntry()
 {   
-    VAMP_LOG_FORMAT_TYPE1(VAMP_COLOR_CYAN, "MESSAGE", "SANDBOX", __FILE__, __LINE__, "%s", "This is a message!");
+    VAMP_LOG_FORMAT_TYPE1(VAMP_COLOR_CYAN, "MESSAGE", "SANDBOX", __FILE__, __func__, __LINE__, "%s", "This is a message!");
 
     VAMP_TRACE("This is a TRACE!");
     VAMP_INFO("This is an INFO!");
