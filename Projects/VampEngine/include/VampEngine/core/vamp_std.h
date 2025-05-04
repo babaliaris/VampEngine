@@ -7,6 +7,17 @@
     #include <stdlib.h>
     #include <stdarg.h>
     #include <stdint.h>
+    #include <stdalign.h>
+    #include <stddef.h>
+#endif
+
+
+#if !defined(__STDC_VERSION__) || __STDC_VERSION__ < 201112L || !defined(max_align_t)
+    typedef union {
+        long long ll;
+        long double ld;
+        void *p;
+    } max_align_t;
 #endif
 
 
@@ -18,6 +29,7 @@
     #endif
 #endif
 
+
 #if VAMP_ALL_PC_PLATFORMS
 
     #define VAMP_INT8 int8_t
@@ -25,10 +37,10 @@
     #define VAMP_INT32 int32_t
     #define VAMP_INT64 int64_t
 
-    #define VAMP_UINT8 u_int8_t
-    #define VAMP_UINT16 u_int16_t
-    #define VAMP_UINT32 u_int32_t
-    #define VAMP_UINT64 u_int64_t
+    #define VAMP_UINT8 uint8_t
+    #define VAMP_UINT16 uint16_t
+    #define VAMP_UINT32 uint32_t
+    #define VAMP_UINT64 uint64_t
 
     #define VAMP_SIZE_T size_t
 

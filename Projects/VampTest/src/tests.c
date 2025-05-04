@@ -1,28 +1,17 @@
 #include <VampTest/vamptest.h>
 #include <VampEngine/debug/vamp_assert.h>
 
-VAMPTEST_TEST(math, add)
-{
-    VAMPTEST_ASSERT(1+1 == 0);
-}
-
-VAMPTEST_TEST(math, subtract)
-{
-    VAMPTEST_ASSERT(1-1 == 10);
-}
-
-VAMPTEST_TEST(math, mult)
-{
-    VAMPTEST_ASSERT(2*2 == 4);
-}
+VAMPTEST_DECLARE_TEST(memory, vamp_memory_debugger);
+VAMPTEST_DECLARE_TEST(memory, vamp_memory_debugger_one_allocation);
+VAMPTEST_DECLARE_TEST(memory, vamp_memory_debugger_two_allocations);
 
 int main()
 {   
     VAMPTEST_START(vamp_app);
 
-    VAMPTEST_REGISTER(vamp_app, math, add);
-    VAMPTEST_REGISTER(vamp_app, math, subtract);
-    VAMPTEST_REGISTER(vamp_app, math, mult);
+    VAMPTEST_REGISTER(vamp_app, memory, vamp_memory_debugger);
+    VAMPTEST_REGISTER(vamp_app, memory, vamp_memory_debugger_one_allocation);
+    VAMPTEST_REGISTER(vamp_app, memory, vamp_memory_debugger_two_allocations);
 
     VAMPTEST_END(vamp_app);
 

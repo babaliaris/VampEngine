@@ -6,14 +6,14 @@
 #if VAMP_ALL_PC_PLATFORMS
 
     #ifdef VAMP_ENTRY_POINT
-    int main()
-    {
-        VampApplication *app = userApplicationEntry();
+        int main()
+        {
+            VampApplication *app = userApplicationEntry();
 
-        app->run(app);
+            app->run(app);
 
-        return vampDestroyApplication(&app);
-    }
+            return vampDestroyApplication(&app);
+        }
     #endif
 
 #endif

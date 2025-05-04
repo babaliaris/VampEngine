@@ -4,11 +4,12 @@
 
 #ifdef VAMP_DEBUG
 
-    #define VAMP_LOG_FORMAT_TYPE1(COLOR, LOG_TYPE, CALLER, FILE, LINE, FMT, ...)\
-        vampPrintf("[%s%s%s]\t{%s%s%s} %s:%ld %s" FMT "%s\n", \
+    #define VAMP_LOG_FORMAT_TYPE1(COLOR, LOG_TYPE, CALLER, FILE, FUNC, LINE, FMT, ...)\
+        vampPrintf("[%s%s%s]\t{%s%s%s} %s:%ld:(%s%s%s) %s" FMT "%s\n", \
             COLOR, LOG_TYPE, VAMP_COLOR_DEFAULT, \
             VAMP_COLOR_GREEN, CALLER, VAMP_COLOR_DEFAULT, \
-            FILE, LINE, COLOR, ##__VA_ARGS__, VAMP_COLOR_DEFAULT)
+            FILE, LINE, VAMP_COLOR_MAGENTA, FUNC, VAMP_COLOR_DEFAULT, \
+            COLOR, ##__VA_ARGS__, VAMP_COLOR_DEFAULT)
 
     #define VAMP_LOG_FORMAT_ASSERT(reason)\
             vampPrintf("[%sASSERTION%s] {%sVampEngine%s} %s:%ld:%s%s%s() %sREASON%s: %s%s%s\n",\
@@ -18,19 +19,19 @@
             )
 
     #define VAMP_TRACE(fmt, ...)\
-        VAMP_LOG_FORMAT_TYPE1(VAMP_COLOR_WHITE, "TRACE", "VampEngine", __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+        VAMP_LOG_FORMAT_TYPE1(VAMP_COLOR_WHITE, "TRACE", "VampEngine", __FILE__, __func__, __LINE__, fmt, ##__VA_ARGS__)
 
     #define VAMP_INFO(fmt, ...)\
-        VAMP_LOG_FORMAT_TYPE1(VAMP_COLOR_CYAN, "INFO", "VampEngine", __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+        VAMP_LOG_FORMAT_TYPE1(VAMP_COLOR_CYAN, "INFO", "VampEngine", __FILE__, __func__, __LINE__, fmt, ##__VA_ARGS__)
 
     #define VAMP_WARN(fmt, ...)\
-        VAMP_LOG_FORMAT_TYPE1(VAMP_COLOR_YELLOW, "WARN", "VampEngine", __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+        VAMP_LOG_FORMAT_TYPE1(VAMP_COLOR_YELLOW, "WARN", "VampEngine", __FILE__, __func__, __LINE__, fmt, ##__VA_ARGS__)
 
     #define VAMP_ERROR(fmt, ...)\
-        VAMP_LOG_FORMAT_TYPE1(VAMP_COLOR_RED, "ERROR", "VampEngine", __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+        VAMP_LOG_FORMAT_TYPE1(VAMP_COLOR_RED, "ERROR", "VampEngine", __FILE__, __func__, __LINE__, fmt, ##__VA_ARGS__)
 
     #define VAMP_FATAL(fmt, ...)\
-        VAMP_LOG_FORMAT_TYPE1(VAMP_COLOR_MAGENTA, "FATAL", "VampEngine", __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+        VAMP_LOG_FORMAT_TYPE1(VAMP_COLOR_MAGENTA, "FATAL", "VampEngine", __FILE__, __func__, __LINE__, fmt, ##__VA_ARGS__)
 
     #define VAMP_LOG_COND(cond, LOGGER)\
         if ( (cond) )\

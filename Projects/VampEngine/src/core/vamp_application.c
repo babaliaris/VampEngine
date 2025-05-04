@@ -1,6 +1,9 @@
 #include <VampEngine/core/vamp_application.h>
 #include <VampEngine/core/vamp_std.h>
 
+#define VAMP_MEMORY_DEBUGGER_GLOBAL_INSTANCE
+#include <VampEngine/core/vamp_memory.h>
+
 static void runIMPL(VampApplication *pThis)
 {
     VAMP_DISABLE_UNUSED_VARIABLE_WARNING(pThis);
@@ -11,6 +14,11 @@ static void runIMPL(VampApplication *pThis)
 
 VampApplication *vampCreateApplication()
 {
+    //Initialize the memory debugger.
+    #if VAMP_DEBUG
+        vampMemoryDebuggerInit();
+    #endif
+
     VampApplication *new_app = (VampApplication *)vampMalloc( VAMP_SIZEOF(VampApplication) );
 
     //TODO Log a warning or do an assertion here.

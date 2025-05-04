@@ -41,7 +41,12 @@
         "type_traits": "c",
         "utility": "c",
         "variant": "c",
-        "vamp_logger.h": "c"
+        "vamp_logger.h": "c",
+        "vamp_assert.h": "c",
+        "vamp_memory.h": "c",
+        "vamp_std.h": "c",
+        "cstdlib": "c",
+        "vamp_platform.h": "c"
     },
     "editor.fontSize": 15
 }
