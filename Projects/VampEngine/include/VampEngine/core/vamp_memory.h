@@ -1,6 +1,7 @@
 #ifndef VAMP_MEMORY_H
 #define VAMP_MEMORY_H
 #include <VampEngine/core/vamp_std.h>
+#include <VampEngine/core/vamp_platform.h>
 
 /**
  * @file
@@ -99,7 +100,7 @@
      * define VAMP_MEMORY_DEBUGGER_GLOBAL_INSTANCE in ONLY ONE .c or .cpp file!!!
      */
     #ifndef VAMP_MEMORY_DEBUGGER_GLOBAL_INSTANCE
-        extern VampMemoryDebugger VAMP_GLOBAL_MEMORY_DEBUGGER;
+        VAMP_API extern VampMemoryDebugger VAMP_GLOBAL_MEMORY_DEBUGGER;
     #else
         VampMemoryDebugger VAMP_GLOBAL_MEMORY_DEBUGGER;
     #endif
