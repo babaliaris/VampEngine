@@ -177,3 +177,165 @@ void vampMemoryDebuggerInit()
     VAMP_GLOBAL_MEMORY_DEBUGGER.checkForLeaks       = checkForLeaksImpl;
 }
 #endif
+
+
+
+static void *pushImpl(VampMemoryStack *pThis, VAMP_SIZE_T pSize, void *pValue)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+    VAMP_ASSERT(pValue != NULL, "This param is required!");
+
+    //Stack is full or pSize does not fit to the remaining memory!
+    if (pSize > pThis->m_size - pThis->m_pointer) return NULL;
+
+    char *position = pThis->m_buffer + pThis->m_pointer;
+    
+    vampMemCopy((void *)position, pValue, pSize);
+
+    pThis->m_pointer += pSize;
+
+    return (void *)position;
+}
+
+static void resetImpl( VampMemoryStack *pThis)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+    pThis->m_pointer = 0;
+}
+
+VAMP_SIZE_T sizeLeftImpl(struct VampMemoryStack *pThis)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+
+    return (pThis->m_pointer > pThis->m_size) ? 0 : pThis->m_size - pThis->m_pointer;
+}
+
+VAMP_SIZE_T sizeOccupiedImpl(struct VampMemoryStack *pThis)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+    return pThis->m_pointer;
+}
+
+static void *pushCharImpl( VampMemoryStack *pThis, char pValue)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+    return pThis->push(pThis, VAMP_SIZEOF(char), &pValue);
+}
+
+static void *pushFloatImpl( VampMemoryStack *pThis, float pValue)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+    return pThis->push(pThis, VAMP_SIZEOF(float), &pValue);
+}
+
+static void *pushDoubleImpl( VampMemoryStack *pThis, double pValue)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+    return pThis->push(pThis, VAMP_SIZEOF(double), &pValue);
+}
+
+static void *pushSizetImpl( VampMemoryStack *pThis, VAMP_SIZE_T pValue)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+    return pThis->push(pThis, VAMP_SIZEOF(VAMP_SIZE_T), &pValue);
+}
+
+static void *pushInt8Impl( VampMemoryStack *pThis, VAMP_INT8 pValue)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+    return pThis->push(pThis, VAMP_SIZEOF(VAMP_INT8), &pValue);
+}
+
+static void *pushInt16Impl( VampMemoryStack *pThis, VAMP_INT16 pValue)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+    return pThis->push(pThis, VAMP_SIZEOF(VAMP_INT16), &pValue);
+}
+
+static void *pushInt32Impl( VampMemoryStack *pThis, VAMP_INT32 pValue)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+    return pThis->push(pThis, VAMP_SIZEOF(VAMP_INT32), &pValue);
+}
+
+static void *pushInt64Impl( VampMemoryStack *pThis, VAMP_INT64 pValue)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+    return pThis->push(pThis, VAMP_SIZEOF(VAMP_INT64), &pValue);
+}
+
+static void *pushUint8Impl( VampMemoryStack *pThis, VAMP_UINT8 pValue)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+    return pThis->push(pThis, VAMP_SIZEOF(VAMP_UINT8), &pValue);
+}
+
+static void *pushUint16Impl( VampMemoryStack *pThis, VAMP_UINT16 pValue)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+    return pThis->push(pThis, VAMP_SIZEOF(VAMP_UINT16), &pValue);
+}
+
+static void *pushUint32Impl( VampMemoryStack *pThis, VAMP_UINT32 pValue)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+    return pThis->push(pThis, VAMP_SIZEOF(VAMP_UINT32), &pValue);
+}
+
+static void *pushUint64Impl( VampMemoryStack *pThis, VAMP_UINT64 pValue)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+    return pThis->push(pThis, VAMP_SIZEOF(VAMP_UINT64), &pValue);
+}
+
+
+
+VampMemoryStack *vampCreateMemoryStack(VAMP_SIZE_T pSize)
+{
+    VampMemoryStack *new_stack = (VampMemoryStack *)VAMP_MALLOC(VAMP_SIZEOF(VampMemoryStack));
+
+    if (!new_stack)
+    {
+        VAMP_WARN("Out of memory!");
+        return NULL;
+    }
+
+    new_stack->m_size               = pSize;
+    new_stack->m_pointer            = 0;
+    new_stack->m_buffer             = (char *)VAMP_MALLOC(pSize);
+
+    if (!new_stack->m_buffer)
+    {
+        VAMP_WARN("Out of memory!");
+        return NULL;
+    }
+
+    new_stack->push         = pushImpl;
+    new_stack->reset        = resetImpl;
+    new_stack->sizeLeft     = sizeLeftImpl;
+    new_stack->sizeOccupied = sizeOccupiedImpl;
+    new_stack->pushChar     = pushCharImpl;
+    new_stack->pushDouble   = pushDoubleImpl;
+    new_stack->pushInt8     = pushInt8Impl;
+    new_stack->pushInt16    = pushInt16Impl;
+    new_stack->pushInt32    = pushInt32Impl;
+    new_stack->pushInt64    = pushInt64Impl;
+    new_stack->pushUint8    = pushUint8Impl;
+    new_stack->pushUint16   = pushUint16Impl;
+    new_stack->pushUint32   = pushUint32Impl;
+    new_stack->pushUint64   = pushUint64Impl;
+
+    return new_stack;
+}
+
+
+void vampDestroyMemoryStack(VampMemoryStack **pThis)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+    VAMP_ASSERT(*pThis != NULL, "The value of *pThis must not be NULL!");
+
+    VAMP_FREE( (*pThis)->m_buffer );
+    VAMP_FREE( *pThis );
+
+    *pThis = NULL;
+}

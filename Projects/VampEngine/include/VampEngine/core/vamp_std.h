@@ -5,6 +5,7 @@
 #if VAMP_ALL_PC_PLATFORMS
     #include <stdio.h>
     #include <stdlib.h>
+    #include <memory.h>
     #include <stdarg.h>
     #include <stdint.h>
     #include <stdalign.h>
@@ -64,7 +65,9 @@ VAMP_API void *vampMalloc(VAMP_SIZE_T pSize);
 
 VAMP_API void vampFree(void *pPtr);
 
-VAMP_API void vampExit(int status);
+VAMP_API void vampExit(int pStatus);
+
+VAMP_API void vampMemCopy(void *pDst, void *pSrc, VAMP_SIZE_T pSize);
 
 
 #define VAMP_DISABLE_UNUSED_VARIABLE_WARNING(variable) (void)variable

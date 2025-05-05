@@ -32,11 +32,20 @@ void vampFree(void *pPtr)
 
 
 
-void vampExit(int status)
+void vampExit(int pStatus)
 {   
     //TODO replace exit with System Shutdown!
     #if VAMP_ALL_PC_PLATFORMS
-        exit(status);
+        exit(pStatus);
+    #else
+        #error Platform not supported!
+    #endif
+}
+
+VAMP_API void vampMemCopy(void *pDst, void *pSrc, VAMP_SIZE_T pSize)
+{
+    #if VAMP_ALL_PC_PLATFORMS
+        memcpy(pDst, pSrc, pSize);
     #else
         #error Platform not supported!
     #endif

@@ -46,7 +46,10 @@
         "vamp_memory.h": "c",
         "vamp_std.h": "c",
         "cstdlib": "c",
-        "vamp_platform.h": "c"
+        "vamp_platform.h": "c",
+        "chrono": "c",
+        "optional": "c",
+        "system_error": "c"
     },
     "editor.fontSize": 15
 }
