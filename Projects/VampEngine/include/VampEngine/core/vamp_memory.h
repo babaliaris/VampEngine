@@ -141,33 +141,33 @@ typedef struct VampMemoryStack
 
     void  (*reset)(struct VampMemoryStack *pThis);
 
-    VAMP_SIZE_T (*sizeLeft)(struct VampMemoryStack *pThis);
+    VAMP_SIZE_T (*remainingSize)(struct VampMemoryStack *pThis);
 
-    VAMP_SIZE_T (*sizeOccupied)(struct VampMemoryStack *pThis);
+    VAMP_SIZE_T (*occupiedSize)(struct VampMemoryStack *pThis);
 
-    void *(*pushChar)(struct VampMemoryStack *pThis, char pValue);
+    char *(*pushChar)(struct VampMemoryStack *pThis, char pValue);
 
-    void *(*pushFloat)(struct VampMemoryStack *pThis, float pValue);
+    float *(*pushFloat)(struct VampMemoryStack *pThis, float pValue);
 
-    void *(*pushDouble)(struct VampMemoryStack *pThis, double pValue);
+    double *(*pushDouble)(struct VampMemoryStack *pThis, double pValue);
 
-    void *(*pushSizet)(struct VampMemoryStack *pThis, VAMP_SIZE_T pValue);
+    VAMP_SIZE_T *(*pushSizet)(struct VampMemoryStack *pThis, VAMP_SIZE_T pValue);
 
-    void *(*pushInt8)(struct VampMemoryStack *pThis, VAMP_INT8 pValue);
+    VAMP_INT8 *(*pushInt8)(struct VampMemoryStack *pThis, VAMP_INT8 pValue);
 
-    void *(*pushInt16)(struct VampMemoryStack *pThis, VAMP_INT16 pValue);
+    VAMP_INT16 *(*pushInt16)(struct VampMemoryStack *pThis, VAMP_INT16 pValue);
 
-    void *(*pushInt32)(struct VampMemoryStack *pThis, VAMP_INT32 pValue);
+    VAMP_INT32 *(*pushInt32)(struct VampMemoryStack *pThis, VAMP_INT32 pValue);
 
-    void *(*pushInt64)(struct VampMemoryStack *pThis, VAMP_INT64 pValue);
+    VAMP_INT64 *(*pushInt64)(struct VampMemoryStack *pThis, VAMP_INT64 pValue);
 
-    void *(*pushUint8)(struct VampMemoryStack *pThis, VAMP_UINT8 pValue);
+    VAMP_UINT8 *(*pushUint8)(struct VampMemoryStack *pThis, VAMP_UINT8 pValue);
 
-    void *(*pushUint16)(struct VampMemoryStack *pThis, VAMP_UINT16 pValue);
+    VAMP_UINT16 *(*pushUint16)(struct VampMemoryStack *pThis, VAMP_UINT16 pValue);
 
-    void *(*pushUint32)(struct VampMemoryStack *pThis, VAMP_UINT32 pValue);
+    VAMP_UINT32 *(*pushUint32)(struct VampMemoryStack *pThis, VAMP_UINT32 pValue);
 
-    void *(*pushUint64)(struct VampMemoryStack *pThis, VAMP_UINT64 pValue);
+    VAMP_UINT64 *(*pushUint64)(struct VampMemoryStack *pThis, VAMP_UINT64 pValue);
 
 }VampMemoryStack;
 

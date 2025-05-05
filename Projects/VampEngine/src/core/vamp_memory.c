@@ -203,89 +203,89 @@ static void resetImpl( VampMemoryStack *pThis)
     pThis->m_pointer = 0;
 }
 
-VAMP_SIZE_T sizeLeftImpl(struct VampMemoryStack *pThis)
+VAMP_SIZE_T remainingSizeImpl(struct VampMemoryStack *pThis)
 {
     VAMP_ASSERT(pThis != NULL, "This param is required!");
 
     return (pThis->m_pointer > pThis->m_size) ? 0 : pThis->m_size - pThis->m_pointer;
 }
 
-VAMP_SIZE_T sizeOccupiedImpl(struct VampMemoryStack *pThis)
+VAMP_SIZE_T occupiedSizeImpl(struct VampMemoryStack *pThis)
 {
     VAMP_ASSERT(pThis != NULL, "This param is required!");
     return pThis->m_pointer;
 }
 
-static void *pushCharImpl( VampMemoryStack *pThis, char pValue)
+static char *pushCharImpl( VampMemoryStack *pThis, char pValue)
 {
     VAMP_ASSERT(pThis != NULL, "This param is required!");
-    return pThis->push(pThis, VAMP_SIZEOF(char), &pValue);
+    return (char *)pThis->push(pThis, VAMP_SIZEOF(char), &pValue);
 }
 
-static void *pushFloatImpl( VampMemoryStack *pThis, float pValue)
+static float *pushFloatImpl( VampMemoryStack *pThis, float pValue)
 {
     VAMP_ASSERT(pThis != NULL, "This param is required!");
-    return pThis->push(pThis, VAMP_SIZEOF(float), &pValue);
+    return (float *)pThis->push(pThis, VAMP_SIZEOF(float), &pValue);
 }
 
-static void *pushDoubleImpl( VampMemoryStack *pThis, double pValue)
+static double *pushDoubleImpl( VampMemoryStack *pThis, double pValue)
 {
     VAMP_ASSERT(pThis != NULL, "This param is required!");
-    return pThis->push(pThis, VAMP_SIZEOF(double), &pValue);
+    return (double *)pThis->push(pThis, VAMP_SIZEOF(double), &pValue);
 }
 
-static void *pushSizetImpl( VampMemoryStack *pThis, VAMP_SIZE_T pValue)
+static VAMP_SIZE_T *pushSizetImpl( VampMemoryStack *pThis, VAMP_SIZE_T pValue)
 {
     VAMP_ASSERT(pThis != NULL, "This param is required!");
-    return pThis->push(pThis, VAMP_SIZEOF(VAMP_SIZE_T), &pValue);
+    return (VAMP_SIZE_T *)pThis->push(pThis, VAMP_SIZEOF(VAMP_SIZE_T), &pValue);
 }
 
-static void *pushInt8Impl( VampMemoryStack *pThis, VAMP_INT8 pValue)
+static VAMP_INT8 *pushInt8Impl( VampMemoryStack *pThis, VAMP_INT8 pValue)
 {
     VAMP_ASSERT(pThis != NULL, "This param is required!");
-    return pThis->push(pThis, VAMP_SIZEOF(VAMP_INT8), &pValue);
+    return (VAMP_INT8 *)pThis->push(pThis, VAMP_SIZEOF(VAMP_INT8), &pValue);
 }
 
-static void *pushInt16Impl( VampMemoryStack *pThis, VAMP_INT16 pValue)
+static VAMP_INT16 *pushInt16Impl( VampMemoryStack *pThis, VAMP_INT16 pValue)
 {
     VAMP_ASSERT(pThis != NULL, "This param is required!");
-    return pThis->push(pThis, VAMP_SIZEOF(VAMP_INT16), &pValue);
+    return (VAMP_INT16 *)pThis->push(pThis, VAMP_SIZEOF(VAMP_INT16), &pValue);
 }
 
-static void *pushInt32Impl( VampMemoryStack *pThis, VAMP_INT32 pValue)
+static VAMP_INT32 *pushInt32Impl( VampMemoryStack *pThis, VAMP_INT32 pValue)
 {
     VAMP_ASSERT(pThis != NULL, "This param is required!");
-    return pThis->push(pThis, VAMP_SIZEOF(VAMP_INT32), &pValue);
+    return (VAMP_INT32 *)pThis->push(pThis, VAMP_SIZEOF(VAMP_INT32), &pValue);
 }
 
-static void *pushInt64Impl( VampMemoryStack *pThis, VAMP_INT64 pValue)
+static VAMP_INT64 *pushInt64Impl( VampMemoryStack *pThis, VAMP_INT64 pValue)
 {
     VAMP_ASSERT(pThis != NULL, "This param is required!");
-    return pThis->push(pThis, VAMP_SIZEOF(VAMP_INT64), &pValue);
+    return (VAMP_INT64 *)pThis->push(pThis, VAMP_SIZEOF(VAMP_INT64), &pValue);
 }
 
-static void *pushUint8Impl( VampMemoryStack *pThis, VAMP_UINT8 pValue)
+static VAMP_UINT8 *pushUint8Impl( VampMemoryStack *pThis, VAMP_UINT8 pValue)
 {
     VAMP_ASSERT(pThis != NULL, "This param is required!");
-    return pThis->push(pThis, VAMP_SIZEOF(VAMP_UINT8), &pValue);
+    return (VAMP_UINT8 *)pThis->push(pThis, VAMP_SIZEOF(VAMP_UINT8), &pValue);
 }
 
-static void *pushUint16Impl( VampMemoryStack *pThis, VAMP_UINT16 pValue)
+static VAMP_UINT16 *pushUint16Impl( VampMemoryStack *pThis, VAMP_UINT16 pValue)
 {
     VAMP_ASSERT(pThis != NULL, "This param is required!");
-    return pThis->push(pThis, VAMP_SIZEOF(VAMP_UINT16), &pValue);
+    return (VAMP_UINT16 *)pThis->push(pThis, VAMP_SIZEOF(VAMP_UINT16), &pValue);
 }
 
-static void *pushUint32Impl( VampMemoryStack *pThis, VAMP_UINT32 pValue)
+static VAMP_UINT32 *pushUint32Impl( VampMemoryStack *pThis, VAMP_UINT32 pValue)
 {
     VAMP_ASSERT(pThis != NULL, "This param is required!");
-    return pThis->push(pThis, VAMP_SIZEOF(VAMP_UINT32), &pValue);
+    return (VAMP_UINT32 *)pThis->push(pThis, VAMP_SIZEOF(VAMP_UINT32), &pValue);
 }
 
-static void *pushUint64Impl( VampMemoryStack *pThis, VAMP_UINT64 pValue)
+static VAMP_UINT64 *pushUint64Impl( VampMemoryStack *pThis, VAMP_UINT64 pValue)
 {
     VAMP_ASSERT(pThis != NULL, "This param is required!");
-    return pThis->push(pThis, VAMP_SIZEOF(VAMP_UINT64), &pValue);
+    return (VAMP_UINT64 *)pThis->push(pThis, VAMP_SIZEOF(VAMP_UINT64), &pValue);
 }
 
 
@@ -312,10 +312,12 @@ VampMemoryStack *vampCreateMemoryStack(VAMP_SIZE_T pSize)
 
     new_stack->push         = pushImpl;
     new_stack->reset        = resetImpl;
-    new_stack->sizeLeft     = sizeLeftImpl;
-    new_stack->sizeOccupied = sizeOccupiedImpl;
+    new_stack->remainingSize= remainingSizeImpl;
+    new_stack->occupiedSize = occupiedSizeImpl;
     new_stack->pushChar     = pushCharImpl;
+    new_stack->pushFloat    = pushFloatImpl;
     new_stack->pushDouble   = pushDoubleImpl;
+    new_stack->pushSizet    = pushSizetImpl;
     new_stack->pushInt8     = pushInt8Impl;
     new_stack->pushInt16    = pushInt16Impl;
     new_stack->pushInt32    = pushInt32Impl;
