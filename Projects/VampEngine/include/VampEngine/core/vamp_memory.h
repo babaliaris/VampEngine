@@ -6,6 +6,9 @@
 
     #define VAMP_ALLOC_MAGIC 0xDEADBEEFDEADBEEF
 
+    /**
+     * 
+     */
     typedef struct VampAllocationMetadata
     {   
         VAMP_UINT64 m_magic_number;
