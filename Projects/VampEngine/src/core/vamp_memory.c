@@ -3,7 +3,7 @@
 #include <VampEngine/core/vamp_platform.h>
 
 #ifdef VAMP_DEBUG
-static void *mallocImpl( VAMP_SIZE_T size, const char *pFilename, 
+static void *mallocImpl( VAMP_SIZE_T pSize, const char *pFilename, 
     const char *pFuncName, VAMP_SIZE_T pLine
 )
 {
@@ -16,7 +16,8 @@ static void *mallocImpl( VAMP_SIZE_T size, const char *pFilename,
     //  VampAllocationMetadata
     //  The users memory (determined by size)
     //  64 bits at the end of the block for the magic number.
-    VampAllocationMetadata *new_node = (VampAllocationMetadata *)vampMalloc( VAMP_SIZEOF(VampAllocationMetadata) + size + VAMP_SIZEOF(VAMP_UINT64) );
+    VampAllocationMetadata *new_node = 
+    (VampAllocationMetadata *)vampMalloc( VAMP_SIZEOF(VampAllocationMetadata) + pSize + VAMP_SIZEOF(VAMP_UINT64) );
 
     VAMP_ASSERT(new_node != NULL);
 
@@ -25,12 +26,12 @@ static void *mallocImpl( VAMP_SIZE_T size, const char *pFilename,
     new_node->m_filename        = pFilename;
     new_node->m_function_name   = pFuncName;
     new_node->m_line            = pLine;
-    new_node->m_user_size       = size;
+    new_node->m_user_size       = pSize;
     new_node->m_next            = NULL;
     new_node->m_prev            = NULL;
 
     //Add the magic number at the end of the allocation block.
-    VAMP_UINT64 *ptr_to_magic_number    = (VAMP_UINT64 *)( (char *)new_node + VAMP_SIZEOF(VampAllocationMetadata) + size );
+    VAMP_UINT64 *ptr_to_magic_number    = (VAMP_UINT64 *)( (char *)new_node + VAMP_SIZEOF(VampAllocationMetadata) + pSize );
     *ptr_to_magic_number                = VAMP_ALLOC_MAGIC;
 
     //The allocation list is empty.
@@ -59,7 +60,7 @@ static void *mallocImpl( VAMP_SIZE_T size, const char *pFilename,
 
     //Initialize the users memory to zeros.
     char *tempUserPtrForLoop = userPtr;
-    for (VAMP_SIZE_T i = 0; i < size; i++)
+    for (VAMP_SIZE_T i = 0; i < pSize; i++)
     {
         *tempUserPtrForLoop = 0;
          tempUserPtrForLoop++;
