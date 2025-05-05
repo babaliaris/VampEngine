@@ -4,16 +4,16 @@
 
 #if VAMP_DEBUG
 
-#define VAMP_ASSERT(cond)\
+#define VAMP_ASSERT(cond, fmt, ...)\
     if ( !(cond) )\
     {\
-        VAMP_LOG_FORMAT_ASSERT(#cond);\
+        VAMP_LOG_FORMAT_ASSERT(fmt, ##__VA_ARGS__);\
         vampExit(-1);\
     }
 
 
 #else
-    #define VAMP_ASSERT(cond)
+    #define VAMP_ASSERT(cond, fmt, ...)
 #endif
 
 #endif

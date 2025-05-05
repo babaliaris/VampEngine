@@ -5,10 +5,10 @@
 static void registerTestImpl(VampTestApplication *pThis, VampUnitTest *pTest)
 {   
     //Neiter must be NULL.
-    VAMP_ASSERT(pThis != NULL);
-    VAMP_ASSERT(pTest != NULL);
+    VAMP_ASSERT(pThis != NULL, "This parameter is required!");
+    VAMP_ASSERT(pTest != NULL, "This parameter is required!");
 
-    VAMP_ASSERT(pThis->m_total_tests < VAMPTEST_MAX_NUM_OF_TESTS);
+    VAMP_ASSERT(pThis->m_total_tests < VAMPTEST_MAX_NUM_OF_TESTS, "This will cause a buffer overflow!");
 
     pThis->m_tests_list[pThis->m_total_tests] = pTest;
 
@@ -25,14 +25,14 @@ static void registerTestImpl(VampTestApplication *pThis, VampUnitTest *pTest)
 
 static void runAllTestsImpl(VampTestApplication *pThis)
 {
-    VAMP_ASSERT(pThis != NULL);
-    VAMP_ASSERT(pThis->m_total_tests <= VAMPTEST_MAX_NUM_OF_TESTS);
+    VAMP_ASSERT(pThis != NULL, "This parameter is required!");
+    VAMP_ASSERT(pThis->m_total_tests <= VAMPTEST_MAX_NUM_OF_TESTS, "This will cause a buffer overflow!");
 
     for (VAMP_SIZE_T i = 0; i < pThis->m_total_tests; i++)
     {
         VampUnitTest *test = pThis->m_tests_list[i];
 
-        VAMP_ASSERT(test != NULL);
+        VAMP_ASSERT(test != NULL, "should not be NULL at this point!");
 
         test->run(test);
 
@@ -54,7 +54,7 @@ VampUnitTest *vampCreateUnitTest(const char *pSuiteName, const char *pTestName, 
     }
 
     //The test funcion MUST be provided!
-    VAMP_ASSERT(pTestFunc != NULL);
+    VAMP_ASSERT(pTestFunc != NULL, "This parameter is required!");
 
     new_test->m_failed      = 0;
     new_test->m_suite_name  = pSuiteName;
@@ -116,12 +116,12 @@ char vampDestroyTestApplication(VampTestApplication **pThis)
         return 0;
     }
 
-    VAMP_ASSERT( (*pThis)->m_total_tests <= VAMPTEST_MAX_NUM_OF_TESTS );
+    VAMP_ASSERT( (*pThis)->m_total_tests <= VAMPTEST_MAX_NUM_OF_TESTS, "This will cause a buffer oferflow!" );
 
     //Destroy all the tests in the list.
     for (VAMP_SIZE_T i = 0; i < (*pThis)->m_total_tests; i++)
     {
-        VAMP_ASSERT( (*pThis)->m_tests_list[i] != NULL );
+        VAMP_ASSERT( (*pThis)->m_tests_list[i] != NULL, "should not be NULL at this point!");
         vampDestroyTest( &(*pThis)->m_tests_list[i] );
     }
 

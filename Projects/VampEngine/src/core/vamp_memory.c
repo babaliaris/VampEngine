@@ -9,7 +9,7 @@ static void *mallocImpl( VAMP_SIZE_T pSize, const char *pFilename,
 {
     //Make sure the alignment is correct.
     #if VAMP_ALL_PC_PLATFORMS
-    VAMP_ASSERT( alignof(VampAllocationMetadata) <= alignof(max_align_t) );
+    VAMP_ASSERT( alignof(VampAllocationMetadata) <= alignof(max_align_t), "Wrong Alignment" );
     #endif
 
     //Allocate a block large enought for:
@@ -19,7 +19,7 @@ static void *mallocImpl( VAMP_SIZE_T pSize, const char *pFilename,
     VampAllocationMetadata *new_node = 
     (VampAllocationMetadata *)vampMalloc( VAMP_SIZEOF(VampAllocationMetadata) + pSize + VAMP_SIZEOF(VAMP_UINT64) );
 
-    VAMP_ASSERT(new_node != NULL);
+    VAMP_ASSERT(new_node != NULL, "Out Of Memory");
 
     //Initialize the metadata.
     new_node->m_magic_number    = VAMP_ALLOC_MAGIC;
@@ -77,23 +77,23 @@ static void freeImpl(void *pUserPtr)
 
     //The list can't be empty if at least one allocation has occured!
     //If it is empty and pUserPtr is provided, something is off...
-    VAMP_ASSERT(VAMP_GLOBAL_MEMORY_DEBUGGER.m_head != NULL);
+    VAMP_ASSERT(VAMP_GLOBAL_MEMORY_DEBUGGER.m_head != NULL, "The lists should not be empty at this point! Something is off...");
 
     //Retrieve the original starting address of the allocation node.
     VampAllocationMetadata *node = (VampAllocationMetadata *)( (char *)pUserPtr - VAMP_SIZEOF(VampAllocationMetadata) );
 
     //Check if this node is a correct debug node.
-    VAMP_ASSERT(node->m_magic_number == VAMP_ALLOC_MAGIC);
+    VAMP_ASSERT(node->m_magic_number == VAMP_ALLOC_MAGIC, "This is not a valid allocation block!");
 
     //Check the end of the block.
     VAMP_UINT64 *ptr_to_magic_number = (VAMP_UINT64 *)( (char *)pUserPtr + node->m_user_size );
-    VAMP_ASSERT(*ptr_to_magic_number == VAMP_ALLOC_MAGIC);
+    VAMP_ASSERT(*ptr_to_magic_number == VAMP_ALLOC_MAGIC, "Memory block overflow detected! Debug your code to find the cause!");
 
     //There is only one item in the list.
     if (VAMP_GLOBAL_MEMORY_DEBUGGER.m_head == VAMP_GLOBAL_MEMORY_DEBUGGER.m_tail)
     {
         //Then node must be the same memory block as the single item in the list!
-        VAMP_ASSERT(node == VAMP_GLOBAL_MEMORY_DEBUGGER.m_head);
+        VAMP_ASSERT(node == VAMP_GLOBAL_MEMORY_DEBUGGER.m_head, "This node should be the head of the list.");
 
         VAMP_GLOBAL_MEMORY_DEBUGGER.m_head = NULL;
         VAMP_GLOBAL_MEMORY_DEBUGGER.m_tail = NULL;
@@ -103,7 +103,8 @@ static void freeImpl(void *pUserPtr)
     else
     {
         //Since there are more items in the list, this must be greater than 1.
-        VAMP_ASSERT(VAMP_GLOBAL_MEMORY_DEBUGGER.m_total_allocations > 1);
+        VAMP_ASSERT(VAMP_GLOBAL_MEMORY_DEBUGGER.m_total_allocations > 1, 
+            "Should be more than 1. Current value is %ld.", VAMP_GLOBAL_MEMORY_DEBUGGER.m_total_allocations);
 
         //The node is the head of the list.
         if (node == VAMP_GLOBAL_MEMORY_DEBUGGER.m_head)
@@ -142,8 +143,8 @@ void checkForLeaksImpl(void)
     if (VAMP_GLOBAL_MEMORY_DEBUGGER.m_total_allocations > 0)
     {
         //Since the list is not empty, the following must not be NULL!
-        VAMP_ASSERT(VAMP_GLOBAL_MEMORY_DEBUGGER.m_head != NULL);
-        VAMP_ASSERT(VAMP_GLOBAL_MEMORY_DEBUGGER.m_tail != NULL);
+        VAMP_ASSERT(VAMP_GLOBAL_MEMORY_DEBUGGER.m_head != NULL, "should not be NULL.");
+        VAMP_ASSERT(VAMP_GLOBAL_MEMORY_DEBUGGER.m_tail != NULL, "should not be NULL");
 
         VampAllocationMetadata *current = VAMP_GLOBAL_MEMORY_DEBUGGER.m_head;
 
