@@ -204,6 +204,8 @@ typedef struct VampMemoryPool
     VAMP_SIZE_T m_user_block_size;
     VAMP_SIZE_T m_user_block_count;
     VAMP_SIZE_T m_buffer_size;
+    VAMP_SIZE_T m_block_size;
+    VAMP_SIZE_T m_blocks_in_used;
     char        *m_buffer;
     char        *m_nextFreeBlock;
     char        *m_lastDirtyBlock;
@@ -211,6 +213,10 @@ typedef struct VampMemoryPool
     void *(*malloc)(struct VampMemoryPool *pThis, void *data);
 
     void (*free)(struct VampMemoryPool *pThis, void *ptr);
+
+    VAMP_SIZE_T (*remainingSize)(struct VampMemoryPool *pThis);
+
+    VAMP_SIZE_T (*occupiedSize)(struct VampMemoryPool *pThis);
 
 }VampMemoryPool;
 

@@ -358,17 +358,16 @@ static void *mallocMemPoolImpl(VampMemoryPool *pThis, void *data)
     vampMemCopy(userBlock, data, pThis->m_user_block_size);
 
     char * buffer_end_address       = pThis->m_buffer + pThis->m_buffer_size;
-    VAMP_SIZE_T next_insert_offset  = pThis->m_user_block_size + VAMP_SIZEOF(__VampMemoryPoolBlock__);
 
     //Current block is being used for the first time and its not the last block in the buffer.
-    if (currentBlock == pThis->m_lastDirtyBlock && (currentBlock + next_insert_offset) !=  buffer_end_address)
+    if (currentBlock == pThis->m_lastDirtyBlock && (currentBlock + pThis->m_block_size) !=  buffer_end_address)
     {
-        pThis->m_nextFreeBlock = currentBlock + next_insert_offset;
+        pThis->m_nextFreeBlock = currentBlock + pThis->m_block_size;
         pThis->m_lastDirtyBlock = pThis->m_nextFreeBlock;
     }
 
     //Current block is being used for the first time and its the last block in the buffer!
-    else if (currentBlock == pThis->m_lastDirtyBlock && (currentBlock + next_insert_offset) ==  buffer_end_address)
+    else if (currentBlock == pThis->m_lastDirtyBlock && (currentBlock + pThis->m_block_size) ==  buffer_end_address)
     {
         pThis->m_nextFreeBlock = NULL;
         pThis->m_lastDirtyBlock = NULL;
@@ -379,8 +378,10 @@ static void *mallocMemPoolImpl(VampMemoryPool *pThis, void *data)
     {
         __VampMemoryPoolBlock__ *currMemBlock = (__VampMemoryPoolBlock__ *)currentBlock;
 
-        pThis->m_nextFreeBlock = currMemBlock->m_next;
+        pThis->m_nextFreeBlock = (char *)currMemBlock->m_next;
     }
+
+    pThis->m_blocks_in_used++;
 
     return userBlock;
 }
@@ -392,9 +393,28 @@ static void freeMemPoolImpl(VampMemoryPool *pThis, void *ptr)
 
     __VampMemoryPoolBlock__ *currentBlock  = (__VampMemoryPoolBlock__ *)( (char *)ptr - VAMP_SIZEOF(__VampMemoryPoolBlock__) );
 
-    currentBlock->m_next = pThis->m_nextFreeBlock;
+    currentBlock->m_next = (__VampMemoryPoolBlock__ *)pThis->m_nextFreeBlock;
     
     pThis->m_nextFreeBlock = (char *)currentBlock;
+
+    pThis->m_blocks_in_used--;
+}
+
+
+static VAMP_SIZE_T remainingSizePoolImpl(VampMemoryPool *pThis)
+{
+    VAMP_SIZE_T in_use          = pThis->m_blocks_in_used * pThis->m_user_block_size;
+    VAMP_SIZE_T user_full_size  = pThis->m_user_block_count * pThis->m_user_block_size;
+
+    VAMP_ASSERT(in_use <= user_full_size, "This should never happen! Else there is an overflow or underflow!");
+
+    return user_full_size - in_use;
+}
+
+
+static VAMP_SIZE_T occupiedSizePoolImpl(VampMemoryPool *pThis)
+{
+    return pThis->m_blocks_in_used * pThis->m_user_block_size;
 }
 
 
@@ -409,7 +429,8 @@ VampMemoryPool *vampCreateMemoryPool(VAMP_SIZE_T pBlockSize, VAMP_SIZE_T pCount)
         return NULL;
     }
     
-    new_pool->m_buffer_size = ( VAMP_SIZEOF(__VampMemoryPoolBlock__) + pBlockSize ) * pCount;
+    new_pool->m_block_size  = VAMP_SIZEOF(__VampMemoryPoolBlock__) + pBlockSize;
+    new_pool->m_buffer_size = new_pool->m_block_size * pCount;
     new_pool->m_buffer      = (char *)VAMP_MALLOC( new_pool->m_buffer_size );
 
     if (!new_pool->m_buffer)
@@ -423,8 +444,11 @@ VampMemoryPool *vampCreateMemoryPool(VAMP_SIZE_T pBlockSize, VAMP_SIZE_T pCount)
     new_pool->m_user_block_count= pCount;
     new_pool->m_nextFreeBlock   = new_pool->m_buffer;
     new_pool->m_lastDirtyBlock  = new_pool->m_buffer;
+    new_pool->m_blocks_in_used  = 0;
     new_pool->malloc            = mallocMemPoolImpl;
     new_pool->free              = freeMemPoolImpl;
+    new_pool->remainingSize     = remainingSizePoolImpl;
+    new_pool->occupiedSize      = occupiedSizePoolImpl;
 
     return new_pool;
 }
