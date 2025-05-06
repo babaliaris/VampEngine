@@ -349,15 +349,21 @@ static void *mallocMemPoolImpl(VampMemoryPool *pThis, void *data)
     VAMP_ASSERT(pThis != NULL, "This param is required!");
     VAMP_ASSERT(data != NULL, "This param is required!");
 
-    char *currentBlock  = pThis->m_nextFreeBlock;
+    //Get the next free block.
+    char *currentBlock                      = pThis->m_nextFreeBlock;
+    __VampMemoryPoolBlock__ *currMemBlock   = (__VampMemoryPoolBlock__ *)currentBlock;
 
+    //This means the pool is full!
     if (!currentBlock) return NULL;
 
+    //Get the user starting address inside that block.
     void *userBlock     = (void *)(currentBlock + VAMP_SIZEOF(__VampMemoryPoolBlock__));
 
+    //Copy the data.
     vampMemCopy(userBlock, data, pThis->m_user_block_size);
 
-    char * buffer_end_address       = pThis->m_buffer + pThis->m_buffer_size;
+    //Calculate the end address of the buffer itself.
+    char * buffer_end_address = pThis->m_buffer + pThis->m_buffer_size;
 
     //Current block is being used for the first time and its not the last block in the buffer.
     if (currentBlock == pThis->m_lastDirtyBlock && (currentBlock + pThis->m_block_size) !=  buffer_end_address)
@@ -376,10 +382,13 @@ static void *mallocMemPoolImpl(VampMemoryPool *pThis, void *data)
     //The current block has its m_next member initialized.
     else
     {
-        __VampMemoryPoolBlock__ *currMemBlock = (__VampMemoryPoolBlock__ *)currentBlock;
-
         pThis->m_nextFreeBlock = (char *)currMemBlock->m_next;
     }
+
+    //Add the magic number if in debug mode, to be able to identify this block.
+    #ifdef VAMP_DEBUG
+    currMemBlock->m_magic_number = VAMP_ALLOC_MAGIC;
+    #endif
 
     pThis->m_blocks_in_used++;
 
@@ -392,6 +401,12 @@ static void freeMemPoolImpl(VampMemoryPool *pThis, void *ptr)
     VAMP_ASSERT(ptr != NULL, "This param is required!");
 
     __VampMemoryPoolBlock__ *currentBlock  = (__VampMemoryPoolBlock__ *)( (char *)ptr - VAMP_SIZEOF(__VampMemoryPoolBlock__) );
+
+    //If in debug mode, check if this is a valid pool block.
+    #ifdef VAMP_DEBUG
+    VAMP_UINT64 magic = currentBlock->m_magic_number;
+    VAMP_ASSERT(magic == VAMP_ALLOC_MAGIC, "This is not a valid pool block, or the memory was overriten!");
+    #endif
 
     currentBlock->m_next = (__VampMemoryPoolBlock__ *)pThis->m_nextFreeBlock;
     

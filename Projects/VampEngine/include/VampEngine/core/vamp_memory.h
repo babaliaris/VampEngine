@@ -342,6 +342,10 @@ VAMP_API void vampDestroyMemoryStack(VampMemoryStack **pThis);
  */
 typedef struct __VampMemoryPoolBlock__
 {
+    #ifdef VAMP_DEBUG
+    VAMP_UINT64 m_magic_number;
+    #endif
+
     struct __VampMemoryPoolBlock__ *m_next;
 
 }__VampMemoryPoolBlock__;
