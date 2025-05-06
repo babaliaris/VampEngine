@@ -341,3 +341,103 @@ void vampDestroyMemoryStack(VampMemoryStack **pThis)
 
     *pThis = NULL;
 }
+
+
+
+static void *mallocMemPoolImpl(VampMemoryPool *pThis, void *data)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+    VAMP_ASSERT(data != NULL, "This param is required!");
+
+    char *currentBlock  = pThis->m_nextFreeBlock;
+
+    if (!currentBlock) return NULL;
+
+    void *userBlock     = (void *)(currentBlock + VAMP_SIZEOF(__VampMemoryPoolBlock__));
+
+    vampMemCopy(userBlock, data, pThis->m_user_block_size);
+
+    char * buffer_end_address       = pThis->m_buffer + pThis->m_buffer_size;
+    VAMP_SIZE_T next_insert_offset  = pThis->m_user_block_size + VAMP_SIZEOF(__VampMemoryPoolBlock__);
+
+    //Current block is being used for the first time and its not the last block in the buffer.
+    if (currentBlock == pThis->m_lastDirtyBlock && (currentBlock + next_insert_offset) !=  buffer_end_address)
+    {
+        pThis->m_nextFreeBlock = currentBlock + next_insert_offset;
+        pThis->m_lastDirtyBlock = pThis->m_nextFreeBlock;
+    }
+
+    //Current block is being used for the first time and its the last block in the buffer!
+    else if (currentBlock == pThis->m_lastDirtyBlock && (currentBlock + next_insert_offset) ==  buffer_end_address)
+    {
+        pThis->m_nextFreeBlock = NULL;
+        pThis->m_lastDirtyBlock = NULL;
+    }
+
+    //The current block has its m_next member initialized.
+    else
+    {
+        __VampMemoryPoolBlock__ *currMemBlock = (__VampMemoryPoolBlock__ *)currentBlock;
+
+        pThis->m_nextFreeBlock = currMemBlock->m_next;
+    }
+
+    return userBlock;
+}
+
+static void freeMemPoolImpl(VampMemoryPool *pThis, void *ptr)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+    VAMP_ASSERT(ptr != NULL, "This param is required!");
+
+    __VampMemoryPoolBlock__ *currentBlock  = (__VampMemoryPoolBlock__ *)( (char *)ptr - VAMP_SIZEOF(__VampMemoryPoolBlock__) );
+
+    currentBlock->m_next = pThis->m_nextFreeBlock;
+    
+    pThis->m_nextFreeBlock = (char *)currentBlock;
+}
+
+
+
+VampMemoryPool *vampCreateMemoryPool(VAMP_SIZE_T pBlockSize, VAMP_SIZE_T pCount)
+{
+    VampMemoryPool *new_pool = (VampMemoryPool *)VAMP_MALLOC(VAMP_SIZEOF(VampMemoryPool));
+
+    if (!new_pool)
+    {
+        VAMP_WARN("Out of memory!");
+        return NULL;
+    }
+    
+    new_pool->m_buffer_size = ( VAMP_SIZEOF(__VampMemoryPoolBlock__) + pBlockSize ) * pCount;
+    new_pool->m_buffer      = (char *)VAMP_MALLOC( new_pool->m_buffer_size );
+
+    if (!new_pool->m_buffer)
+    {
+        VAMP_WARN("Out of memory!");
+        VAMP_FREE(new_pool);
+        return NULL;
+    }
+
+    new_pool->m_user_block_size = pBlockSize;
+    new_pool->m_user_block_count= pCount;
+    new_pool->m_nextFreeBlock   = new_pool->m_buffer;
+    new_pool->m_lastDirtyBlock  = new_pool->m_buffer;
+    new_pool->malloc            = mallocMemPoolImpl;
+    new_pool->free              = freeMemPoolImpl;
+
+    return new_pool;
+}
+
+
+void vampDestroyMemoryPool(VampMemoryPool **pThis)
+{
+    VAMP_ASSERT(pThis != NULL, "This param is required!");
+    VAMP_ASSERT(*pThis != NULL, "This param is required!");
+    VAMP_ASSERT((*pThis)->m_buffer != NULL, "Should not be NULL at this point!");
+
+    VAMP_FREE((*pThis)->m_buffer);
+    VAMP_FREE(*pThis);
+
+    *pThis = NULL;
+}

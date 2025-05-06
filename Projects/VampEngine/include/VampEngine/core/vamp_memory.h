@@ -131,6 +131,22 @@
 #endif
 
 
+
+/**
+ * @brief Memory Stack Allocator Class
+ * 
+ * Create a instance of this class using `vampCreateMemoryStack`
+ * and `vampDestroyMemoryStack` to destroy it. This creates a stack
+ * memory block, that you can use in order to push data into it.
+ * You cannot pop data, but you always get a pointer back to the data
+ * every time use push something. This stack is meant to be push only
+ * and be reseted by the user, depending on the life of the stack.
+ * 
+ * Example: Once per frame life duration. You push data / frame into the
+ * stack, and at the end of each frame, you reset the stack (deleting everythnig).
+ * This is good for frame operations (vertex buffers that change each frame, 
+ * uniform buffers, particle system buffers etc since they change every frame).
+ */
 typedef struct VampMemoryStack
 {
     VAMP_SIZE_T  m_size;
@@ -175,5 +191,31 @@ typedef struct VampMemoryStack
 VAMP_API VampMemoryStack *vampCreateMemoryStack(VAMP_SIZE_T pSize);
 
 VAMP_API void vampDestroyMemoryStack(VampMemoryStack **pThis);
+
+
+typedef struct __VampMemoryPoolBlock__
+{
+    struct __VampMemoryPoolBlock__ *m_next;
+
+}__VampMemoryPoolBlock__;
+
+typedef struct VampMemoryPool
+{
+    VAMP_SIZE_T m_user_block_size;
+    VAMP_SIZE_T m_user_block_count;
+    VAMP_SIZE_T m_buffer_size;
+    char        *m_buffer;
+    char        *m_nextFreeBlock;
+    char        *m_lastDirtyBlock;
+
+    void *(*malloc)(struct VampMemoryPool *pThis, void *data);
+
+    void (*free)(struct VampMemoryPool *pThis, void *ptr);
+
+}VampMemoryPool;
+
+VampMemoryPool *vampCreateMemoryPool(VAMP_SIZE_T pBlockSize, VAMP_SIZE_T pCount);
+
+void vampDestroyMemoryPool(VampMemoryPool **pThis);
 
 #endif
