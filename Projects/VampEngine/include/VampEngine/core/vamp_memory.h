@@ -153,75 +153,274 @@ typedef struct VampMemoryStack
     VAMP_SIZE_T  m_pointer;
     char        *m_buffer;
 
+    /**
+     * @brief Push data into the stack.
+     * 
+     * @param pThis This `VampMemoryStack` instance.
+     * @param pSize The data size.
+     * @param pValue The address of some data to be be copied.
+     * 
+     * @return A pointer to the start address of the data.
+     */
     void *(*push)(struct VampMemoryStack *pThis, VAMP_SIZE_T pSize, void *pValue);
 
+    /**
+     * @brief Resets the stack (Without deleting the data.)
+     * 
+     * The Pointer of the stack gets reseted and every time you push
+     * something new, the data are getting overitten.
+     * 
+     * @param pThis This `VampMemoryStack` instance.
+     * 
+     */
     void  (*reset)(struct VampMemoryStack *pThis);
 
+    /**
+     * @brief Get the remaining size (in bytes) of the stack.
+     * 
+     * @param pThis This `VampMemoryStack` instance.
+     * 
+     * @return The remaining (free) size of the stack in bytes.
+     */
     VAMP_SIZE_T (*remainingSize)(struct VampMemoryStack *pThis);
 
+    /**
+     * @brief Get the occupied (used) size (in bytes) of the stack.
+     * 
+     * @param pThis This `VampMemoryStack` instance.
+     * 
+     * @return The occupied (used) size of the stack in bytes.
+     */
     VAMP_SIZE_T (*occupiedSize)(struct VampMemoryStack *pThis);
 
+    /**
+     * @brief Push a `char` into the stack.
+     * 
+     * @param pThis This `VampMemoryStack` instance.
+     * @param pValue The value to be stored.
+     * 
+     * @return The start address of the data inside the stack.
+     */
     char *(*pushChar)(struct VampMemoryStack *pThis, char pValue);
 
+    /**
+     * @brief Push a `float` into the stack.
+     * 
+     * @param pThis This `VampMemoryStack` instance.
+     * @param pValue The value to be stored.
+     * 
+     * @return The start address of the data inside the stack.
+     */
     float *(*pushFloat)(struct VampMemoryStack *pThis, float pValue);
 
+    /**
+     * @brief Push a `double` into the stack.
+     * 
+     * @param pThis This `VampMemoryStack` instance.
+     * @param pValue The value to be stored.
+     * 
+     * @return The start address of the data inside the stack.
+     */
     double *(*pushDouble)(struct VampMemoryStack *pThis, double pValue);
 
+    /**
+     * @brief Push a `VAMP_SIZE_T` into the stack.
+     * 
+     * @param pThis This `VampMemoryStack` instance.
+     * @param pValue The value to be stored.
+     * 
+     * @return The start address of the data inside the stack.
+     */
     VAMP_SIZE_T *(*pushSizet)(struct VampMemoryStack *pThis, VAMP_SIZE_T pValue);
 
+    /**
+     * @brief Push a `VAMP_INT8` into the stack.
+     * 
+     * @param pThis This `VampMemoryStack` instance.
+     * @param pValue The value to be stored.
+     * 
+     * @return The start address of the data inside the stack.
+     */
     VAMP_INT8 *(*pushInt8)(struct VampMemoryStack *pThis, VAMP_INT8 pValue);
 
+    /**
+     * @brief Push a `VAMP_INT16` into the stack.
+     * 
+     * @param pThis This `VampMemoryStack` instance.
+     * @param pValue The value to be stored.
+     * 
+     * @return The start address of the data inside the stack.
+     */
     VAMP_INT16 *(*pushInt16)(struct VampMemoryStack *pThis, VAMP_INT16 pValue);
 
+    /**
+     * @brief Push a `VAMP_INT32` into the stack.
+     * 
+     * @param pThis This `VampMemoryStack` instance.
+     * @param pValue The value to be stored.
+     * 
+     * @return The start address of the data inside the stack.
+     */
     VAMP_INT32 *(*pushInt32)(struct VampMemoryStack *pThis, VAMP_INT32 pValue);
 
+    /**
+     * @brief Push a `VAMP_INT64` into the stack.
+     * 
+     * @param pThis This `VampMemoryStack` instance.
+     * @param pValue The value to be stored.
+     * 
+     * @return The start address of the data inside the stack.
+     */
     VAMP_INT64 *(*pushInt64)(struct VampMemoryStack *pThis, VAMP_INT64 pValue);
 
+    /**
+     * @brief Push a `VAMP_UINT8` into the stack.
+     * 
+     * @param pThis This `VampMemoryStack` instance.
+     * @param pValue The value to be stored.
+     * 
+     * @return The start address of the data inside the stack.
+     */
     VAMP_UINT8 *(*pushUint8)(struct VampMemoryStack *pThis, VAMP_UINT8 pValue);
 
+    /**
+     * @brief Push a `VAMP_UINT16` into the stack.
+     * 
+     * @param pThis This `VampMemoryStack` instance.
+     * @param pValue The value to be stored.
+     * 
+     * @return The start address of the data inside the stack.
+     */
     VAMP_UINT16 *(*pushUint16)(struct VampMemoryStack *pThis, VAMP_UINT16 pValue);
 
+    /**
+     * @brief Push a `VAMP_UINT32` into the stack.
+     * 
+     * @param pThis This `VampMemoryStack` instance.
+     * @param pValue The value to be stored.
+     * 
+     * @return The start address of the data inside the stack.
+     */
     VAMP_UINT32 *(*pushUint32)(struct VampMemoryStack *pThis, VAMP_UINT32 pValue);
 
+    /**
+     * @brief Push a `VAMP_UINT64` into the stack.
+     * 
+     * @param pThis This `VampMemoryStack` instance.
+     * @param pValue The value to be stored.
+     * 
+     * @return The start address of the data inside the stack.
+     */
     VAMP_UINT64 *(*pushUint64)(struct VampMemoryStack *pThis, VAMP_UINT64 pValue);
 
 }VampMemoryStack;
 
 
+/**
+ * @brief Create an instance of `VampMemoryStack`.
+ * 
+ * @param pSize The size (in bytes) of the stack.
+ * 
+ * @return The `VampMemoryStack` instance.
+ */
 VAMP_API VampMemoryStack *vampCreateMemoryStack(VAMP_SIZE_T pSize);
 
+/**
+ * @brief Destroy a `VampMemoryStack` instance.
+ * 
+ * @param pThis The users local variable that contains the `VampMemoryStack` instance.
+ */
 VAMP_API void vampDestroyMemoryStack(VampMemoryStack **pThis);
 
 
+
+
+/**
+ * @brief Memory Pool Allocator Block For Metadata.
+ * 
+ * You should not touch this. The engine will handle it.
+ */
 typedef struct __VampMemoryPoolBlock__
 {
     struct __VampMemoryPoolBlock__ *m_next;
 
 }__VampMemoryPoolBlock__;
 
+
+
+/**
+ * @brief Memory Pool Allocator.
+ * 
+ * A memory pool acts as a dynamic allocator (malloc-free)
+ * but with a Single Size block! This means that, once you
+ * create a pool, the block allocation size is determined from 
+ * the start!
+ */
 typedef struct VampMemoryPool
 {
-    VAMP_SIZE_T m_user_block_size;
-    VAMP_SIZE_T m_user_block_count;
-    VAMP_SIZE_T m_buffer_size;
-    VAMP_SIZE_T m_block_size;
-    VAMP_SIZE_T m_blocks_in_used;
-    char        *m_buffer;
-    char        *m_nextFreeBlock;
-    char        *m_lastDirtyBlock;
+    VAMP_SIZE_T m_user_block_size; ///< The users block size.
+    VAMP_SIZE_T m_user_block_count; ///< The users request amount of blocks.
+    VAMP_SIZE_T m_buffer_size; ///< The actual buffer size.
+    VAMP_SIZE_T m_block_size; ///< The full block size (including metadata).
+    VAMP_SIZE_T m_blocks_in_used; ///< How many blocks are in use.
+    char        *m_buffer; ///< The actual buffer that holds the data.
+    char        *m_nextFreeBlock; ///< Next free block pointer.
+    char        *m_lastDirtyBlock; ///< Last dirty block (Thas was never initialized).
 
-    void *(*malloc)(struct VampMemoryPool *pThis, void *data);
+    /**
+     * @brief Allocate a new block of `m_user_block_size`.
+     * 
+     * @param pThis The `VampMemoryPool` instance!
+     * @param pData The address of some data to initialize the allocation.
+     * 
+     * @return The start address of the newly allocated data.
+     */
+    void *(*malloc)(struct VampMemoryPool *pThis, void *pData);
 
-    void (*free)(struct VampMemoryPool *pThis, void *ptr);
+    /**
+     * @brief Frees a block.
+     * 
+     * @param pThis The `VampMemoryPool` instance!
+     * @param pPtr The memory block to be freed.
+     */
+    void (*free)(struct VampMemoryPool *pThis, void *pPtr);
 
+    /**
+     * @brief Information about the remaining free size in bytes.
+     * 
+     * @param pThis The `VampMemoryPool` instance!
+     * 
+     * @return The remaining free size of the pool in bytes.
+     */
     VAMP_SIZE_T (*remainingSize)(struct VampMemoryPool *pThis);
 
+    /**
+     * @brief Information about the occupied (in use) size in bytes.
+     * 
+     * @param pThis The `VampMemoryPool` instance!
+     * 
+     * @return The occupied (in use) size of the pool in bytes.
+     */
     VAMP_SIZE_T (*occupiedSize)(struct VampMemoryPool *pThis);
 
 }VampMemoryPool;
 
+
+/**
+ * @brief Create a new instance of `VampMemoryPool`.
+ * 
+ * @param pBlockSize The block size of each block.
+ * @param pCount The total amount of blocks which determined the size of the pool.
+ * 
+ * @return The newly created `VampMemoryPool` instance.
+ */
 VampMemoryPool *vampCreateMemoryPool(VAMP_SIZE_T pBlockSize, VAMP_SIZE_T pCount);
 
+/**
+ * @brief Destroys an instance of `VampMemoryPool`.
+ * 
+ * @param pThis The users local variable that holds the instance of `VampMemoryPool`.
+ */
 void vampDestroyMemoryPool(VampMemoryPool **pThis);
 
 #endif

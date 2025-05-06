@@ -2,7 +2,7 @@
 #define VAMP_ASSERT_H
 #include <VampEngine/debug/vamp_logger.h>
 
-#if VAMP_DEBUG
+#if defined(VAMP_DEBUG)
 
 #define VAMP_ASSERT(cond, fmt, ...)\
     if ( !(cond) )\

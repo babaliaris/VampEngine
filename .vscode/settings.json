@@ -21,9 +21,9 @@
         "cdialect"
     ],
     "files.associations": {
+        "*.dbclient-js": "javascript",
         "*.sqlbook": "sql",
         "*.ndjson": "jsonl",
-        "*.dbclient-js": "javascript",
         "vampengine.h": "c",
         "compare": "cpp",
         "cstdint": "cpp",
@@ -49,7 +49,8 @@
         "vamp_platform.h": "c",
         "chrono": "c",
         "optional": "c",
-        "system_error": "c"
+        "system_error": "c",
+        "random": "c"
     },
     "editor.fontSize": 15
 }
